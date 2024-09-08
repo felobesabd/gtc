@@ -1,0 +1,140 @@
+#kt_app_main {
+  margin-top: 0;
+}
+
+
+.form-control.form-control-solid {
+  background-color: var(--bs-gray-200);
+  border-color: var(--bs-gray-200);
+  color: #4b5675;
+  transition: color .2s ease;
+}
+
+.nav-tabs .nav-link {
+  color: #232020b3;
+}
+
+.general-tabs .card-header {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+input.disabled,
+select.disabled {
+  pointer-events: none !important;
+  background: #fdf9f9 !important;
+}
+
+.alert-block.message {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.alert-block.message .btn-close {
+  margin-right: 10px;
+}
+
+.attachment {
+  margin-left: 20px;
+}
+
+.form-control {
+  appearance: auto !important;
+}
+
+.btn>i {
+  font-size: inherit !important;
+}
+
+.select2-container .select2-selection--single {
+  height: 43px !important;
+}
+
+.select2-selection__arrow {
+  height: 26px;
+  position: absolute;
+  top: 10px;
+  right: 1px;
+  width: 20px;
+}
+
+.select2-selection__arrow b {
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+  height: 0;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -2px;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+.select2-results__options{
+  line-height: 26px;
+}
+
+.select2-results__option {
+  padding: 0.8rem 1.50rem !important;
+  font-size: 14px;
+}
+
+.dataTable  td {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* Mouse Cursor Css */
+.mouse-move {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  visibility: hidden;
+}
+
+.mouse-inner{
+  z-index: 10000001;
+}
+
+.mouse-inner, .mouse-inner.mouse-hover {
+  margin-left: -25px;
+  margin-top: -25px;
+  width: 50px;
+  height: 50px;
+  background-color: #6176f6;
+  opacity: 0.1;
+}
+
+[data-kt-app-layout=dark-sidebar] .app-sidebar {
+    background-color: #014aa6 !important;
+}
+
+@media (min-width: 992px) {
+    .app-sidebar-menu .menu>.menu-item>.menu-link>.menu-title {
+        font-size: 1.4rem !important;
+    }
+}
+
+[data-kt-app-layout=dark-sidebar] .app-sidebar .menu>.menu-item .menu-link.active {
+    background-color: #014AA4 !important;
+}
+
+@media (min-width: 992px) {
+    .app-sidebar-logo {
+        justify-content: center !important;
+    }
+}
+
+.btnColor {
+    background-color: #014294;
+    color: white;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
