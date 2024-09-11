@@ -25,14 +25,17 @@ class EmployeeRequest extends FormRequest
             'name' => ['required', 'string'],
             'country' => ['required', 'string'],
             'department_id' => ['required', 'integer'],
-            'personal_card_image' => ['string'],
-            'passport_image' => ['string'],
             'bank_name' => ['required', 'string'],
             'bank_acc_no' => ['required', 'string'],
             'civil_no' => ['required', 'string'],
             'date_of_birth' => ['required'],
             'joining_date' => ['required'],
             'passport_no' => ['required', 'string'],
+            'attachments' => ['nullable', 'array', 'max:5'],
+//            'attachments.*' => ['nullable', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
         ];
     }
 }
+
+//'personal_card_image' => ['string'],
+//            'passport_image' => ['string'],

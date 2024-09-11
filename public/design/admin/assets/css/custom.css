@@ -138,3 +138,9 @@ select.disabled {
     overflow: hidden;
     margin-bottom: 15px;
 }
+
+
+.btn:not(.btn-outline):not(.btn-dashed):not(.btn-bordered):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+    padding: calc(0.775rem + 1px) calc(0.4rem + 1px);
+    font-size: 11px !important;
+}

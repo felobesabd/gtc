@@ -12,8 +12,7 @@ class Employee extends Model
     protected $fillable = [
         'name',
         'department_id',
-        'passport_image',
-        'personal_card_image',
+        'attachments_ids',
         'passport_no',
         'civil_no',
         'bank_acc_no',

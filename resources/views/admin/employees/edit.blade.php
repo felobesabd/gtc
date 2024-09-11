@@ -10,7 +10,7 @@ Employees
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <form class="form" action="{{ route('admin.employees.update', ['employee' => $employee->id]) }}" method="post">
+    <form class="form" action="{{ route('admin.employees.update', ['employee' => $employee->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
         <input name="_method" type="hidden" value="PATCH" />
         <div class="row">
@@ -73,13 +73,9 @@ Employees
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Passport Image</label>
-                        <input type="text" class="form-control" name="passport_image" value="{{ $employee->passport_image }}"/>
-                    </div>
-
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Personal Card Image</label>
-                        <input type="text" class="form-control" name="personal_card_image" value="{{ $employee->personal_card_image }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Attachments</label>
+                        <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple
+                               value=""/>
                     </div>
 
                 </div>

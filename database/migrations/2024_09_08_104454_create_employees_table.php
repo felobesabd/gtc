@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('department_id');
-            $table->text('passport_image')->nullable();
-            $table->text('personal_card_image')->nullable();
+            $table->text('attachments_ids')->nullable();
             $table->string('passport_no');
             $table->string('civil_no');
             $table->string('bank_acc_no');

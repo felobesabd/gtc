@@ -58,8 +58,6 @@ Department
                         <th class="min-w-125px">Civil Number</th>
                         <th class="min-w-125px">Bank Name</th>
                         <th class="min-w-125px">Bank Acc Number</th>
-                        <th class="min-w-125px">Passport Photo</th>
-                        <th class="min-w-125px">Personal Card</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -127,16 +125,6 @@ Department
             data: 'bank_acc_no',
             name: 'bank_acc_no',
             className: "text-start",
-        },
-        {
-            data: 'passport_image',
-            name: 'passport_image',
-            className: "text-center",
-        },
-        {
-            data: 'personal_card_image',
-            name: 'personal_card_image',
-            className: "text-center",
         },
         {
             data: 'created_at',

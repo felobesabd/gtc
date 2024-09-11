@@ -64,7 +64,7 @@ Department
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Name_En</th>
-                        <th class="min-w-125px">Name_Ar</th>
+{{--                        <th class="min-w-125px">Name_Ar</th>--}}
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -93,11 +93,11 @@ Department
             name: 'name_en',
             className: "text-start",
         },
-        {
-            data: 'name_ar',
-            name: 'name_ar',
-            className: "text-start",
-        },
+        // {
+        //     data: 'name_ar',
+        //     name: 'name_ar',
+        //     className: "text-start",
+        // },
         {
             data: 'created_at',
             name: 'created_at',

@@ -10,7 +10,7 @@ Employees
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <form class="form" action="{{ route('admin.employees.store') }}" method="post">
+    <form class="form" action="{{ route('admin.employees.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="card card-flush py-10">
@@ -67,13 +67,8 @@ Employees
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Passport Image</label>
-                        <input type="text" class="form-control" name="passport_image" value="{{ old('passport_image') }}"/>
-                    </div>
-
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Personal Card Image</label>
-                        <input type="text" class="form-control" name="personal_card_image" value="{{ old('personal_card_image') }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Attachments</label>
+                        <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple value=""/>
                     </div>
 
                 </div>

@@ -25,16 +25,16 @@ Employees
 {{--                            @endforeach--}}
 {{--                        </select>--}}
 {{--                    </div>--}}
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Name AR</label>
-                        <input type="text" class="form-control" name="name_ar" value="{{ old('name_ar') }}"/>
-                        @if($errors->has('name_ar'))
-                            <span class="text-danger">{{$errors->first('name_ar')}}</span>
-                        @endif
-                    </div>
+{{--                    <div class="fv-row mb-7">--}}
+{{--                        <label class="fs-6 fw-semibold mb-2">Name AR</label>--}}
+{{--                        <input type="text" class="form-control" name="name_ar" value="{{ old('name_ar') }}"/>--}}
+{{--                        @if($errors->has('name_ar'))--}}
+{{--                            <span class="text-danger">{{$errors->first('name_ar')}}</span>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Name EN</label>
+                        <label class="fs-6 fw-semibold mb-2">Name</label>
                         <input type="text" class="form-control" name="name_en" value="{{ old('name_en') }}"/>
                         @if($errors->has('name_en'))
                             <span class="text-danger">{{$errors->first('name_en')}}</span>

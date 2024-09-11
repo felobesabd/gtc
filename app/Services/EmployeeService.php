@@ -16,12 +16,28 @@ class EmployeeService
     public function createEmployee($data): object
     {
         $model = Employee::create($data);
+        /** edit or store attachment */
+        $folder = 'employees-attachment';
+        editOrCreateMultipleFiles(
+            folder: $folder,
+            obj: $model,
+            attachments: $data['attachments'] ?? null,
+            attach_col_name: 'attachments_ids'
+        );
         return $model;
     }
 
-    public function updateEmployee(int $id, array $data): bool
+    public function updateEmployee(Employee $employee, array $data): bool
     {
-        $employee = Employee::findOrFail($id);
+        /** edit or store attachment */
+        $folder = 'employees-attachment';
+        editOrCreateMultipleFiles(
+            folder: $folder,
+            obj: $employee,
+            attachments: $data['attachments'] ?? null,
+            attach_col_name: 'attachments_ids'
+        );
+
         return $employee->fill($data)->save();
     }
 
@@ -36,6 +52,9 @@ class EmployeeService
         return Datatables::of($model)
             ->addColumn('action', function ($row) {
                 $res = '
+                    <a href="' . route('admin.employees.show', ['employee' => $row->id]) . '" class="btn btn-info" onclick="return true;">
+                        View
+                    </a>
                     <a href="' . route('admin.employees.edit', ['employee' => $row->id]) . '" class="btn btn-primary" onclick="return true;">
                         Edit
                     </a>

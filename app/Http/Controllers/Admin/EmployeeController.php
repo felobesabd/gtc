@@ -38,11 +38,13 @@ class EmployeeController
         $department = $this->employeeService->createEmployee(data: $request->all());
         return redirect()->back()->with('success', 'Created successfully');
     }
-//
-//    public function show(Request $request, $id)
-//    {
-//        $department = Department::find($id);
-//    }
+
+    public function show($id)
+    {
+        $employee = Employee::findOrFail($id);
+        $departments = Department::all();
+        return view('admin.employees.view', compact('employee', 'departments'));
+    }
 
     public function edit(Request $request, $id)
     {
@@ -53,7 +55,8 @@ class EmployeeController
 
     public function update(EmployeeRequest $request, $id)
     {
-        $employee = $this->employeeService->updateEmployee(id: $id, data: $request->all());
+        $employee = Employee::findOrFail($id);
+        $uploadEmployee = $this->employeeService->updateEmployee($employee, data: $request->all());
         return redirect()->back()->with('success', 'Updated successfully');
     }
 

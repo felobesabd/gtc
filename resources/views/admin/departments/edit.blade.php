@@ -27,13 +27,13 @@ Department
             <div class="card card-flush py-10">
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Name AR</label>
-                        <input type="text" class="form-control" name="name_ar" value="{{ $department->name_ar }}"/>
-                        @if($errors->has('name_ar'))
-                            <span class="text-danger">{{$errors->first('name_ar')}}</span>
-                        @endif
-                    </div>
+{{--                    <div class="fv-row mb-7">--}}
+{{--                        <label class="fs-6 fw-semibold mb-2">Name AR</label>--}}
+{{--                        <input type="text" class="form-control" name="name_ar" value="{{ $department->name_ar }}"/>--}}
+{{--                        @if($errors->has('name_ar'))--}}
+{{--                            <span class="text-danger">{{$errors->first('name_ar')}}</span>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Name EN</label>

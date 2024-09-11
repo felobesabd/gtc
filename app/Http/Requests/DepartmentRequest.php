@@ -23,7 +23,7 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name_en' => ['required', 'string'],
-            'name_ar' => ['required', 'string'],
+//            'name_ar' => ['required', 'string'],
         ];
     }
 }
