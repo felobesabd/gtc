@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Item Categories
+Groups
 @endsection
 
 @push('header')
@@ -10,16 +10,15 @@ Item Categories
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <form class="form" action="{{ route('admin.itemCats.update', ['itemCat' => $itemCat->id]) }}" method="post">
+    <form class="form" action="{{ route('admin.groups.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <input name="_method" type="hidden" value="PATCH" />
         <div class="row">
             <div class="card card-flush py-10">
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Category Item Name</label>
-                        <input type="text" class="form-control" name="item_cat_name" value="{{ $itemCat->item_cat_name }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Group Name</label>
+                        <input type="text" class="form-control" name="group_name" value="{{ old('group_name') }}"/>
                     </div>
                 </div>
                 <!--end::Modal body-->

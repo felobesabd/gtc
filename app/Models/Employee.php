@@ -21,4 +21,14 @@ class Employee extends Model
         'joining_date',
         'date_of_birth',
     ];
+
+    public function getDepartmentName($department_id)
+    {
+        $department = self::query()
+            ->join('departments', 'departments.id', '=', 'employees.department_id')
+            ->where('departments.id', $department_id)
+            ->value('departments.name_en');
+
+        return $department ?: 'Unknown Department';
+    }
 }

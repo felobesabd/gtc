@@ -50,6 +50,15 @@ class EmployeeService
     protected function getTableData($model)
     {
         return Datatables::of($model)
+            ->editColumn('department_id', function (Employee $employee) {
+                return $employee->getDepartmentName($employee->department_id);
+            })
+            ->editColumn('date_of_birth', function ($employee) {
+                return date('d-M-y', strtotime($employee->date_of_birth));
+            })
+            ->editColumn('joining_date', function ($employee) {
+                return date('d-M-y', strtotime($employee->joining_date));
+            })
             ->addColumn('action', function ($row) {
                 $res = '
                     <a href="' . route('admin.employees.show', ['employee' => $row->id]) . '" class="btn btn-info" onclick="return true;">

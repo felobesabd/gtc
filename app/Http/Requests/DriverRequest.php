@@ -32,7 +32,7 @@ class DriverRequest extends FormRequest
             'license_no' => ['required', 'string'],
             'license_expired' => ['required'],
             'attachments' => ['nullable', 'array', 'max:5'],
-//            'attachments.*' => ['nullable', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'attachments.*' => ['nullable', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
         ];
     }
 }

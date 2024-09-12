@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\StoreLocationController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\ItemCategoryController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\GroupController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
@@ -63,4 +65,16 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::get('/itemCats/delete/{id}', [ItemCategoryController::class, 'destroy'])->name('admin.itemCats.delete');
     Route::get('/itemCats-data-table', [ItemCategoryController::class, 'index'])->name('admin.itemCats.data-table');
     /** ItemCategoryController */
+
+    /** CategoryController */
+    Route::resource('/categories', CategoryController::class, ['names' => 'admin.categories']);
+    Route::get('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.delete');
+    Route::get('/categories-data-table', [CategoryController::class, 'index'])->name('admin.categories.data-table');
+    /** CategoryController */
+
+    /** CategoryController */
+    Route::resource('/groups', GroupController::class, ['names' => 'admin.groups']);
+    Route::get('/groups/delete/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
+    Route::get('/groups-data-table', [GroupController::class, 'index'])->name('admin.groups.data-table');
+    /** CategoryController */
 });

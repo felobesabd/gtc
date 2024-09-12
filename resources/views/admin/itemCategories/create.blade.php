@@ -17,8 +17,8 @@ Item Categories
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Item Name</label>
-                        <input type="text" class="form-control" name="item_name" value="{{ old('item_name') }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Category Item Name</label>
+                        <input type="text" class="form-control" name="item_cat_name" value="{{ old('item_cat_name') }}"/>
                     </div>
                 </div>
                 <!--end::Modal body-->

@@ -99,7 +99,7 @@ Department
         {
             data: 'department_id',
             name: 'department_id',
-            className: "text-center",
+            className: "text-start",
         },
         {
             data: 'country',

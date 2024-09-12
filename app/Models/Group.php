@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemCategory extends Model
+class Group extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'item_cat_name',
+        'group_name',
     ];
 }

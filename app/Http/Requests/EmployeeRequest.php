@@ -32,7 +32,7 @@ class EmployeeRequest extends FormRequest
             'joining_date' => ['required'],
             'passport_no' => ['required', 'string'],
             'attachments' => ['nullable', 'array', 'max:5'],
-//            'attachments.*' => ['nullable', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'attachments.*' => ['nullable', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
         ];
     }
 }

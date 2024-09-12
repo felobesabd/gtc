@@ -57,7 +57,7 @@ Drivers
                         <th class="min-w-125px">Passport Number</th>
                         <th class="min-w-125px">Bus Number</th>
                         <th class="min-w-125px">License Number</th>
-                        <th class="min-w-125px">License expired date</th>
+                        <th class="min-w-125px">License Expired</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -105,6 +105,9 @@ Drivers
             data: 'date_of_birth',
             name: 'date_of_birth',
             className: "text-center",
+            render: function(data, type, row) {
+                return data ? data.slice(0, 10) : '';
+            }
         },
         {
             data: 'passport_no',
@@ -125,6 +128,9 @@ Drivers
             data: 'license_expired',
             name: 'license_expired',
             className: "text-center",
+            render: function(data, type, row) {
+                return data ? data.slice(0, 10) : '';
+            }
         },
         {
             data: 'created_at',
