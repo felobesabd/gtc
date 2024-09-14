@@ -176,6 +176,14 @@
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->
+                                    <a class="menu-link active" href="{{ route('admin.groups.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Groups</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu link-->
                                     <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>

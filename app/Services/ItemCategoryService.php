@@ -33,6 +33,15 @@ class ItemCategoryService
     protected function getTableData($model)
     {
         return Datatables::of($model)
+            ->editColumn('category_id', function (ItemCategory $item) {
+                return $item->getNameById('categories', $item->category_id, 'id', 'category_id', 'category_name');
+            })
+            ->editColumn('group_id', function (ItemCategory $item) {
+                return $item->getNameById('groups', $item->group_id, 'id',  'group_id','group_name');
+            })
+            ->editColumn('unit_id', function (ItemCategory $item) {
+                return $item->getNameById('units', $item->unit_id, 'id',  'unit_id','name');
+            })
             ->addColumn('action', function ($row) {
                 $res = '
                     <a href="' . route('admin.itemCats.edit', ['itemCat' => $row->id]) . '" class="btn btn-primary" onclick="return true;">

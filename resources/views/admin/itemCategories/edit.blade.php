@@ -18,8 +18,59 @@ Item Categories
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Category Item Name</label>
-                        <input type="text" class="form-control" name="item_cat_name" value="{{ $itemCat->item_cat_name }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Item Name</label>
+                        <input type="text" class="form-control" name="item_name" value="{{ $itemCat->item_name }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Category</label>
+                        <select class="form-control" name="category_id">
+                            @foreach($categories as $category)
+                                <option
+                                    @if($itemCat->category_id === $category->id) selected @endif value="{{ $category->id }}">
+                                    {{ $category->category_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Group</label>
+                        <select class="form-control" name="group_id">
+                            @foreach($groups as $group)
+                                <option
+                                    @if($itemCat->group_id === $group->id) selected @endif value="{{ $group->id }}">
+                                    {{ $group->group_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Part Number</label>
+                        <input type="text" class="form-control" name="part_no" value="{{ $itemCat->part_no }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Category</label>
+                        <select class="form-control" name="unit_id">
+                            @foreach($units as $unit)
+                                <option
+                                    @if($itemCat->unit_id === $unit->id) selected @endif value="{{ $unit->id }}">
+                                    {{ $unit->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                        <input type="number" class="form-control" name="quantity" value="{{ $itemCat->quantity }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Rate</label>
+                        <input type="number" class="form-control" name="rate" value="{{ $itemCat->rate }}"/>
                     </div>
                 </div>
                 <!--end::Modal body-->

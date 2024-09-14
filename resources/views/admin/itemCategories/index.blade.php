@@ -50,6 +50,13 @@ Item Categories
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Name</th>
+                        <th class="min-w-125px">Group Name</th>
+                        <th class="min-w-125px">Part No</th>
+                        <th class="min-w-125px">Category</th>
+                        <th class="min-w-125px">Unit</th>
+                        <th class="min-w-125px">Quantity</th>
+                        <th class="min-w-125px">Rate</th>
+                        <th class="min-w-125px">Rate Per</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -74,8 +81,43 @@ Item Categories
             className: "text-center",
         },
         {
-            data: 'item_cat_name',
-            name: 'item_cat_name',
+            data: 'item_name',
+            name: 'item_name',
+            className: "text-start",
+        },
+        {
+            data: 'group_id',
+            name: 'group_id',
+            className: "text-start",
+        },
+        {
+            data: 'part_no',
+            name: 'part_no',
+            className: "text-start",
+        },
+        {
+            data: 'category_id',
+            name: 'category_id',
+            className: "text-start",
+        },
+        {
+            data: 'unit_id',
+            name: 'unit_id',
+            className: "text-start",
+        },
+        {
+            data: 'quantity',
+            name: 'quantity',
+            className: "text-start",
+        },
+        {
+            data: 'rate',
+            name: 'rate',
+            className: "text-start",
+        },
+        {
+            data: 'rate_per',
+            name: 'rate_per',
             className: "text-start",
         },
         {

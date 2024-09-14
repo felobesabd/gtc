@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ItemCategoryRequest;
+use App\Models\Category;
+use App\Models\Group;
 use App\Models\ItemCategory;
+use App\Models\Unit;
 use App\Services\ItemCategoryService;
 use Illuminate\Http\Request;
 
@@ -27,7 +30,10 @@ class ItemCategoryController
 
     public function create()
     {
-        return view('admin.itemCategories.create');
+        $categories = Category::all();
+        $groups = Group::all();
+        $units = Unit::all();
+        return view('admin.itemCategories.create', compact('categories', 'groups', 'units'));
     }
 
     public function store(ItemCategoryRequest $request)
@@ -39,7 +45,15 @@ class ItemCategoryController
     public function edit(Request $request, $id)
     {
         $itemCat = ItemCategory::findOrFail($id);
-        return view('admin.itemCategories.edit', compact('itemCat'));
+        $categories = Category::all();
+        $groups = Group::all();
+        $units = Unit::all();
+        return view('admin.itemCategories.edit', compact(
+            'itemCat',
+            'categories',
+            'groups',
+            'units'
+        ));
     }
 
     public function update(ItemCategoryRequest $request, $id)

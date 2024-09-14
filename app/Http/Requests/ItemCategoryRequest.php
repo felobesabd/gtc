@@ -22,7 +22,13 @@ class ItemCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_cat_name' => ['required', 'string'],
+            'item_name' => ['required', 'string'],
+            'part_no' => ['required', 'string'],
+            'category_id' => ['required', 'integer'],
+            'group_id' => ['required', 'integer'],
+            'unit_id' => ['required', 'integer'],
+            'quantity' => ['required', 'integer'],
+            'rate' => ['required','integer'],
         ];
     }
 }

@@ -17,9 +17,59 @@ Item Categories
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Category Item Name</label>
-                        <input type="text" class="form-control" name="item_cat_name" value="{{ old('item_cat_name') }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Item Name</label>
+                        <input type="text" class="form-control" name="item_name" value="{{ old('item_name') }}"/>
                     </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Select Category</label>
+                        <select class="form-control" name="category_id">
+                                <option selected disabled hidden>Choose</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Select Group</label>
+                        <select class="form-control" name="group_id">
+                                <option selected disabled hidden>Choose</option>
+                            @foreach($groups as $group)
+                                <option value="{{ $group->id }}">{{ $group->group_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Part Number</label>
+                        <input type="text" class="form-control" name="part_no" value="{{ old('part_no') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Select Unit</label>
+                        <select class="form-control" name="unit_id">
+                                <option selected disabled hidden>Choose</option>
+                            @foreach($units as $unit)
+                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Rate</label>
+                        <input type="number" class="form-control" name="rate" value="{{ old('rate') }}"/>
+                    </div>
+
+                    {{--                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Rate Per</label>
+                        <input type="number" class="form-control" name="rate_per" value="{{ old('rate_per') }}"/>
+                    </div>--}}
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">
