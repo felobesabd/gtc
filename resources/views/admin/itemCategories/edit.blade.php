@@ -52,7 +52,7 @@ Item Categories
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Category</label>
+                        <label class="fs-6 fw-semibold mb-2">Unit</label>
                         <select class="form-control" name="unit_id">
                             @foreach($units as $unit)
                                 <option
