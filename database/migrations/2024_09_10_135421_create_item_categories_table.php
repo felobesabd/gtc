@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('part_no');
             $table->integer('unit_id');
             $table->integer('quantity');
-            $table->decimal('rate');
+            $table->decimal('rate')->nullable();
             $table->decimal('rate_per')->nullable();
+            $table->integer('min_allowed_value');
             $table->timestamps();
         });
     }

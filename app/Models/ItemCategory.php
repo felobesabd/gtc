@@ -18,6 +18,7 @@ class ItemCategory extends Model
         'quantity',
         'rate',
         'rate_per',
+        'min_allowed_value',
     ];
 
 //    public function getCategoryName($category_id)

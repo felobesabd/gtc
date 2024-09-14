@@ -57,6 +57,7 @@ Item Categories
                         <th class="min-w-125px">Quantity</th>
                         <th class="min-w-125px">Rate</th>
                         <th class="min-w-125px">Rate Per</th>
+                        <th class="min-w-125px">Min Allowed Value</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -119,6 +120,11 @@ Item Categories
             data: 'rate_per',
             name: 'rate_per',
             className: "text-start",
+        },
+        {
+            data: 'min_allowed_value',
+            name: 'min_allowed_value',
+            className: "text-center",
         },
         {
             data: 'created_at',

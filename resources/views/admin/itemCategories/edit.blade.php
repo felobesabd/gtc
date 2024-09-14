@@ -69,9 +69,14 @@ Item Categories
                     </div>
 
                     <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Minimum Allowed Value</label>
+                        <input type="number" class="form-control" name="min_allowed_value" value="{{ $itemCat->min_allowed_value }}"/>
+                    </div>
+
+                    {{--<div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Rate</label>
                         <input type="number" class="form-control" name="rate" value="{{ $itemCat->rate }}"/>
-                    </div>
+                    </div>--}}
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">

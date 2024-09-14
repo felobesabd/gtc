@@ -28,7 +28,8 @@ class ItemCategoryRequest extends FormRequest
             'group_id' => ['required', 'integer'],
             'unit_id' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
-            'rate' => ['required','integer'],
+//            'rate' => ['required','integer'],
+            'min_allowed_value' => ['required','integer'],
         ];
     }
 }
