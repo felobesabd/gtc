@@ -78,14 +78,26 @@ Drivers
                         <label class="fs-6 fw-semibold mb-2">Attachments</label>
                     </div>
                     <div class="modal-body px-lg-17">
-                        @foreach(getMultipleAttachments(obj: $driver, attach_col_name: 'images') as $key => $attachment)
+                        @php
+                            $attachments = getMultipleAttachments(obj: $driver, attach_col_name: 'images');
+                        @endphp
+
+                        @if($attachments->isEmpty())
                             <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Attachment {{$key + 1}}</label>
-                                <span class="attachment">
-                            <a href="{{url($attachment->path)}}" target="_blank"><i class="fa fa-file"></i></a>
-                        </span>
+                                <label class="fs-6 fw-semibold mb-2">No attachments available.</label>
                             </div>
-                        @endforeach
+                        @else
+                            @foreach($attachments as $key => $attachment)
+                                <div class="fv-row mb-7">
+                                    <label class="fs-6 fw-semibold mb-2">Attachment {{$key + 1}}</label>
+                                    <span class="attachment">
+                            <a href="{{ url($attachment->path) }}" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-file"></i>
+                            </a>
+                        </span>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

@@ -164,7 +164,11 @@ function getMultipleAttachments(
     string $attach_col_name = '',
 ): Collection {
     $attach_ids = json_decode($obj->{$attach_col_name});
-    return Attachment::whereIn('id', $attach_ids)->get();
+    if ($attach_ids === null) {
+        return new Collection();
+    } else {
+        return Attachment::whereIn('id', $attach_ids)->get();
+    }
 }
 
 /**

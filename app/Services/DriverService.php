@@ -15,6 +15,12 @@ class DriverService
     public function createDriver($data): object
     {
         $model = Driver::create($data);
+
+        $attachments = $data['attachments'] ?? [];
+        if (!is_array($attachments)) {
+            $attachments = [];
+        }
+
         /** for ordering */
         ordering(model: 'App\Models\Driver', obj: $model);
         /** edit or store attachment */
@@ -22,7 +28,7 @@ class DriverService
         editOrCreateMultipleFiles(
             folder: $folder,
             obj: $model,
-            attachments: $data['attachments'] ?? null,
+            attachments: $attachments,
             attach_col_name: 'images'
         );
 
@@ -31,12 +37,17 @@ class DriverService
 
     public function updateDriver(Driver $driver, array $data): bool
     {
+        $attachments = $data['attachments'] ?? [];
+        if (!is_array($attachments)) {
+            $attachments = [];
+        }
+
         /** edit or store attachment */
         $folder = 'driver-attachment';
         editOrCreateMultipleFiles(
             folder: $folder,
             obj: $driver,
-            attachments: $data['attachments'] ?? null,
+            attachments: $attachments,
             attach_col_name: 'images'
         );
 
