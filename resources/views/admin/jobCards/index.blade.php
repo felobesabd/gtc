@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Categories
+Job Card
 @endsection
 
 @push('header')
@@ -14,11 +14,11 @@ Categories
     <div class="page-header">
         <div class="row">
             <div class="col-sm-8 col-auto">
-                <h3 class="page-title">Categories</h3>
+                <h3 class="page-title">Job Card</h3>
             </div>
 
             <div class="col-sm-4 col">
-                <a href="{{route('admin.categories.create')}}" class="btn btnColor float-end mt-2">Add Category</a>
+                <a href="{{route('admin.job_cards.create')}}" class="btn btnColor float-end mt-2">Add Job Card</a>
             </div>
         </div>
     </div>
@@ -49,8 +49,8 @@ Categories
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
-                        <th class="min-w-125px">Name</th>
-                        <th class="min-w-125px">Group Name</th>
+                        <th class="min-w-125px">Reg No</th>
+                        <th class="min-w-125px">Vehicle Details</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -75,13 +75,13 @@ Categories
             className: "text-center",
         },
         {
-            data: 'category_name',
-            name: 'category_name',
+            data: 'reg_no',
+            name: 'reg_no',
             className: "text-start",
         },
         {
-            data: 'group_id',
-            name: 'group_id',
+            data: 'vehicle_id',
+            name: 'vehicle_id',
             className: "text-start",
         },
         {
@@ -103,7 +103,7 @@ Categories
 
     console.log(columns);
 
-    var ajax_url = "{!! route('admin.categories.data-table') !!}";
+    var ajax_url = "{!! route('admin.job_cards.data-table') !!}";
 
     $(function() {
         createDatatable(columns, ajax_url);

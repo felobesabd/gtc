@@ -144,3 +144,8 @@ select.disabled {
     padding: calc(0.775rem + 1px) calc(0.4rem + 1px);
     font-size: 11px !important;
 }
+
+.job-card-checkbox {
+    background-color: #f6f6f6f6;
+    padding: 5px 10px;
+}

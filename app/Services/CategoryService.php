@@ -12,6 +12,12 @@ class CategoryService
         return $this->getTableData(model: $model);
     }
 
+    public function getCategory($id): object
+    {
+        $model = Category::where('id', $id)->first();
+        return $model;
+    }
+
     public function createCategory($data): object
     {
         $model = Category::create($data);
@@ -33,6 +39,9 @@ class CategoryService
     protected function getTableData($model)
     {
         return Datatables::of($model)
+            ->editColumn('group_id', function (Category $item) {
+                return $item->getGroupName($item->group_id);
+            })
             ->addColumn('action', function ($row) {
                 $res = '
                     <a href="' . route('admin.categories.edit', ['category' => $row->id]) . '" class="btn btn-primary" onclick="return true;">

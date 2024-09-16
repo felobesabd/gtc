@@ -30,6 +30,11 @@ class GroupController
         return view('admin.groups.create');
     }
 
+    public function getSpecificGroup($id)
+    {
+        return $this->groupService->getGroup($id);
+    }
+
     public function store(GroupRequest $request)
     {
         $group = $this->groupService->createGroup(data: $request->all());

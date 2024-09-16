@@ -12,6 +12,12 @@ class GroupService
         return $this->getTableData(model: $model);
     }
 
+    public function getGroup($id): object
+    {
+        $model = Group::where('id', $id)->first();
+        return $model;
+    }
+
     public function createGroup($data): object
     {
         $model = Group::create($data);

@@ -20,6 +20,16 @@ Categories
                         <label class="fs-6 fw-semibold mb-2">Category Name</label>
                         <input type="text" class="form-control" name="category_name" value="{{ old('category_name') }}"/>
                     </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Select Group</label>
+                        <select class="form-control" name="group_id">
+                                <option selected disabled hidden>Choose</option>
+                            @foreach($groups as $group)
+                                <option value="{{ $group->id }}">{{ $group->group_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">

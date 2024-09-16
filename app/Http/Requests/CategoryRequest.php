@@ -23,6 +23,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'category_name' => ['required', 'string'],
+            'group_id' => ['required', 'integer'],
         ];
     }
 }

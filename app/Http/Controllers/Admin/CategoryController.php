@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Group;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -25,9 +26,15 @@ class CategoryController
         return view('admin.categories.index');
     }
 
+    public function getSpecificCategory($id)
+    {
+        return $this->catService->getCategory($id);
+    }
+
     public function create()
     {
-        return view('admin.categories.create');
+        $groups = Group::all();
+        return view('admin.categories.create', compact('groups'));
     }
 
     public function store(CategoryRequest $request)
@@ -39,7 +46,8 @@ class CategoryController
     public function edit(Request $request, $id)
     {
         $category = Category::findOrFail($id);
-        return view('admin.categories.edit', compact('category'));
+        $groups = Group::all();
+        return view('admin.categories.edit', compact('category', 'groups'));
     }
 
     public function update(CategoryRequest $request, $id)
