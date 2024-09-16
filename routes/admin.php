@@ -8,9 +8,11 @@ use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\StoreLocationController;
 use App\Http\Controllers\Admin\UnitController;
-use App\Http\Controllers\Admin\ItemCategoryController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\GroupController;
+use App\Http\Controllers\Admin\ItemCategoryController;
+use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\JobCardController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
@@ -60,21 +62,35 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::get('/units-data-table', [UnitController::class, 'index'])->name('admin.units.data-table');
     /** UnitController */
 
-    /** ItemCategoryController */
-    Route::resource('/itemCats', ItemCategoryController::class, ['names' => 'admin.itemCats']);
-    Route::get('/itemCats/delete/{id}', [ItemCategoryController::class, 'destroy'])->name('admin.itemCats.delete');
-    Route::get('/itemCats-data-table', [ItemCategoryController::class, 'index'])->name('admin.itemCats.data-table');
-    /** ItemCategoryController */
-
     /** CategoryController */
     Route::resource('/categories', CategoryController::class, ['names' => 'admin.categories']);
     Route::get('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.delete');
+    Route::get('/categories/specific/{id}', [CategoryController::class, 'getSpecificCategory'])->name('admin.categories.specific');
     Route::get('/categories-data-table', [CategoryController::class, 'index'])->name('admin.categories.data-table');
     /** CategoryController */
 
     /** CategoryController */
     Route::resource('/groups', GroupController::class, ['names' => 'admin.groups']);
     Route::get('/groups/delete/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
+    Route::get('/groups/specific/{id}', [GroupController::class, 'getSpecificGroup'])->name('admin.groups.specific');
     Route::get('/groups-data-table', [GroupController::class, 'index'])->name('admin.groups.data-table');
     /** CategoryController */
+
+    /** ItemCategoryController */
+    Route::resource('/itemCats', ItemCategoryController::class, ['names' => 'admin.itemCats']);
+    Route::get('/itemCats/delete/{id}', [ItemCategoryController::class, 'destroy'])->name('admin.itemCats.delete');
+    Route::get('/itemCats-data-table', [ItemCategoryController::class, 'index'])->name('admin.itemCats.data-table');
+    /** ItemCategoryController */
+
+    /** VehicleController */
+    Route::resource('/vehicles', VehicleController::class, ['names' => 'admin.vehicles']);
+    Route::get('/vehicles/delete/{id}', [VehicleController::class, 'destroy'])->name('admin.vehicles.delete');
+    Route::get('/vehicles-data-table', [VehicleController::class, 'index'])->name('admin.vehicles.data-table');
+    /** VehicleController */
+
+    /** JobCardController */
+    Route::resource('/job_cards', JobCardController::class, ['names' => 'admin.job_cards']);
+    Route::get('/job_cards/delete/{id}', [JobCardController::class, 'destroy'])->name('admin.job_cards.delete');
+    Route::get('/job_cards-data-table', [JobCardController::class, 'index'])->name('admin.job_cards.data-table');
+    /** JobCardController */
 });
