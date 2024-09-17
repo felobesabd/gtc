@@ -250,7 +250,7 @@ Job Card
 
                 if (groupId) {
                     $.ajax({
-                        url: '/admin/groups/specific/' + groupId,
+                        url: '{{ route('admin.groups.specific', ['id' => '__GROUP_ID__']) }}'.replace('__GROUP_ID__', groupId),
                         type: 'GET',
                         success: function (response) {
                             var groupName = response.group_name;
@@ -271,7 +271,7 @@ Job Card
 
                 if (catId) {
                     $.ajax({
-                        url: '/admin/categories/specific/' + catId,
+                        url: '{{ route('admin.categories.specific', ['id' => '__CAT_ID__']) }}'.replace('__CAT_ID__', catId),
                         type: 'GET',
                         success: function (response) {
                             var catName = response.category_name;
