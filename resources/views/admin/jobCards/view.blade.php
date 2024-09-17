@@ -19,7 +19,7 @@ Job Card
                 <div class="modal-body px-lg-17">
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Choose Vehicle</label>
-                        <select class="form-control" name="vehicle_id">
+                        <select class="form-control disabled" name="vehicle_id">
                             <option selected disabled hidden>Choose</option>
                             @foreach($vehicles as $vehicle)
                                 <option
@@ -35,86 +35,86 @@ Job Card
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Delivered by</label>
-                        <input type="text" class="form-control" name="delivered_by" value="{{ $job_card->delivered_by }}"/>
+                        <input type="text" class="form-control disabled" name="delivered_by" value="{{ $job_card->delivered_by }}"/>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Received by</label>
-                        <input type="text" class="form-control" name="received_by" value="{{ $job_card->received_by }}"/>
+                        <input type="text" class="form-control disabled" name="received_by" value="{{ $job_card->received_by }}"/>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Ref Number</label>
-                        <input type="text" class="form-control" name="ref_number" value="{{ $job_card->ref_number }}"/>
+                        <input type="text" class="form-control disabled" name="ref_number" value="{{ $job_card->ref_number }}"/>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Date In</label>
-                        <input type="date" class="form-control" name="date_in" value="{{ $job_card->date_in }}">
+                        <input type="date" class="form-control disabled" name="date_in" value="{{ $job_card->date_in }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Expected Date Out</label>
-                        <input type="date" class="form-control" name="expected_date_out" value="{{ $job_card->expected_date_out }}">
+                        <input type="date" class="form-control disabled" name="expected_date_out" value="{{ $job_card->expected_date_out }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Reg No</label>
-                        <input type="text" class="form-control" name="reg_no" value="{{ $job_card->reg_no }}">
+                        <input type="text" class="form-control disabled" name="reg_no" value="{{ $job_card->reg_no }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">KM</label>
-                        <input type="number" class="form-control" name="km" value="{{ $job_card->km }}">
+                        <input type="number" class="form-control disabled" name="km" value="{{ $job_card->km }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Expected Hour Out</label>
-                        <input type="number" class="form-control" name="expected_hour_out" value="{{ $job_card->expected_hour_out }}">
+                        <input type="number" class="form-control disabled" name="expected_hour_out" value="{{ $job_card->expected_hour_out }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Location</label>
-                        <input type="text" class="form-control" name="location" value="{{ $job_card->location }}">
+                        <input type="text" class="form-control disabled" name="location" value="{{ $job_card->location }}">
                     </div>
 
-                    <div class="fv-row mb-7 job-card-checkbox">
+                    <div class="fv-row mb-7 job-card-checkbox disabled">
                         <label class="fs-6 fw-semibold mb-2">Site</label><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="site" id="reactive" value="1">
+                            <input class="form-check-input disabled" type="radio" name="site" id="reactive" value="1">
                             <label class="form-check-label" for="reactive">Reactive</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="site" id="proactive" value="2">
+                            <input class="form-check-input disabled" type="radio" name="site" id="proactive" value="2">
                             <label class="form-check-label" for="proactive">Proactive</label>
                         </div>
                     </div>
 
                     <!-- Job Card Type -->
-                    <div class="fv-row mb-7 job-card-checkbox">
+                    <div class="fv-row mb-7 job-card-checkbox disabled">
                         <label class="fs-6 fw-semibold mb-2">Job Card Type</label><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="internal" name="job_card_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="internal" name="job_card_type[]"
                                    value="1">
                             <label class="form-check-label" for="internal">Internal</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="breakdown" name="job_card_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="breakdown" name="job_card_type[]"
                                    value="2">
                             <label class="form-check-label" for="breakdown">Breakdown</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="dealer_service" name="job_card_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="dealer_service" name="job_card_type[]"
                                    value="3">
                             <label class="form-check-label" for="dealer_service">Dealer Service</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="insurance" name="job_card_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="insurance" name="job_card_type[]"
                                    value="4">
                             <label class="form-check-label" for="insurance">Insurance</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="outside_garage" name="job_card_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="outside_garage" name="job_card_type[]"
                                    value="5">
                             <label class="form-check-label" for="outside_garage">Outside Garage</label>
                         </div>
@@ -124,36 +124,36 @@ Job Card
                     <div class="fv-row mb-7 job-card-checkbox">
                         <label class="fs-6 fw-semibold mb-2">Repair Type</label><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="normal" name="repair_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="normal" name="repair_type[]"
                                    value="1">
                             <label class="form-check-label" for="normal">Normal</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="accident" name="repair_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="accident" name="repair_type[]"
                                    value="2">
                             <label class="form-check-label" for="accident">Accident</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="major" name="repair_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="major" name="repair_type[]"
                                    value="3">
                             <label class="form-check-label" for="major">Major</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="pms" name="repair_type[]" value="4">
+                            <input class="form-check-input disabled" type="checkbox" id="pms" name="repair_type[]" value="4">
                             <label class="form-check-label" for="pms">PMS</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="safety" name="repair_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="safety" name="repair_type[]"
                                    value="5">
                             <label class="form-check-label" for="safety">Safety</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="warranty" name="repair_type[]"
+                            <input class="form-check-input disabled" type="checkbox" id="warranty" name="repair_type[]"
                                    value="6">
                             <label class="form-check-label" for="warranty">Warranty</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="repetitive" name="repair_type[]"
+                            <input class="form-check-input di disabledsabled" type="checkbox" id="repetitive" name="repair_type[]"
                                    value="7">
                             <label class="form-check-label" for="repetitive">Repetitive</label>
                         </div>
@@ -162,18 +162,18 @@ Job Card
                     <!-- Work Required -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Work Required</label>
-                        <textarea class="form-control" name="work_required" rows="3">{{ $job_card->work_required }}</textarea>
+                        <textarea disabled class="form-control" name="work_required" rows="3">{{ $job_card->work_required }}</textarea>
                     </div>
 
                     <!-- Estimated Time and Staff Details -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Estimated Time</label>
-                        <input type="text" class="form-control" name="estimated_time" value="{{ $job_card->estimated_time }}">
+                        <input type="text" class="form-control disabled" name="estimated_time" value="{{ $job_card->estimated_time }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Staff Details</label>
-                        <select class="form-control" name="staff_details[]" multiple>
+                        <select class="form-control disabled" name="staff_details[]" multiple>
                             <option disabled hidden>Choose</option>
                             @foreach($employees as $employee)
                                 <option
@@ -189,29 +189,29 @@ Job Card
                     <!-- Comments -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Comments</label>
-                        <textarea class="form-control" name="comments" rows="3">{{ $job_card->comments }}</textarea>
+                        <textarea disabled class="form-control disabled" name="comments" rows="3">{{ $job_card->comments }}</textarea>
                     </div>
 
                     <!-- Costs -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Lubrication Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="lubrication_cost" value="{{ $job_card->lubrication_cost }}">
+                        <input type="number" class="form-control disabled" step="0.01" name="lubrication_cost" value="{{ $job_card->lubrication_cost }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Subcontractor Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="subcontractor_cost" value="{{ $job_card->subcontractor_cost }}">
+                        <input type="number" class="form-control disabled" step="0.01" name="subcontractor_cost" value="{{ $job_card->subcontractor_cost }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Parts Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="parts_cost" value="{{ $job_card->parts_cost }}">
+                        <input type="number" class="form-control disabled" step="0.01" name="parts_cost" value="{{ $job_card->parts_cost }}">
                     </div>
 
                     <!--  -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Driver</label>
-                        <select class="form-control" name="driver_id">
+                        <select class="form-control disabled" name="driver_id">
                             <option selected disabled hidden>Choose</option>
                             @foreach($drivers as $driver)
                                 <option @if($job_card->driver_id === $driver->id) selected @endif value="{{ $driver->id }}">
@@ -223,22 +223,22 @@ Job Card
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Operation Coordinator</label>
-                        <input type="text" class="form-control" name="operation_coordinator" value="{{ $job_card->operation_coordinator }}">
+                        <input type="text" class="form-control disabled" name="operation_coordinator" value="{{ $job_card->operation_coordinator }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Maintenance Supervisor</label>
-                        <input type="text" class="form-control" name="maintenance_supervisor" value="{{ $job_card->maintenance_supervisor }}">
+                        <input type="text" class="form-control disabled" name="maintenance_supervisor" value="{{ $job_card->maintenance_supervisor }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Maintenance Manager</label>
-                        <input type="text" class="form-control" name="maintenance_manager" value="{{ $job_card->maintenance_manager }}">
+                        <input type="text" class="form-control disabled" name="maintenance_manager" value="{{ $job_card->maintenance_manager }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                        <select class="form-control" name="part_number">
+                        <select class="form-control disabled" name="part_number">
                             <option selected disabled hidden>Choose</option>
                             @foreach($items as $item)
                                 <option @if($job_card->part_number === $item->part_no) selected @endif value="{{ $item->part_no }}">
@@ -250,28 +250,20 @@ Job Card
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Description</label>
-                        <textarea class="form-control" name="description" rows="3">{{ $job_card->description }}</textarea>
+                        <textarea disabled class="form-control disabled" name="description" rows="3">{{ $job_card->description }}</textarea>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="cost" value="{{ $job_card->cost }}">
+                        <input type="number" class="form-control disabled" step="0.01" name="cost" value="{{ $job_card->cost }}">
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Quantity</label>
-                        <input type="number" class="form-control" name="quantity" value="{{ $job_card->quantity }}">
+                        <input type="number" class="form-control disabled" name="quantity" value="{{ $job_card->quantity }}">
                     </div>
 
 
-                </div>
-                <!--end::Modal body-->
-                <div class="modal-footer flex-center">
-                    <!--begin::Button-->
-                    <button type="submit" class="btn btn-primary">
-                        <span class="indicator-label">Submit</span>
-                    </button>
-                    <!--end::Button-->
                 </div>
             </div>
         </div>

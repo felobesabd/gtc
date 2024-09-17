@@ -38,6 +38,10 @@ return new class extends Migration
             $table->string('operation_coordinator');
             $table->string('maintenance_supervisor');
             $table->string('maintenance_manager');
+            $table->string('part_number');
+            $table->text('description');
+            $table->decimal('cost', 10, 2);
+            $table->integer('quantity');
             $table->timestamps();
         });
     }

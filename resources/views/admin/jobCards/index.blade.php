@@ -51,6 +51,12 @@ Job Card
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Reg No</th>
                         <th class="min-w-125px">Vehicle Details</th>
+                        <th class="min-w-125px">Delivered by</th>
+                        <th class="min-w-125px">Received by</th>
+                        <th class="min-w-125px">Date In</th>
+                        <th class="min-w-125px">Expected Date</th>
+                        <th class="min-w-125px">Location</th>
+                        <th class="min-w-125px">Total Cost</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -82,6 +88,36 @@ Job Card
         {
             data: 'vehicle_id',
             name: 'vehicle_id',
+            className: "text-start",
+        },
+        {
+            data: 'delivered_by',
+            name: 'delivered_by',
+            className: "text-start",
+        },
+        {
+            data: 'received_by',
+            name: 'received_by',
+            className: "text-start",
+        },
+        {
+            data: 'date_in',
+            name: 'date_in',
+            className: "text-start",
+        },
+        {
+            data: 'expected_date_out',
+            name: 'expected_date_out',
+            className: "text-start",
+        },
+        {
+            data: 'location',
+            name: 'location',
+            className: "text-start",
+        },
+        {
+            data: 'total_cost',
+            name: 'total_cost',
             className: "text-start",
         },
         {

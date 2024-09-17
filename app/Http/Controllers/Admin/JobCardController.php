@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\JobCardRequest;
 use App\Models\Driver;
 use App\Models\Employee;
+use App\Models\ItemCategory;
 use App\Models\JobCard;
 use App\Models\Vehicle;
 use App\Services\JobCardService;
@@ -28,12 +29,37 @@ class JobCardController
         return view('admin.jobCards.index');
     }
 
+    public function show($id)
+    {
+        $job_card = JobCard::findOrFail($id);
+
+        $job_card->staff_details = json_decode($job_card->staff_details, true);
+        $selectedJobCardTypes = json_decode($job_card->job_card_type, true);
+        $selectedRepairTypes = json_decode($job_card->repair_type, true);
+
+        $vehicles = Vehicle::all();
+        $employees = Employee::all();
+        $drivers = Driver::all();
+        $items = ItemCategory::all();
+
+        return view('admin.jobCards.view', compact(
+            'job_card',
+            'vehicles',
+            'employees',
+            'drivers',
+            'selectedJobCardTypes',
+            'selectedRepairTypes',
+            'items'
+        ));
+    }
+
     public function create()
     {
         $vehicles = Vehicle::all();
         $employees = Employee::all();
         $drivers = Driver::all();
-        return view('admin.jobCards.create', compact('vehicles','employees', 'drivers'));
+        $items = ItemCategory::all();
+        return view('admin.jobCards.create', compact('vehicles','employees', 'drivers', 'items'));
     }
 
     public function store(JobCardRequest $request)
@@ -53,6 +79,7 @@ class JobCardController
         $vehicles = Vehicle::all();
         $employees = Employee::all();
         $drivers = Driver::all();
+        $items = ItemCategory::all();
 
         return view('admin.jobCards.edit', compact(
             'job_card',
@@ -60,7 +87,8 @@ class JobCardController
             'employees',
             'drivers',
             'selectedJobCardTypes',
-            'selectedRepairTypes'
+            'selectedRepairTypes',
+            'items'
         ));
     }
 

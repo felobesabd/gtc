@@ -19,7 +19,9 @@ class JobCardService
         $data['repair_type'] = json_encode($data['repair_type']);
         $data['staff_details'] = json_encode($data['staff_details']);
 
-        Log::info('Storing Job Card:', $data);
+        $data['total_cost'] = $this->totalCost($data);
+
+//        Log::info('Storing Job Card:', $data);
 
         $model = JobCard::create($data);
         return $model;
@@ -28,6 +30,8 @@ class JobCardService
     public function updateJobCard(int $id, array $data): bool
     {
         $itemCat = JobCard::findOrFail($id);
+
+        $data['total_cost'] = $this->totalCost($data);
         return $itemCat->fill($data)->save();
     }
 
@@ -46,6 +50,9 @@ class JobCardService
             })
             ->addColumn('action', function ($row) {
                 $res = '
+                    <a href="' . route('admin.job_cards.show', ['job_card' => $row->id]) . '" class="btn btn-info" onclick="return true;">
+                        View
+                    </a>
                     <a href="' . route('admin.job_cards.edit', ['job_card' => $row->id]) . '" class="btn btn-primary" onclick="return true;">
                         Edit
                     </a>
@@ -57,5 +64,11 @@ class JobCardService
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function totalCost($data)
+    {
+        $total_cost = $data['parts_cost'] + $data['subcontractor_cost'] + $data['lubrication_cost'];
+        return $total_cost;
     }
 }

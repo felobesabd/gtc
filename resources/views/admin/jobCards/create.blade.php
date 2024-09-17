@@ -225,6 +225,34 @@ Job Card
                         <input type="text" class="form-control" name="maintenance_manager" value="{{ old('maintenance_manager') }}">
                     </div>
 
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Part Number</label>
+                        <select class="form-control" name="part_number">
+                            <option selected disabled hidden>Choose</option>
+                            @foreach($items as $item)
+                                <option value="{{ $item->part_no }}">
+                                    {{ $item->part_no }} / {{ $item->item_name }} / {{ $item->quantity }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Cost</label>
+                        <input type="number" class="form-control" step="0.01" name="cost" value="{{ old('cost') }}">
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') }}">
+                    </div>
+
+
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">
