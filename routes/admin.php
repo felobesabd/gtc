@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\ItemCategoryController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\JobCardController;
+use App\Http\Controllers\Admin\IncidentalExpensesController;
+use App\Http\Controllers\Admin\SalesController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
@@ -93,4 +95,16 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::get('/job_cards/delete/{id}', [JobCardController::class, 'destroy'])->name('admin.job_cards.delete');
     Route::get('/job_cards-data-table', [JobCardController::class, 'index'])->name('admin.job_cards.data-table');
     /** JobCardController */
+
+    /** IncidentalExpensesController */
+    Route::resource('/expenses', IncidentalExpensesController::class, ['names' => 'admin.expenses']);
+    Route::get('/expenses/delete/{id}', [IncidentalExpensesController::class, 'destroy'])->name('admin.expenses.delete');
+    Route::get('/expenses-data-table', [IncidentalExpensesController::class, 'index'])->name('admin.expenses.data-table');
+    /** IncidentalExpensesController */
+
+    /** SalesController */
+    Route::resource('/sales', SalesController::class, ['names' => 'admin.sales']);
+    Route::get('/sales/delete/{id}', [SalesController::class, 'destroy'])->name('admin.sales.delete');
+    Route::get('/sales-data-table', [SalesController::class, 'index'])->name('admin.sales.data-table');
+    /** SalesController */
 });

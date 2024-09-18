@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class IncidentalExpenses extends Model
+class Sales extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'operation_type',
         'comments',
         'amount',
         'attachment_id',

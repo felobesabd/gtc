@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incidental_expenses', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('operation_type')->comment('0=in,1=out');
             $table->text('comments');
             $table->decimal('amount');
             $table->unsignedBigInteger('attachment_id')->nullable();
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incidental_expenses');
+        Schema::dropIfExists('sales');
     }
 };
