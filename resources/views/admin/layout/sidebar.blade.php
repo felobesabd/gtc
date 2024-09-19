@@ -184,6 +184,14 @@
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->
+                                    <a class="menu-link active" href="{{ route('admin.item_history.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Items Histories</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu link-->
                                     <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>

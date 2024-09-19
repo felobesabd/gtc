@@ -26,9 +26,19 @@
 </div>
 @endif
 
-@if ($errors->any())
-<div class="alert alert-danger alert-block message">
-	<button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
-	{{$errors->first()}}
-</div>
+@if ($errors = Session::get('ex'))
+    <div class="alert alert-danger alert-block message">
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+        @if(is_array($errors))
+            <ul>
+                @foreach ($errors as $error)
+                    @foreach ($error as $message)
+                        <li>{{ $message }}</li>
+                    @endforeach
+                @endforeach
+            </ul>
+        @else
+            <strong>{{ $errors }}</strong>
+        @endif
+    </div>
 @endif
