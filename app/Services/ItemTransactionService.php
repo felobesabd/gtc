@@ -2,42 +2,47 @@
 namespace App\Services;
 
 use App\Models\ItemCategory;
-use App\Models\ItemHistory;
+use App\Models\ItemTransaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Yajra\Datatables\Datatables;
 
-class ItemHistoryService
+class ItemTransactionService
 {
-    public function getItemHistories(): object
+    public function getItemTransactions(): object
     {
-        $model = ItemHistory::all();
+        $model = ItemTransaction::all();
         return $this->getTableData(model: $model);
     }
 
-    public function createItemHistory($data): object
+    public function createItemTransaction($data): object
     {
         DB::beginTransaction();
 
         try {
             $item = ItemCategory::find($data['item_id']);
 
-            if ($item->quantity < $data['quantity_out']) {
-                throw ValidationException::withMessages([
-                    'quantity_out' => 'Item quantity not enough.',
-                ]);
+            if ($data['transaction_type'] == 1 ) {
+                $quantity_in = $item->quantity + $data['quantity'];
+                $item->update(['quantity' => $quantity_in]);
+            } else {
+                if ($item->quantity < $data['quantity']) {
+                    throw ValidationException::withMessages([
+                        'quantity' => 'Item quantity not enough.',
+                    ]);
+                }
+
+                // Update item quantity
+                $total_quantity = $item->quantity - $data['quantity'];
+                $item->update(['quantity' => $total_quantity]);
             }
 
-            // Update item quantity
-            $total_quantity = $item->quantity - $data['quantity_out'];
-            $item->update(['quantity' => $total_quantity]);
-
             // calculation price
-            $data['price'] = $data['quantity_out'] * $data['cost'];
+            $data['price'] = $data['quantity'] * $data['cost'];
 
             // Update the item history record
-            $model = ItemHistory::create($data);
+            $model = ItemTransaction::create($data);
 
             DB::commit();
             return $model;
@@ -59,39 +64,46 @@ class ItemHistoryService
 //
 //            // calculation price
 //            $data['price'] = $data['quantity_out'] * $data['cost'];
-//            $model = ItemHistory::create($data);
+//            $model = ItemTransaction::create($data);
 //        } else {
 //            throw new ValidationException('Item quantity not enough.');
 //        }
 //
 //        return $model;
 
-    public function updateItemHistory(int $id, array $data): bool
+    public function updateItemTransaction(int $id, array $data): bool
     {
         DB::beginTransaction();
-        $itemCat = ItemHistory::findOrFail($id);
+        $itemTransaction = ItemTransaction::findOrFail($id);
 
         try {
             $item = ItemCategory::find($data['item_id']);
-            $add_quantity_after_change = $item->quantity + $itemCat->quantity_out;
 
-            $item->update(['quantity' => $add_quantity_after_change]);
+            if ($data['transaction_type'] == 1 ) {
+                $decrement_quantity = $item->quantity - $itemTransaction->quantity; // 20 - 15 = 5
+                $item->quantity = $decrement_quantity + $data['quantity'];
+                $item->update(['quantity' => $item->quantity]);
+            } else {
+                $add_quantity_after_change = $item->quantity + $itemTransaction->quantity;
 
-            if ($item->quantity < $data['quantity_out']) {
-                throw ValidationException::withMessages([
-                    'quantity_out' => 'Item quantity not enough.',
-                ]);
+                $item->update(['quantity' => $add_quantity_after_change]);
+
+                if ($item->quantity < $data['quantity']) {
+                    throw ValidationException::withMessages([
+                        'quantity' => 'Item quantity not enough.',
+                    ]);
+                }
+
+                // Update item quantity
+                $total_quantity = $item->quantity - $data['quantity'];
+                $item->update(['quantity' => $total_quantity]);
             }
 
-            // Update item quantity
-            $total_quantity = $item->quantity - $data['quantity_out'];
-            $item->update(['quantity' => $total_quantity]);
-
             // calculation price
-            $data['price'] = $data['quantity_out'] * $data['cost'];
+            $data['price'] = $data['quantity'] * $data['cost'];
 
             // Update the item history record
-            $model = $itemCat->fill($data)->save();
+            $model = $itemTransaction->fill($data)->save();
 
             DB::commit();
             return $model;
@@ -121,9 +133,9 @@ class ItemHistoryService
 //            throw new ValidationException('Item quantity not enough.');
 //        }
 
-    public function deleteItemHistory($id): bool
+    public function deleteItemTransaction($id): bool
     {
-        $itemCat = ItemHistory::findOrFail($id);
+        $itemCat = ItemTransaction::findOrFail($id);
         return $itemCat->delete();
     }
 
@@ -132,6 +144,15 @@ class ItemHistoryService
         return Datatables::of($model)
             ->editColumn('item_id', function ($row) {
                 return $row->itemCategory->item_name;
+            })
+            ->editColumn('transaction_type', function ($row) {
+                return $row->getTransactionType();
+            })
+            ->editColumn('user_id', function ($row) {
+                return $row->username->full_name;
+            })
+            ->editColumn('supplier_id', function ($row) {
+                return $row->supplier ? $row->supplier->company_name : '---';
             })
             ->addColumn('action', function ($row) {
                 $res = '

@@ -188,7 +188,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Items Histories</span>
+                                        <span class="menu-title">Items Transaction</span>
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->

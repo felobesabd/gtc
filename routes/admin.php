@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\JobCardController;
 use App\Http\Controllers\Admin\IncidentalExpensesController;
 use App\Http\Controllers\Admin\SalesController;
-use App\Http\Controllers\Admin\ItemHistoryController;
+use App\Http\Controllers\Admin\ItemTransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
@@ -109,9 +109,9 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::get('/sales-data-table', [SalesController::class, 'index'])->name('admin.sales.data-table');
     /** SalesController */
 
-    /** ItemHistoryController */
-    Route::resource('/item_history', ItemHistoryController::class, ['names' => 'admin.item_history']);
-    Route::get('/item_history/delete/{id}', [ItemHistoryController::class, 'destroy'])->name('admin.item_history.delete');
-    Route::get('/item_history-data-table', [ItemHistoryController::class, 'index'])->name('admin.item_history.data-table');
-    /** ItemHistoryController */
+    /** ItemTransactionController */
+    Route::resource('/item_history', ItemTransactionController::class, ['names' => 'admin.item_history']);
+    Route::get('/item_history/delete/{id}', [ItemTransactionController::class, 'destroy'])->name('admin.item_history.delete');
+    Route::get('/item_history-data-table', [ItemTransactionController::class, 'index'])->name('admin.item_history.data-table');
+    /** ItemTransactionController */
 });

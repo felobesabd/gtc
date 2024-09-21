@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Items History
+Item Transaction
 @endsection
 
 @push('header')
@@ -14,11 +14,11 @@ Items History
     <div class="page-header">
         <div class="row">
             <div class="col-sm-8 col-auto">
-                <h3 class="page-title">Items History</h3>
+                <h3 class="page-title">Item Transaction</h3>
             </div>
 
             <div class="col-sm-4 col">
-                <a href="{{route('admin.item_history.create')}}" class="btn btnColor float-end mt-2">Add Items History</a>
+                <a href="{{route('admin.item_history.create')}}" class="btn btnColor float-end mt-2">Add Transaction</a>
             </div>
         </div>
     </div>
@@ -50,9 +50,11 @@ Items History
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Item Name</th>
-                        <th class="min-w-125px">Out Quantity</th>
+                        <th class="min-w-125px">Transaction</th>
+                        <th class="min-w-125px">Quantity</th>
                         <th class="min-w-125px">Reason</th>
-                        <th class="min-w-125px">Supply Order</th>
+                        <th class="min-w-125px">Supplier</th>
+                        <th class="min-w-125px">User</th>
                         <th class="min-w-125px">Cost</th>
                         <th class="min-w-125px">Price</th>
                         <th class="min-w-125px">Created Date</th>
@@ -84,18 +86,28 @@ Items History
             className: "text-start",
         },
         {
-            data: 'quantity_out',
-            name: 'quantity_out',
+            data: 'transaction_type',
+            name: 'transaction_type',
             className: "text-start",
         },
         {
-            data: 'reason_out',
-            name: 'reason_out',
+            data: 'quantity',
+            name: 'quantity',
             className: "text-start",
         },
         {
-            data: 'supply_order_no',
-            name: 'supply_order_no',
+            data: 'reason',
+            name: 'reason',
+            className: "text-start",
+        },
+        {
+            data: 'supplier_id',
+            name: 'supplier_id',
+            className: "text-start",
+        },
+        {
+            data: 'user_id',
+            name: 'user_id',
             className: "text-start",
         },
         {

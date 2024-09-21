@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItemHistoryRequest extends FormRequest
+class ItemTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,11 @@ class ItemHistoryRequest extends FormRequest
     {
         return [
             'item_id' => 'required|exists:item_categories,id',
-            'quantity_out' => 'required|numeric|min:1',
-            'reason_out' => 'nullable|string',
-            'supply_order_no' => 'required|string',
+            'quantity' => 'required|numeric|min:1',
+            'reason' => 'nullable|string',
+            'transaction_type' => 'required|integer',
+            'supplier_id' => 'nullable|integer|exists:suppliers,id',
+            'user_id' => 'required|integer|exists:users,id',
             'cost' => 'required|numeric|min:1',
         ];
     }

@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Items History
+Item Transaction
 @endsection
 
 @push('header')
@@ -27,23 +27,47 @@ Items History
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Out Quantity</label>
-                        <input type="number" class="form-control" name="quantity_out" value="{{ old('quantity_out') }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') }}"/>
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Comments</label>
-                        <textarea class="form-control" name="reason_out" rows="3">{{ old('reason_out') }}</textarea>
+                        <label class="fs-6 fw-semibold mb-2">Transaction Type</label>
+                        <select class="form-control" name="transaction_type">
+                            <option selected disabled hidden>Choose</option>
+                            <option value="1">In</option>
+                            <option value="2">Out</option>
+                        </select>
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Supply Order Number</label>
-                        <input type="text" class="form-control" name="supply_order_no" value="{{ old('supply_order_no') }}"/>
+                        <label class="fs-6 fw-semibold mb-2">Reason</label>
+                        <textarea class="form-control" name="reason" rows="3">{{ old('reason') }}</textarea>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Cost</label>
                         <input type="number" class="form-control" step="0.01" name="cost" value="{{ old('cost') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Supplier</label>
+                        <select class="form-control" name="supplier_id">
+                            <option selected disabled hidden>Choose</option>
+                            @foreach($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->company_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">User</label>
+                        <select class="form-control" name="user_id">
+                            <option selected disabled hidden>Choose</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <!--end::Modal body-->
