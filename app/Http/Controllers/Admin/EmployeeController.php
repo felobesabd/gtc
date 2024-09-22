@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\EmployeeRequest;
 use App\Models\Department;
 use App\Models\Employee;
-use App\Services\DepartmentService;
 use App\Services\EmployeeService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EmployeeController
@@ -30,11 +30,29 @@ class EmployeeController
     public function create()
     {
         $departments = Department::all();
-        return view('admin.employees.create', compact('departments'));
+        $countries = generate_country_codes();
+
+        return view('admin.employees.create', compact('departments', 'countries'));
     }
 
     public function store(EmployeeRequest $request)
     {
+//        $passportExpiryWarning = Carbon::parse($request->passport_expires_at)->subMonths(6);
+//        $drivingLicenseExpiryWarning = Carbon::parse($request->driving_license_expires_at)->subMonths(3);
+//
+//        $now = Carbon::now();
+//
+//        if ($now->greaterThanOrEqualTo($passportExpiryWarning)) {
+//            $warnings[] = 'Your passport will expire in less than 6 months!';
+//        }
+//
+//        if ($now->greaterThanOrEqualTo($drivingLicenseExpiryWarning)) {
+//            $warnings[] = 'Your driving license will expire in less than 3 months!';
+//        }
+//
+//        if (!empty($warnings)) {
+//            return redirect()->back()->with('warnings', $warnings);
+//        }
         $department = $this->employeeService->createEmployee(data: $request->all());
         return redirect()->back()->with('success', 'Created successfully');
     }
@@ -50,7 +68,9 @@ class EmployeeController
     {
         $employee = Employee::findOrFail($id);
         $departments = Department::all();
-        return view('admin.employees.edit', compact('employee', 'departments'));
+        $countries = generate_country_codes();
+
+        return view('admin.employees.edit', compact('employee', 'departments', 'countries'));
     }
 
     public function update(EmployeeRequest $request, $id)

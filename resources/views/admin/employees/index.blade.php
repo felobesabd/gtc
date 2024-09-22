@@ -50,10 +50,10 @@ Department
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Name</th>
+                        <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Date Of Birth</th>
                         <th class="min-w-125px">Joining Date</th>
                         <th class="min-w-125px">Department</th>
-                        <th class="min-w-125px">Country</th>
                         <th class="min-w-125px">Passport Number</th>
                         <th class="min-w-125px">Civil Number</th>
                         <th class="min-w-125px">Bank Name</th>
@@ -87,6 +87,11 @@ Department
             className: "text-start",
         },
         {
+            data: 'email',
+            name: 'email',
+            className: "text-start",
+        },
+        {
             data: 'date_of_birth',
             name: 'date_of_birth',
             className: "text-center",
@@ -99,11 +104,6 @@ Department
         {
             data: 'department_id',
             name: 'department_id',
-            className: "text-start",
-        },
-        {
-            data: 'country',
-            name: 'country',
             className: "text-start",
         },
         {

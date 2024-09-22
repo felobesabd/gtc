@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email');
+            $table->string('direct_contact_number');
+            $table->string('whatsapp_number');
+            $table->string('country_contact_number');
+            $table->string('country_code');
+            $table->string('social_url');
             $table->integer('department_id');
             $table->text('attachments_ids')->nullable();
             $table->string('passport_no');
@@ -21,8 +27,12 @@ return new class extends Migration
             $table->string('bank_acc_no');
             $table->string('bank_name');
             $table->string('country');
-            $table->timestamp('joining_date');
-            $table->timestamp('date_of_birth');
+            $table->date('joining_date');
+            $table->date('date_of_birth');
+            $table->date('passport_issued_at');
+            $table->date('passport_expires_at');
+            $table->date('driving_license_issued_at');
+            $table->date('driving_license_expires_at');
             $table->timestamps();
         });
     }

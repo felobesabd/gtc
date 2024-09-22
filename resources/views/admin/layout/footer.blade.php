@@ -44,6 +44,9 @@
 <script src="{{url('design/admin')}}/assets/js/scripts.bundle.js"></script>
 <script src="{{url('design/assets/js/helper.js')}}"></script>
 <script src="{{url('design/admin')}}/assets/js/custom.js"></script>
+<script src="{{url('design/admin')}}/assets/js/moment.min.js"></script>
+<script src="{{url('design/admin')}}/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!--end::Global Javascript Bundle-->
 @stack('footer')
 </body>

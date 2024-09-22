@@ -12,17 +12,28 @@
 </div>
 @endif
 
-@if ($message = Session::get('warning'))
-<div class="alert alert-warning alert-block message">
-	<button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
-	<strong>{{ $message }}</strong>
-</div>
+@if ($messages = Session::get('warnings'))
+    <div class="alert alert-warning alert-block message">
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+        <ul>
+            @foreach ($messages as $message)
+                <li>{{ $message }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 @if ($message = Session::get('info'))
 <div class="alert alert-info alert-block message">
 	<button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
 	<strong>{{ $message }}</strong>
+</div>
+@endif
+
+@if ($errors->any())
+<div class="alert alert-danger alert-block message">
+	<button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+	{{$errors->first()}}
 </div>
 @endif
 
@@ -42,3 +53,5 @@
         @endif
     </div>
 @endif
+
+

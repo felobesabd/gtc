@@ -20,6 +20,8 @@
 		<link href="{{url('design/admin')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('design/admin')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('design/admin')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
+		<link href="{{url('design/admin')}}/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+        <link rel = "stylesheet" type = "text/css" href = "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" />
 		<!--end::Global Stylesheets Bundle-->
 		@stack('header')
 	</head>

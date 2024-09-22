@@ -24,8 +24,8 @@ Employees
                         </div>
 
                         <div class="fv-row mb-7">
-                            <label class="fs-6 fw-semibold mb-2">Country</label>
-                            <input type="text" class="form-control disabled" name="country" value="{{ $employee->country }}"/>
+                            <label class="fs-6 fw-semibold mb-2">Email</label>
+                            <input type="text" class="form-control disabled" name="email" value="{{ $employee->email }}"/>
                         </div>
 
                         <div class="fv-row mb-7">

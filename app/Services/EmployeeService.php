@@ -3,10 +3,14 @@ namespace App\Services;
 
 use App\Models\Department;
 use App\Models\Employee;
+use App\Traits\DateFormatterTrait;
 use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
 
 class EmployeeService
 {
+    use DateFormatterTrait;
+
     public function getEmployees(): object
     {
         $model = Employee::all();
@@ -15,29 +19,16 @@ class EmployeeService
 
     public function createEmployee($data): object
     {
+        $data = $this->formatDates($data);
         $model = Employee::create($data);
-        /** edit or store attachment */
-        $folder = 'employees-attachment';
-        editOrCreateMultipleFiles(
-            folder: $folder,
-            obj: $model,
-            attachments: $data['attachments'] ?? null,
-            attach_col_name: 'attachments_ids'
-        );
+        $this->handleAttachments($model, $data['attachments'] ?? null);
         return $model;
     }
 
     public function updateEmployee(Employee $employee, array $data): bool
     {
-        /** edit or store attachment */
-        $folder = 'employees-attachment';
-        editOrCreateMultipleFiles(
-            folder: $folder,
-            obj: $employee,
-            attachments: $data['attachments'] ?? null,
-            attach_col_name: 'attachments_ids'
-        );
-
+        $data = $this->formatDates($data);
+        $this->handleAttachments($employee, $data['attachments'] ?? null);
         return $employee->fill($data)->save();
     }
 
@@ -75,5 +66,35 @@ class EmployeeService
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    private function formatDates(array $data): array
+    {
+        $dateFields = [
+            'date_of_birth',
+            'joining_date',
+            'driving_license_expires_at',
+            'driving_license_issued_at',
+            'passport_expires_at',
+            'passport_issued_at',
+        ];
+
+        foreach ($dateFields as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = $this->formatDate($data[$field]);
+            }
+        }
+        return $data;
+    }
+
+    private function handleAttachments($model, $attachments = null): void
+    {
+        $folder = 'employees-attachment';
+        editOrCreateMultipleFiles(
+            folder: $folder,
+            obj: $model,
+            attachments: $attachments,
+            attach_col_name: 'attachments_ids'
+        );
     }
 }
