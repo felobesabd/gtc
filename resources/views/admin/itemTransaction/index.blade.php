@@ -18,7 +18,7 @@ Item Transaction
             </div>
 
             <div class="col-sm-4 col">
-                <a href="{{route('admin.item_history.create')}}" class="btn btnColor float-end mt-2">Add Transaction</a>
+                <a href="{{route('admin.item_history.create')}}" class="btn btnColor float-end mt-2">Transaction</a>
             </div>
         </div>
     </div>

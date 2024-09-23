@@ -129,15 +129,51 @@ Employees
                     </div>
 
                     <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Number</label>
+                        <input type="text" class="form-control" name="medical_insurance_no"
+                               value="{{ $employee->medical_insurance_no }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Issued Date</label>
+                        <input type="text" class="form-control datepicker" name="medical_issued_at"
+                               value="{{ $employee->medical_issued_at ? date('d-m-Y', strtotime($employee->medical_issued_at)) : '' }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Expiration Date</label>
+                        <input type="text" class="form-control datepicker" name="medical_expires_at"
+                               value="{{ $employee->medical_expires_at ? date('d-m-Y', strtotime($employee->medical_expires_at)) : '' }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Number</label>
+                        <input type="text" class="form-control" name="life_insurance_no"
+                               value="{{ $employee->life_insurance_no }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Issued Date</label>
+                        <input type="text" class="form-control datepicker" name="life_issued_at"
+                               value="{{ $employee->life_issued_at ? date('d-m-Y', strtotime($employee->life_issued_at)) : '' }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Expiration Date</label>
+                        <input type="text" class="form-control datepicker" name="life_expires_at"
+                               value="{{ $employee->life_expires_at ? date('d-m-Y', strtotime($employee->life_expires_at)) : '' }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Profile Image</label>
                         <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple
-                               value="" required/>
+                               value=""/>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Attachments</label>
                         <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple
-                               value="" required/>
+                               value=""/>
                     </div>
 
                 </div>

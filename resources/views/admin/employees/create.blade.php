@@ -93,11 +93,6 @@ Employees
                     </div>
 
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Passport Number</label>
-                        <input type="text" class="form-control" name="passport_no" value="{{ old('passport_no') }}"/>
-                    </div>
-
-                    <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Civil Number</label>
                         <input type="text" class="form-control" name="civil_no" value="{{ old('civil_no') }}"/>
                     </div>
@@ -110,6 +105,11 @@ Employees
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Bank Account Number</label>
                         <input type="text" class="form-control" name="bank_acc_no" value="{{ old('bank_acc_no') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Passport Number</label>
+                        <input type="text" class="form-control" name="passport_no" value="{{ old('passport_no') }}"/>
                     </div>
 
                     <div class="fv-row mb-7">
@@ -133,15 +133,45 @@ Employees
                     </div>
 
                     <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Number</label>
+                        <input type="text" class="form-control" name="medical_insurance_no" value="{{ old('medical_insurance_no') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Issued Date</label>
+                        <input type="text" class="form-control datepicker" name="medical_issued_at" value="{{ old('medical_issued_at') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Medical Insurance Expiration Date</label>
+                        <input type="text" class="form-control datepicker" name="medical_expires_at" value="{{ old('medical_expires_at') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Number</label>
+                        <input type="text" class="form-control" name="life_insurance_no" value="{{ old('life_insurance_no') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Issued Date</label>
+                        <input type="text" class="form-control datepicker" name="life_issued_at" value="{{ old('life_issued_at') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Life Insurance Expiration Date</label>
+                        <input type="text" class="form-control datepicker" name="life_expires_at" value="{{ old('life_expires_at') }}"/>
+                    </div>
+
+                    <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Profile Image</label>
                         <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple
-                               value="" required/>
+                               value=""/>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Attachments</label>
                         <input type="file" class="form-control" name="attachments[]" accept="image/*,.pdf" multiple
-                               value="" required/>
+                               value=""/>
                     </div>
                 </div>
                 <!--end::Modal body-->

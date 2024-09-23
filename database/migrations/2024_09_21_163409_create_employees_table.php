@@ -33,6 +33,12 @@ return new class extends Migration
             $table->date('passport_expires_at');
             $table->date('driving_license_issued_at');
             $table->date('driving_license_expires_at');
+            $table->string('medical_insurance_no')->nullable();
+            $table->date('medical_issued_at')->nullable();
+            $table->date('medical_expires_at')->nullable();
+            $table->string('life_insurance_no')->nullable();
+            $table->date('life_issued_at')->nullable();
+            $table->date('life_expires_at')->nullable();
             $table->timestamps();
         });
     }

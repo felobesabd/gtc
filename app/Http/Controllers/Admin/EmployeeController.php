@@ -61,7 +61,9 @@ class EmployeeController
     {
         $employee = Employee::findOrFail($id);
         $departments = Department::all();
-        return view('admin.employees.view', compact('employee', 'departments'));
+        $countries = generate_country_codes();
+
+        return view('admin.employees.view', compact('employee', 'departments', 'countries'));
     }
 
     public function edit(Request $request, $id)

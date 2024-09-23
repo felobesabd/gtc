@@ -77,6 +77,10 @@ class EmployeeService
             'driving_license_issued_at',
             'passport_expires_at',
             'passport_issued_at',
+            'medical_issued_at',
+            'medical_expires_at',
+            'life_issued_at',
+            'life_expires_at',
         ];
 
         foreach ($dateFields as $field) {
@@ -89,6 +93,10 @@ class EmployeeService
 
     private function handleAttachments($model, $attachments = null): void
     {
+        if (!is_array($attachments)) {
+            $attachments = [];
+        }
+
         $folder = 'employees-attachment';
         editOrCreateMultipleFiles(
             folder: $folder,
@@ -96,5 +104,25 @@ class EmployeeService
             attachments: $attachments,
             attach_col_name: 'attachments_ids'
         );
+    }
+    private function handleAttachmentOnly($model, $data = null): void
+    {
+        // check if file input
+        // loop on files input. value of $folder = '{name file input}-attachment'
+        // editOrCreateFile to every input specific column
+
+        foreach ($data as $inputName => $inputValue) {
+            if (isset($inputValue) && $inputValue instanceof \Illuminate\Http\UploadedFile) {
+                $folder = "{$inputName}-attachment";
+
+                editOrCreateFile(
+                    folder: $folder,
+                    obj: $model,
+                    attachment: $inputValue,
+                    relation: $inputName,
+                    attach_col_name: "{$inputName}_id"
+                );
+            }
+        }
     }
 }
