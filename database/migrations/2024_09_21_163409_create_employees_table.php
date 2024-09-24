@@ -39,6 +39,10 @@ return new class extends Migration
             $table->string('life_insurance_no')->nullable();
             $table->date('life_issued_at')->nullable();
             $table->date('life_expires_at')->nullable();
+            $table->date('profile_img')->nullable();
+            $table->date('passport_img')->nullable();
+            $table->date('driving_img')->nullable();
+            $table->date('bank_img')->nullable();
             $table->timestamps();
         });
     }

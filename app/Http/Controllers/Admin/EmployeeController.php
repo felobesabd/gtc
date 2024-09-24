@@ -35,9 +35,9 @@ class EmployeeController
         return view('admin.employees.create', compact('departments', 'countries'));
     }
 
-    public function store(EmployeeRequest $request)
+    public function store(Request $request)
     {
-//        $passportExpiryWarning = Carbon::parse($request->passport_expires_at)->subMonths(6);
+        //        $passportExpiryWarning = Carbon::parse($request->passport_expires_at)->subMonths(6);
 //        $drivingLicenseExpiryWarning = Carbon::parse($request->driving_license_expires_at)->subMonths(3);
 //
 //        $now = Carbon::now();
@@ -77,8 +77,7 @@ class EmployeeController
 
     public function update(EmployeeRequest $request, $id)
     {
-        $employee = Employee::findOrFail($id);
-        $uploadEmployee = $this->employeeService->updateEmployee($employee, data: $request->all());
+        $uploadEmployee = $this->employeeService->updateEmployee($id, data: $request->all());
         return redirect()->back()->with('success', 'Updated successfully');
     }
 

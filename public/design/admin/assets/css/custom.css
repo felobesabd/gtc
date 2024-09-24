@@ -149,3 +149,7 @@ select.disabled {
     background-color: #f6f6f6f6;
     padding: 5px 10px;
 }
+
+.input-file {
+    width: 239px !important;
+}

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Traits\DateFormatterTrait;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
@@ -21,15 +22,45 @@ class EmployeeService
     {
         $data = $this->formatDates($data);
         $model = Employee::create($data);
-        $this->handleAttachments($model, $data['attachments'] ?? null);
+
+        $this->handleAttachmentOnly($model, $data);
+        // $this->handleAttachments($model, $data['attachments'] ?? null);
         return $model;
     }
 
-    public function updateEmployee(Employee $employee, array $data): bool
+    public function updateEmployee($id, array $data): bool
     {
-        $data = $this->formatDates($data);
-        $this->handleAttachments($employee, $data['attachments'] ?? null);
-        return $employee->fill($data)->save();
+        $employee = Employee::findOrFail($id);
+
+        DB::beginTransaction();
+
+        try {
+            $data = $this->formatDates($data);
+
+            foreach ($data as $inputName => $inputValue) {
+                if ($inputValue instanceof \Illuminate\Http\UploadedFile) {
+                    $folder = "{$inputName}-attachment";
+
+                    $attachmentId = editOrCreateFileReturnId(
+                        folder: $folder,
+                        obj: $employee,
+                        attachment: $inputValue,
+                        relation: $inputName . 'Attachment',
+                        attach_col_name: "{$inputName}"
+                    );
+
+                    $data["{$inputName}"] = $attachmentId;
+                }
+            }
+
+            $employee->fill($data)->save();
+
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function deleteEmployee($id): bool
@@ -112,15 +143,15 @@ class EmployeeService
         // editOrCreateFile to every input specific column
 
         foreach ($data as $inputName => $inputValue) {
-            if (isset($inputValue) && $inputValue instanceof \Illuminate\Http\UploadedFile) {
+            if ($inputValue instanceof \Illuminate\Http\UploadedFile) {
                 $folder = "{$inputName}-attachment";
 
                 editOrCreateFile(
                     folder: $folder,
                     obj: $model,
                     attachment: $inputValue,
-                    relation: $inputName,
-                    attach_col_name: "{$inputName}_id"
+                    relation: $inputName . 'Attachment',
+                    attach_col_name: "{$inputName}"
                 );
             }
         }

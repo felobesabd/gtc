@@ -89,14 +89,61 @@ function editOrCreateFile(
             }
         }
         /* edit relation database */
+        if (!$obj->$relation){
+            return;
+        }
+
+
         $obj->$relation->fill([
             'name' => $attachment->getClientOriginalName(),
             'path' => $folder . '/' . $newname
         ])->save();
+
+
         /* update attach_col_name  */
         $obj->$attach_col_name = $obj->$relation->id;
         $obj->save();
     }
+}
+
+function editOrCreateFileReturnId(
+    string $folder,
+    Object $obj,
+    ?UploadedFile $attachment = null,
+    string $relation = 'attach',
+    string $attach_col_name = 'attachment_id'
+): ?int {
+    if ($attachment) {
+        $newname = $obj->id . '_' . date("d_m_Y") . rand(1, 1000) . time() . '_' . rand(1, 1000) . '.' . $attachment->getClientOriginalExtension();
+
+        $attachment->move(public_path('uploads/' . $folder), $newname);
+
+        if ($obj->$relation && $obj->$relation->path) {
+            $file_path = public_path($obj->$relation->path);
+            if (File::exists($file_path)) {
+                File::delete($file_path);
+            }
+        }
+
+        // Update the attachment model
+        if ($obj->$relation) {
+            $obj->$relation->fill([
+                'name' => $attachment->getClientOriginalName(),
+                'path' => $folder . '/' . $newname,
+            ])->save();
+        } else {
+            $obj->$relation()->create([
+                'name' => $attachment->getClientOriginalName(),
+                'path' => $folder . '/' . $newname,
+            ]);
+        }
+
+        $obj->$attach_col_name = $obj->$relation->id;
+        $obj->save();
+
+        return $obj->$relation->id;
+    }
+    return null;
 }
 
 /* delete file */

@@ -31,7 +31,6 @@ class IncidentalExpensesController
 
     public function store(Request $request)
     {
-        return $request;
         $expenses = $this->expensesService->createExpense(data: $request->all());
         return redirect()->back()->with('success', 'Created successfully');
     }
