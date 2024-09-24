@@ -59,7 +59,7 @@ class ItemTransactionController
     public function update(ItemTransactionRequest $request, $id)
     {
         try {
-            $ItemTransaction = $this->itemTransactionService->updateItemTransaction(id: $id, data: $request->all());
+            // $ItemTransaction = $this->itemTransactionService->updateItemTransaction(id: $id, data: $request->all());
             return redirect()->back()->with('success', 'Updated successfully');
         } catch (ValidationException $e) {
             return redirect()->back()->with('ex', $e->errors());

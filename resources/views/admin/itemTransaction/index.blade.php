@@ -58,7 +58,6 @@ Item Transaction
                         <th class="min-w-125px">Cost</th>
                         <th class="min-w-125px">Price</th>
                         <th class="min-w-125px">Created Date</th>
-                        <th class="min-w-125px">Actions</th>
                     </tr>
                 </thead>
             </table>
@@ -127,13 +126,6 @@ Item Transaction
             render: function(data, type, row) {
                 return data ? data.slice(0, 10) : '';
             }
-        },
-        {
-            data: 'action',
-            name: 'action',
-            className: "text-center",
-            orderable: false,
-            searchable: false
         },
     ];
 
