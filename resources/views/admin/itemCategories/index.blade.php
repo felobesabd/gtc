@@ -68,6 +68,36 @@ Item Categories
         <!--end::Card body-->
     </div>
     <!--end::Card-->
+
+    <div class="card mt-10">
+        <form class="form" action="{{ route('admin.itemCats.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="card-flush py-10">
+                    <div class="modal-body px-lg-17">
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Add Excel File</label>
+                            <input type="file" class="form-control" name="file"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer flex-center">
+                        <button type="submit" class="btn btn-primary" style="padding: 10px 15px">
+                            <span class="indicator-label" style="font-size: 13px">Import</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+{{--    <form action="{{ route('admin.itemCats.import') }}" method="POST" enctype="multipart/form-data">--}}
+{{--        @csrf--}}
+{{--        <input type="file" name="file">--}}
+{{--        <button type="submit">Import</button>--}}
+{{--    </form>--}}
 </div>
 <!--end::Content container-->
 @endsection

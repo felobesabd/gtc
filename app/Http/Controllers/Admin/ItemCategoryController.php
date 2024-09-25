@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ItemCategoryRequest;
+use App\Imports\ItemsImport;
 use App\Models\Category;
 use App\Models\Group;
 use App\Models\ItemCategory;
 use App\Models\Unit;
 use App\Services\ItemCategoryService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Validation\ValidationException;
 
 class ItemCategoryController
 {
@@ -66,5 +69,24 @@ class ItemCategoryController
     {
         $itemCat = $this->itemCatService->deleteItemCat($id);
         return redirect()->back()->with('success', 'Deleted successfully');
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls'
+            ]);
+
+            $categories = Category::all();
+            $groups = Group::all();
+            $units = Unit::all();
+
+            Excel::import(new ItemsImport($categories, $groups, $units), $request->file('file'));
+
+            return redirect()->back()->with('success', 'Items imported successfully!');
+        } catch (ValidationException $e) {
+            return redirect()->back()->with('ex', $e->errors());
+        }
     }
 }

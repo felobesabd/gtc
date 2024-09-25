@@ -25,6 +25,8 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
 
     /** UserController */
     Route::resource('/users', UserController::class, ['names' => 'admin.users']);
+    Route::get('/users-export', [UserController::class, 'export'])->name('admin.users.export');
+    Route::post('/users-import', [UserController::class, 'import'])->name('admin.users.import');
     Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('admin.users.delete');
     Route::get('/users-data-table', [UserController::class, 'index'])->name('admin.users.data-table');
     /** UserController */
@@ -81,6 +83,7 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
 
     /** ItemCategoryController */
     Route::resource('/itemCats', ItemCategoryController::class, ['names' => 'admin.itemCats']);
+    Route::post('/itemCats-import', [ItemCategoryController::class, 'import'])->name('admin.itemCats.import');
     Route::get('/itemCats/delete/{id}', [ItemCategoryController::class, 'destroy'])->name('admin.itemCats.delete');
     Route::get('/itemCats-data-table', [ItemCategoryController::class, 'index'])->name('admin.itemCats.data-table');
     /** ItemCategoryController */
