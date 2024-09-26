@@ -29,14 +29,15 @@ class ItemsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new ItemCategory([
-            'item_name'        => $row['item_name'],
-            'category_id'      => $this->getCategoryId($row['category']),
-            'group_id'         => $this->getGroupId($row['group_name']),
-            'part_no'          => $row['part_no'],
-            'unit_id'          => $this->getUnitId($row['units']),
-            'quantity'         => $row['quantity'],
-            'rate'             => $row['rate'],
-            'rate_per'         => $row['rate_per'],
+            'item_name'             => $row['name'],
+            'category_id'           => $this->getCategoryId($row['category']),
+            'group_id'              => $this->getGroupId($row['group_name']),
+            'part_no'               => $row['part_no'],
+            'unit_id'               => $this->getUnitId($row['units']),
+            'quantity'              => $row['opening_balance_quantity'],
+            'rate'                  => $row['opening_balance_rate'],
+            'rate_per'              => $row['opening_balance_rate_per'],
+            'opening_balance_value' => $this->getValidDecimalValue($row['opening_balance_value']),
         ]);
     }
 
@@ -78,6 +79,11 @@ class ItemsImport implements ToModel, WithHeadingRow
         throw ValidationException::withMessages([
             'file' => "Units not found for: " . $unitName,
         ]);
+    }
+
+    private function getValidDecimalValue($value)
+    {
+        return is_numeric($value) ? $value : 0;
     }
 
     /*$category = $this->categories->firstWhere('name', $categoryName);
