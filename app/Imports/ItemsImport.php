@@ -35,8 +35,8 @@ class ItemsImport implements ToModel, WithHeadingRow
             'part_no'               => $row['part_no'],
             'unit_id'               => $this->getUnitId($row['units']),
             'quantity'              => $row['opening_balance_quantity'],
-            'rate'                  => $row['opening_balance_rate'],
-            'rate_per'              => $row['opening_balance_rate_per'],
+            'rate'                  => $this->getValidDecimalValue($row['opening_balance_rate']),
+            'rate_per'              => $this->getValidDecimalValue($row['opening_balance_rate_per']),
             'opening_balance_value' => $this->getValidDecimalValue($row['opening_balance_value']),
         ]);
     }
@@ -83,7 +83,7 @@ class ItemsImport implements ToModel, WithHeadingRow
 
     private function getValidDecimalValue($value)
     {
-        return is_numeric($value) ? $value : 0;
+        return is_numeric($value) ? $value : null;
     }
 
     /*$category = $this->categories->firstWhere('name', $categoryName);
