@@ -76,10 +76,10 @@ class EmployeeService
                 return $employee->getDepartmentName($employee->department_id);
             })
             ->editColumn('date_of_birth', function ($employee) {
-                return date('d-M-y', strtotime($employee->date_of_birth));
+                return date('d-m-y', strtotime($employee->date_of_birth));
             })
             ->editColumn('joining_date', function ($employee) {
-                return date('d-M-y', strtotime($employee->joining_date));
+                return date('d-m-y', strtotime($employee->joining_date));
             })
             ->addColumn('action', function ($row) {
                 $res = '

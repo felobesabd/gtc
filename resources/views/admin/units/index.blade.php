@@ -51,7 +51,6 @@ Units
                         <th class="min-w-125px">id</th>
                         <th class="min-w-125px">Name</th>
                         <th class="min-w-125px">Unit Type</th>
-                        <th class="min-w-125px">Size</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -84,11 +83,6 @@ Units
             data: 'unit_type',
             name: 'unit_type',
             className: "text-start",
-        },
-        {
-            data: 'size',
-            name: 'size',
-            className: "text-center",
         },
         {
             data: 'created_at',

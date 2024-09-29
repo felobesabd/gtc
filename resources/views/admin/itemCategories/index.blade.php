@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Item Categories
+Items
 @endsection
 
 @push('header')
@@ -14,11 +14,11 @@ Item Categories
     <div class="page-header">
         <div class="row">
             <div class="col-sm-8 col-auto">
-                <h3 class="page-title">Item Categories</h3>
+                <h3 class="page-title">Items</h3>
             </div>
 
             <div class="col-sm-4 col">
-                <a href="{{route('admin.itemCats.create')}}" class="btn btnColor float-end mt-2">Add Category Item</a>
+                <a href="{{route('admin.itemCats.create')}}" class="btn btnColor float-end mt-2">Add Item</a>
             </div>
         </div>
     </div>

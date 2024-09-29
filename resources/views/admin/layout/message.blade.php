@@ -12,6 +12,13 @@
 </div>
 @endif
 
+@if ($message = \Illuminate\Http\Request::capture()->get('error'))
+<div class="alert alert-danger alert-block message">
+	<button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+	<strong>{{ $message }}</strong>
+</div>
+@endif
+
 @if ($messages = Session::get('warnings'))
     <div class="alert alert-warning alert-block message">
         <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>

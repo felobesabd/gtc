@@ -25,11 +25,6 @@ Units
                         <label class="fs-6 fw-semibold mb-2">Unit Type</label>
                         <input type="text" class="form-control" name="unit_type" value="{{ old('unit_type') }}"/>
                     </div>
-
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Size</label>
-                        <input type="text" class="form-control" name="size" value="{{ old('size') }}"/>
-                    </div>
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">

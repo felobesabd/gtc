@@ -42,6 +42,27 @@ class ItemCategoryService
             ->editColumn('unit_id', function (ItemCategory $item) {
                 return $item->getNameById('units', $item->unit_id, 'id',  'unit_id','name');
             })
+            ->editColumn('rate', function ($row) {
+                if (is_null($row->rate)) {
+                    return '---';
+                } else {
+                    return $row->rate;
+                }
+            })
+            ->editColumn('rate_per', function ($row) {
+                if (is_null($row->rate_per)) {
+                    return '---';
+                } else {
+                    return $row->rate_per;
+                }
+            })
+            ->editColumn('min_allowed_value', function ($row) {
+                if (is_null($row->min_allowed_value)) {
+                    return '---';
+                } else {
+                    return $row->min_allowed_value;
+                }
+            })
             ->addColumn('action', function ($row) {
                 $res = '
                     <a href="' . route('admin.itemCats.edit', ['itemCat' => $row->id]) . '" class="btn btn-primary" onclick="return true;">

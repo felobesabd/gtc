@@ -486,32 +486,16 @@
                             </span>
                             <!--end:Menu link-->
 
-                            {{--                            <!--begin:Menu sub-->
-                            <div class="menu-sub menu-sub-accordion">
+                            <!--begin:Menu sub-->
+                            {{--<div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="#">
+                                    <a class="menu-link active" href="{{ route('admin.roles.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">List Vehicle</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="#">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">List Vehicle Type</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="#">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">List Vehicle Brand</span>
+                                        <span class="menu-title">Permission</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>

@@ -24,7 +24,6 @@ class UnitRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'unit_type' => ['required', 'string'],
-            'size' => ['required', 'string'],
         ];
     }
 }

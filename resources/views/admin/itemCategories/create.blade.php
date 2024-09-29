@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Item Categories
+Items
 @endsection
 
 @push('header')

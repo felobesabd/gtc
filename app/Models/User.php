@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $this->belongsTo(Attachment::class, 'legal_establishment_attachment_id')->withDefault();
     }
 
+    public function privileges()
+    {
+        return $this->belongsToMany(Role::class, 'privileges', 'user_id', 'id');
+    }
+
 }
