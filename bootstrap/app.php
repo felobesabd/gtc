@@ -22,12 +22,20 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([ 
+        $middleware->alias([
             'guest' => \App\Http\Middleware\OnlyGuestAllowedMiddleware::class
         ]);
         $middleware->appendToGroup('admin', [
             Illuminate\Auth\Middleware\Authenticate::class,
             \App\Http\Middleware\CheckAdmin::class,
+        ]);
+        $middleware->appendToGroup('warehouse-manager', [
+            Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\CheckWarehouseManager::class,
+        ]);
+        $middleware->appendToGroup('deputy-warehouse-manager', [
+            Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\CheckDeputyWarehouseManager::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

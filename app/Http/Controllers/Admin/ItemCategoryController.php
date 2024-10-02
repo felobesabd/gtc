@@ -24,6 +24,8 @@ class ItemCategoryController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('items.list');
+
         if ($request->ajax()) {
             return $this->itemCatService->getItemCats();
         }
@@ -33,6 +35,8 @@ class ItemCategoryController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('items.add');
+
         $categories = Category::all();
         $groups = Group::all();
         $units = Unit::all();
@@ -47,10 +51,13 @@ class ItemCategoryController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('items.edit');
+
         $itemCat = ItemCategory::findOrFail($id);
         $categories = Category::all();
         $groups = Group::all();
         $units = Unit::all();
+
         return view('admin.itemCategories.edit', compact(
             'itemCat',
             'categories',
@@ -67,12 +74,16 @@ class ItemCategoryController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('items.delete');
+
         $itemCat = $this->itemCatService->deleteItemCat($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }
 
     public function import(Request $request)
     {
+        checkUserHasRolesOrRedirect('items.add');
+
         try {
             $request->validate([
                 'file' => 'required|mimes:xlsx,xls'

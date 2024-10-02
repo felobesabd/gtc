@@ -20,15 +20,20 @@ class EmployeeController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('employee.list');
+
         if ($request->ajax()) {
             return $this->employeeService->getEmployees();
         }
+
 
         return view('admin.employees.index');
     }
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('employee.add');
+
         $departments = Department::all();
         $countries = generate_country_codes();
 
@@ -53,12 +58,15 @@ class EmployeeController
 //        if (!empty($warnings)) {
 //            return redirect()->back()->with('warnings', $warnings);
 //        }
+
         $department = $this->employeeService->createEmployee(data: $request->all());
         return redirect()->back()->with('success', 'Created successfully');
     }
 
     public function show($id)
     {
+        checkUserHasRolesOrRedirect('employee.show');
+
         $employee = Employee::findOrFail($id);
         $departments = Department::all();
         $countries = generate_country_codes();
@@ -68,6 +76,8 @@ class EmployeeController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('employee.edit');
+
         $employee = Employee::findOrFail($id);
         $departments = Department::all();
         $countries = generate_country_codes();
@@ -83,6 +93,7 @@ class EmployeeController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('employee.delete');
         $employee = $this->employeeService->deleteEmployee($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

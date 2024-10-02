@@ -51,7 +51,8 @@
                         </div>
                     </div>
 
-                    <!--begin::Menu HRM-->
+                    @if(auth()->user()->hasRole('admin'))
+                    <!--begin::Menu Users-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
@@ -65,51 +66,21 @@
                                         <span class="path4"></span>
                                     </i>
                                 </span>
-                                <span class="menu-title">HRM</span>
+                                <span class="menu-title">Users</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
+
                             <!--begin:Menu sub-->
                             <div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{ route('admin.employees.index') }}">
+                                    <a class="menu-link active" href="{{ route('admin.users.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Employees</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{ route('admin.departments.index') }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Department</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'notary'])}}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Attendance</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Work Hours</span>
-                                    </a>
-
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Vacations</span>
+                                        <span class="menu-title">Manage Users</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
@@ -119,8 +90,86 @@
                         </div>
                         <!--end:Menu item-->
                     </div>
-                    <!--end::Menu HRM-->
+                    <!--end::Menu Users-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
+                        <!--begin::Menu HRM-->
+                        <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6"
+                             id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+                            <!--begin:Menu item-->
+                            <div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
+                                <!--begin:Menu link-->
+                                <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-element-11 fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">HRM</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                                <!--end:Menu link-->
+                                <!--begin:Menu sub-->
+                                <div class="menu-sub menu-sub-accordion">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link active" href="{{ route('admin.employees.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Employees</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link active" href="{{ route('admin.departments.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                            <span class="menu-title">Department</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link active"
+                                           href="{{route('admin.users.index', ['user_role' => 'notary'])}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                            <span class="menu-title">Attendance</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link active"
+                                           href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                            <span class="menu-title">Work Hours</span>
+                                        </a>
+
+                                        <a class="menu-link active"
+                                           href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                            <span class="menu-title">Vacations</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu sub-->
+                            </div>
+                            <!--end:Menu item-->
+                        </div>
+                        <!--end::Menu HRM-->
+                    @endif
+
+                    @if(auth()->user()->hasRole(['admin', 'deputy warehouse manager', 'warehouse manager']))
                     <!--begin::Menu Stores-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -192,7 +241,7 @@
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
+                                    <a class="menu-link active" href="{{route('admin.users.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -200,7 +249,7 @@
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
+                                    <a class="menu-link active" href="{{route('admin.users.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -208,7 +257,7 @@
                                     </a>
                                     <!--end:Menu link-->
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{route('admin.users.index', ['user_role' => 'chartered_accountant'])}}">
+                                    <a class="menu-link active" href="{{route('admin.users.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -223,7 +272,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Stores-->
+                    @endif
 
+                    @if(auth()->user()->hasRole(['admin', 'deputy warehouse manager', 'warehouse manager']))
                     <!--begin::Menu Maintenance-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -270,7 +321,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Maintenance-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
                     <!--begin::Menu Vehicle-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -325,7 +378,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Vehicle-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
                     <!--begin::Menu Driver-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -372,7 +427,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Driver-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
                     <!--begin::Menu Suppliers-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -419,7 +476,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Suppliers-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
                     <!--begin::Menu Suppliers-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -466,7 +525,9 @@
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Suppliers-->
+                    @endif
 
+                    @if(auth()->user()->hasRole('admin'))
                     <!--begin::Menu Setting-->
                     <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!--begin:Menu item-->
@@ -487,11 +548,11 @@
                             <!--end:Menu link-->
 
                             <!--begin:Menu sub-->
-                            {{--<div class="menu-sub menu-sub-accordion">
+                            <div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link active" href="{{ route('admin.roles.index') }}">
+                                    <a class="menu-link active" href="{{ route('admin.permission.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -500,12 +561,13 @@
                                     <!--end:Menu link-->
                                 </div>
                                 <!--end:Menu item-->
-                            </div>--}}
+                            </div>
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
                     </div>
                     <!--end::Menu Vehicle-->
+                    @endif
 
                 </div>
                 <!--end::Scroll wrapper-->

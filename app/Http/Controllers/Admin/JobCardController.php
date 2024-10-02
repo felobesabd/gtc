@@ -22,6 +22,8 @@ class JobCardController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('job_card.list');
+
         if ($request->ajax()) {
             return $this->jobCardService->getJobCards();
         }
@@ -31,8 +33,9 @@ class JobCardController
 
     public function show($id)
     {
-        $job_card = JobCard::findOrFail($id);
+        checkUserHasRolesOrRedirect('job_card.show');
 
+        $job_card = JobCard::findOrFail($id);
         $job_card->staff_details = json_decode($job_card->staff_details, true);
         $selectedJobCardTypes = json_decode($job_card->job_card_type, true);
         $selectedRepairTypes = json_decode($job_card->repair_type, true);
@@ -55,10 +58,13 @@ class JobCardController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('job_card.add');
+
         $vehicles = Vehicle::all();
         $employees = Employee::all();
         $drivers = Driver::all();
         $items = ItemCategory::all();
+
         return view('admin.jobCards.create', compact('vehicles','employees', 'drivers', 'items'));
     }
 
@@ -70,8 +76,9 @@ class JobCardController
 
     public function edit(Request $request, $id)
     {
-        $job_card = JobCard::findOrFail($id);
+        checkUserHasRolesOrRedirect('job_card.edit');
 
+        $job_card = JobCard::findOrFail($id);
         $job_card->staff_details = json_decode($job_card->staff_details, true);
         $selectedJobCardTypes = json_decode($job_card->job_card_type, true);
         $selectedRepairTypes = json_decode($job_card->repair_type, true);
@@ -100,6 +107,8 @@ class JobCardController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('job_card.delete');
+
         $job_card = $this->jobCardService->deleteJobCard($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

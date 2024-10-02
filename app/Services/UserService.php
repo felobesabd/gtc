@@ -3,6 +3,9 @@ namespace App\Services;
 
 use App\Enums\Status;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Yajra\Datatables\Datatables;
 
 class UserService
@@ -10,20 +13,44 @@ class UserService
 
     public function getUsers($data): object
     {
-        $model = User::with('roles')
-            ->whereHas("roles", function ($q) use ($data) {
-                $q->whereIn("name", [$data['user_role']]);
-            })
-            ->when(!empty($data['status']), function ($query) use ($data) {
-                $query->where('status', $data['status']);
-            });
+        $model = User::all();
         return $this->getTableData(model: $model);
+    }
+
+    public function manageUser($data): object {
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'employee_id' => $data['employee_id'],
+                'full_name' => $data['full_name'],
+                'email' => $data['email'],
+                'phone_number' => $data['phone_number'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            $user->assignRole($data['role']);
+
+            DB::commit();
+            return $user;
+        } catch (ValidationException $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 
     public function updateUser(int $id, array $data): bool
     {
-        $user = User::findOrFail($id);
-        return $user->fill($data)->save();
+        DB::beginTransaction();
+        try {
+            $user = User::findOrFail($id);
+            $user->syncRoles($data['role']);
+
+            DB::commit();
+            return $user->fill($data)->save();
+        } catch (ValidationException $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 
     public function deleteUser($id): bool

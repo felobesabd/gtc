@@ -48,6 +48,20 @@ class JobCardService
                 $vehicle = $jobCard->getVehicleDetails($jobCard->vehicle_id);
                 return $vehicle['vehicle_type'] . ' -- ' . $vehicle['group_name'] . ' -- ' . $vehicle['category_name'];
             })
+            ->editColumn('status', function ($row) {
+                if ($row->status == 0)
+                    $html = '<label for="" class="text-warning">Pending</label>';
+                elseif ($row->status == 1)
+                    $html = '<label for="" class="text-info">in-progress</label>';
+                elseif ($row->status == 2)
+                    $html = '<label for="" class="text-success">Completed</label>';
+                elseif ($row->status == 4)
+                    $html = '<label for="" class="text-success">Confirmed</label>';
+                else
+                    $html = '<label for="" class="text-danger">Canceled</label>';
+
+                return $html;
+            })
             ->addColumn('action', function ($row) {
                 $res = '
                     <a href="' . route('admin.job_cards.show', ['job_card' => $row->id]) . '" class="btn btn-info" onclick="return true;">
@@ -62,7 +76,7 @@ class JobCardService
                     ';
                 return $res;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
             ->make(true);
     }
 

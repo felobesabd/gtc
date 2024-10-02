@@ -17,6 +17,7 @@ class SalesController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('sales.list');
         if ($request->ajax()) {
             return $this->salesService->getSales();
         }
@@ -26,6 +27,7 @@ class SalesController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('sales.add');
         return view('admin.sales.create');
     }
 
@@ -37,6 +39,7 @@ class SalesController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('sales.edit');
         $sales = Sales::findOrFail($id);
         return view('admin.sales.edit', compact('sales'));
     }
@@ -50,6 +53,7 @@ class SalesController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('sales.delete');
         $sales = $this->salesService->deleteSales($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

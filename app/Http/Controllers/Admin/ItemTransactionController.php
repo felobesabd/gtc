@@ -22,6 +22,8 @@ class ItemTransactionController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('item_transaction.list');
+
         if ($request->ajax()) {
             return $this->itemTransactionService->getItemTransactions();
         }
@@ -31,9 +33,12 @@ class ItemTransactionController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('item_transaction.add');
+
         $items = ItemCategory::all();
         $suppliers = Supplier::all();
         $users = User::select('id', 'full_name')->get();
+
         return view('admin.itemTransaction.create', compact('items', 'suppliers', 'users'));
     }
 
@@ -49,10 +54,13 @@ class ItemTransactionController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('item_transaction.edit');
+
         $item_history = ItemTransaction::findOrFail($id);
         $items = ItemCategory::all();
         $suppliers = Supplier::all();
         $users = User::select('id', 'full_name')->get();
+
         return view('admin.itemTransaction.edit', compact('item_history', 'items', 'suppliers', 'users'));
     }
 
@@ -68,6 +76,8 @@ class ItemTransactionController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('item_transaction.delete');
+
         $ItemTransaction = $this->itemTransactionService->deleteItemTransaction($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

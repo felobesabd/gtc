@@ -20,6 +20,8 @@ class VehicleController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('vehicle.list');
+
         if ($request->ajax()) {
             return $this->vehicleService->getVehicles();
         }
@@ -29,6 +31,8 @@ class VehicleController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('vehicle.add');
+
         $categories = Category::all();
         $groups = Group::all();
         return view('admin.vehicles.create', compact('categories', 'groups'));
@@ -42,6 +46,8 @@ class VehicleController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('vehicle.edit');
+
         $vehicle = Vehicle::findOrFail($id);
         $categories = Category::all();
         $groups = Group::all();
@@ -60,6 +66,8 @@ class VehicleController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('vehicle.delete');
+
         $vehicle = $this->vehicleService->deleteVehicle($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

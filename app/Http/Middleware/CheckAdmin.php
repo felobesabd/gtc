@@ -18,10 +18,10 @@ class CheckAdmin
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        if (!$user->hasRole('admin')) {
-            return redirect(url('login'));
-        }
-        
+//        if (!$user->hasRole('admin')) {
+//            return redirect(url('login'));
+//        }
+
         return $next($request);
     }
 }

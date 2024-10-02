@@ -2,7 +2,7 @@
 
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-navbar-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-navbar="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
 	<input type="hidden" id="csrf-input" value="{{ csrf_token() }}">
-    <input type="hidden" id="url-input" value="{{ url('/') }}">	
+    <input type="hidden" id="url-input" value="{{ url('/') }}">
 	<form id="logout-form" action="{{ url('logout') }}" class="none" method="POST">
 			@csrf
 			<button type="submit">Logout</button>

@@ -18,6 +18,7 @@ class StoreLocationController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('store_location.list');
         if ($request->ajax()) {
             return $this->storeLocationService->getStoreLocations();
         }
@@ -27,6 +28,7 @@ class StoreLocationController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('store_location.add');
         return view('admin.storeLocations.create');
     }
 
@@ -38,6 +40,7 @@ class StoreLocationController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('store_location.edit');
         $storeLocation = StoreLocation::findOrFail($id);
         return view('admin.storeLocations.edit', compact('storeLocation'));
     }
@@ -50,6 +53,7 @@ class StoreLocationController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('store_location.delete');
         $storeLocation = $this->storeLocationService->deleteStoreLocation($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

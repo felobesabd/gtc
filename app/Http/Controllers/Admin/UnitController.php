@@ -18,6 +18,7 @@ class UnitController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('unit.list');
         if ($request->ajax()) {
             return $this->unitService->getUnits();
         }
@@ -27,6 +28,7 @@ class UnitController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('unit.add');
         return view('admin.units.create');
     }
 
@@ -38,6 +40,7 @@ class UnitController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('unit.edit');
         $unit = Unit::findOrFail($id);
         return view('admin.units.edit', compact('unit'));
     }
@@ -50,6 +53,7 @@ class UnitController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('unit.delete');
         $unit = $this->unitService->deleteUnit($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

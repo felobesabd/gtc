@@ -17,6 +17,18 @@ Job Card
             <div class="card card-flush py-10">
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
+                    @if(auth()->user()->hasRole(['deputy warehouse manager', 'warehouse manager']))
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Status</label>
+                            <select class="form-control" name="status">
+                                <option disabled selected>...</option>
+                                @foreach(StatusEnum::jobCardCases() as $status)
+                                    <option @if($job_card->status === $status->value) selected @endif value="{{$status->value}}">{{$status->probertyName()}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Choose Vehicle</label>
                         <select class="form-control" name="vehicle_id">
@@ -262,8 +274,6 @@ Job Card
                         <label class="fs-6 fw-semibold mb-2">Quantity</label>
                         <input type="number" class="form-control" name="quantity" value="{{ $job_card->quantity }}">
                     </div>
-
-
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">
@@ -289,9 +299,10 @@ Job Card
 
                 if (groupId) {
                     $.ajax({
-                        url: '{{ route('admin.groups.specific', ['id' => '__GROUP_ID__']) }}'.replace('__GROUP_ID__', groupId),
+                        url: '{{ route(target() . '.groups.specific', ['id' => '__GROUP_ID__']) }}'.replace('__GROUP_ID__', groupId),
                         type: 'GET',
                         success: function (response) {
+                            console.log(response);
                             var groupName = response.group_name;
 
                             var originalText = $option.text();
@@ -310,7 +321,7 @@ Job Card
 
                 if (catId) {
                     $.ajax({
-                        url: '{{ route('admin.categories.specific', ['id' => '__CAT_ID__']) }}'.replace('__CAT_ID__', catId),
+                        url: '{{ route(target() . '.categories.specific', ['id' => '__CAT_ID__']) }}'.replace('__CAT_ID__', catId),
                         type: 'GET',
                         success: function (response) {
                             var catName = response.category_name;

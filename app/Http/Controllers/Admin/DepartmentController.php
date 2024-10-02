@@ -18,6 +18,8 @@ class DepartmentController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('department.list');
+
         if ($request->ajax()) {
             return $this->departmentService->getDepartments();
         }
@@ -27,6 +29,8 @@ class DepartmentController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('department.add');
+
         return view('admin.departments.create');
     }
 
@@ -43,6 +47,8 @@ class DepartmentController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('department.edit');
+
         $department = Department::find($id);
         return view('admin.departments.edit', compact('department'));
     }
@@ -55,6 +61,8 @@ class DepartmentController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('department.delete');
+
         $department = $this->departmentService->deleteDepartment($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

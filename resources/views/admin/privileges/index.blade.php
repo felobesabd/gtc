@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Job Card
+Permission
 @endsection
 
 @push('header')
@@ -10,19 +10,6 @@ Job Card
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="row">
-            <div class="col-sm-8 col-auto">
-                <h3 class="page-title">Job Card</h3>
-            </div>
-
-            <div class="col-sm-4 col">
-                <a href="{{route('admin.job_cards.create')}}" class="btn btnColor float-end mt-2">Add Job Card</a>
-            </div>
-        </div>
-    </div>
-
     <!--begin::Card-->
     <div class="card">
         <!--begin::Card header-->
@@ -45,23 +32,51 @@ Job Card
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5 ajax-data-table">
+            {{--<table class="table align-middle table-row-dashed fs-6 gy-5 ajax-data-table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
-                        <th class="min-w-125px">Status</th>
-                        <th class="min-w-125px">Reg No</th>
-                        <th class="min-w-125px">Vehicle Details</th>
-                        <th class="min-w-125px">Delivered by</th>
-                        <th class="min-w-125px">Received by</th>
-                        <th class="min-w-125px">Date In</th>
-                        <th class="min-w-125px">Expected Date</th>
-                        <th class="min-w-125px">Location</th>
-                        <th class="min-w-125px">Total Cost</th>
+                        <th class="min-w-125px">Name</th>
+                        <th class="min-w-125px">Permission</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
                 </thead>
+            </table>--}}
+
+            <table class="table align-middle table-row-dashed fs-6 gy-5">
+                <thead>
+                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-125px">#</th>
+                    <th class="min-w-125px">Name</th>
+                    <th class="min-w-125px">Permission</th>
+                    <th class="min-w-125px">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($roles as $index => $role)
+                    <tr>
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td>{{ $role->name }}</td>
+                        <td>
+                            <a href="{{ route('admin.edit.permission', ['role_id' => $role->id]) }}"
+                               class="btn btn-primary">
+                                Permission
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.edit.permission', ['role_id' => $role->id]) }}"
+                               class="btn btn-primary">
+                                Edit
+                            </a>
+                            <a href="{{ route('admin.delete.permission', ['role_id' => $role->id]) }}" class="btn btn-danger"
+                               onclick="return confirmMsg();">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
             <!--end::Table-->
         </div>
@@ -74,7 +89,7 @@ Job Card
 
 @push('footer')
 <script src="{{ url('design/admin/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script>
+{{--<script>
     /*let user_role = "{{request('user_role')}}";*/
     var columns = [{
             data: 'id',
@@ -82,49 +97,14 @@ Job Card
             className: "text-center",
         },
         {
-            data: 'status',
-            name: 'status',
+            data: 'roles',
+            name: 'roles',
             className: "text-start",
         },
         {
-            data: 'reg_no',
-            name: 'reg_no',
-            className: "text-start",
-        },
-        {
-            data: 'vehicle_id',
-            name: 'vehicle_id',
-            className: "text-start",
-        },
-        {
-            data: 'delivered_by',
-            name: 'delivered_by',
-            className: "text-start",
-        },
-        {
-            data: 'received_by',
-            name: 'received_by',
-            className: "text-start",
-        },
-        {
-            data: 'date_in',
-            name: 'date_in',
-            className: "text-start",
-        },
-        {
-            data: 'expected_date_out',
-            name: 'expected_date_out',
-            className: "text-start",
-        },
-        {
-            data: 'location',
-            name: 'location',
-            className: "text-start",
-        },
-        {
-            data: 'total_cost',
-            name: 'total_cost',
-            className: "text-start",
+            data: 'permission',
+            name: 'permission',
+            className: "text-center",
         },
         {
             data: 'created_at',
@@ -145,14 +125,14 @@ Job Card
 
     console.log(columns);
 
-    var ajax_url = "{!! route('admin.job_cards.data-table') !!}";
+    var ajax_url = "{!! route('admin.privileges.data-table') !!}";
 
     $(function() {
         createDatatable(columns, ajax_url);
     });
 
     $.fn.dataTable.ext.errMode = 'none';
-</script>
+</script>--}}
 {{--<script>
     $(document).on('change', '.status', function() {
         let param = {

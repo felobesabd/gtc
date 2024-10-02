@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\JobCardController;
 use App\Http\Controllers\Admin\IncidentalExpensesController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\ItemTransactionController;
+use App\Http\Controllers\Admin\PrivilegeController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
@@ -27,6 +29,8 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::resource('/users', UserController::class, ['names' => 'admin.users']);
     Route::get('/users-export', [UserController::class, 'export'])->name('admin.users.export');
     Route::post('/users-import', [UserController::class, 'import'])->name('admin.users.import');
+    Route::get('/manage-users', [UserController::class, 'manage_users'])->name('admin.users.manage');
+    Route::post('/manage-users-store', [UserController::class, 'manage_users_store'])->name('admin.users.manage.store');
     Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('admin.users.delete');
     Route::get('/users-data-table', [UserController::class, 'index'])->name('admin.users.data-table');
     /** UserController */
@@ -117,4 +121,15 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
     Route::get('/item_history/delete/{id}', [ItemTransactionController::class, 'destroy'])->name('admin.item_history.delete');
     Route::get('/item_history-data-table', [ItemTransactionController::class, 'index'])->name('admin.item_history.data-table');
     /** ItemTransactionController */
+
+    /** RoleController */
+    Route::resource('/permission', PrivilegeController::class, ['names' => 'admin.permission']);
+    Route::get('/add-permission/{role_id}', [PrivilegeController::class, 'addPermission'])->name('admin.permission.add.permission');
+    Route::get('/edit-permission/{role_id}', [PrivilegeController::class, 'editPermission'])->name('admin.edit.permission');
+    Route::patch('/update-permission', [PrivilegeController::class, 'updatePermission'])->name('admin.update.permission');
+    Route::get('/delete-permission/{role_id}', [PrivilegeController::class, 'destroyPermission'])->name('admin.delete.permission');
+    Route::get('/permission-data-table', [PrivilegeController::class, 'index'])->name('admin.permission.data-table');
+    /** RoleController */
 });
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

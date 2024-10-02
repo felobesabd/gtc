@@ -19,6 +19,8 @@ class CategoryController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('category.list');
+
         if ($request->ajax()) {
             return $this->catService->getCategories();
         }
@@ -33,6 +35,8 @@ class CategoryController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('category.add');
+
         $groups = Group::all();
         return view('admin.categories.create', compact('groups'));
     }
@@ -45,6 +49,8 @@ class CategoryController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('category.edit');
+
         $category = Category::findOrFail($id);
         $groups = Group::all();
         return view('admin.categories.edit', compact('category', 'groups'));
@@ -58,6 +64,8 @@ class CategoryController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('category.delete');
+
         $category = $this->catService->deleteCategory($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

@@ -10,8 +10,9 @@ trait BaseEnumTrait
         return ucwords(strtolower($res));
     }
 
-    public static function fromName(string $name): ?object
+    public static function tryFromName(string $name): ?object
     {
         return defined("self::$name") ? constant("self::$name") : null;
     }
 }
+

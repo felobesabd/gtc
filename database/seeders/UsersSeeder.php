@@ -40,135 +40,52 @@ class UsersSeeder extends Seeder
         );
         $admin->assignRole($adminRole);
 
+        // admin
+        $warehouseManagerRole = Role::updateOrCreate(
+            [
+                'name' => 'warehouse manager'
+            ],
+            []
+        );
+        $admin = User::updateOrCreate(
+            [
+                'email' => 'mohmd@mohmd.com'
+            ],
+            [
+                'full_name' => 'Mohammed',
+                'phone_number' => '01025251241',
+                'city_id' => 1,
+                'license_type' => '0',
+                'license_attachment_id' => '0',
+                'have_legal_establishment' => '0',
+                'cv' => '',
+                'password' => Hash::make('123'),
+            ]
+        );
+        $admin->assignRole($warehouseManagerRole);
+
         // customer
         $customerRole = Role::updateOrCreate(
             [
-                'name' => 'customer'
+                'name' => 'default'
             ],
             []
         );
         $customer = User::updateOrCreate(
             [
-                'email' => 'customer@customer.com'
+                'email' => 'phelo@gmail.com'
             ],
             [
                 'full_name' => 'customer',
-                'phone_number' => '01555',
+                'phone_number' => '01501254785',
                 'city_id' => 1,
                 'license_type' => '0',
                 'license_attachment_id' => '0',
                 'have_legal_establishment' => '0',
                 'cv' => '',
-                'password' => Hash::make('customer'),
+                'password' => Hash::make('phelo'),
             ]
         );
         $customer->assignRole($customerRole);
-
-        // notary
-        $notaryRole = Role::updateOrCreate(
-            [
-                'name' => 'notary'
-            ],
-            []
-        );
-        $notary = User::updateOrCreate(
-            [
-                'email' => 'notary@notary.com'
-            ],
-            [
-                'full_name' => 'notary',
-                'phone_number' => '01522114555',
-                'city_id' => 1,
-                'license_type' => '0',
-                'license_attachment_id' => '0',
-                'have_legal_establishment' => '0',
-                'cv' => '',
-                'password' => Hash::make('notary'),
-            ]
-        );
-        $notary->assignRole($notaryRole);
-
-        // chartered_accountant
-        $chartered_accountantRole = Role::updateOrCreate(
-            [
-                'name' => 'chartered_accountant'
-            ],
-            []
-        );
-        $chartered_accountant = User::updateOrCreate(
-            [
-                'email' => 'chartered_accountant@chartered_accountant.com'
-            ],
-            [
-                'full_name' => 'Ahmed Eid',
-                'phone_number' => '0122555',
-                'city_id' => 1,
-                'license_type' => '0',
-                'license_attachment_id' => '0',
-                'have_legal_establishment' => '0',
-                'cv' => '',
-                'password' => Hash::make('chartered_accountant'),
-            ]
-        );
-        $chartered_accountant->assignRole($chartered_accountantRole);
-
-        // lawyer
-        $lawyerRole = Role::updateOrCreate(
-            [
-                'name' => 'lawyer'
-            ],
-            []
-        );
-        $lawyer = User::updateOrCreate(
-            [
-                'email' => 'lawyer@lawyer.com'
-            ],
-            [
-                'full_name' => 'ahmed hafez',
-                'phone_number' => '012345',
-                'city_id' => 1,
-                'license_type' => '0',
-                'license_attachment_id' => '0',
-                'have_legal_establishment' => '0',
-                'cv' => '',
-                'password' => Hash::make('notary'),
-            ]
-        );
-        $lawyer->assignRole($lawyerRole);
-        $lawyer = User::updateOrCreate(
-            [
-                'email' => 'lawyer2@law.com'
-            ],
-            [
-                'full_name' => 'Mahmoud Salama',
-                'phone_number' => '01202345',
-                'city_id' => 1,
-                'license_type' => '0',
-                'license_attachment_id' => '0',
-                'have_legal_establishment' => '0',
-                'cv' => '',
-                'password' => Hash::make('notary'),
-            ]
-        );
-        $lawyer->assignRole($lawyerRole);
-        $lawyer = User::updateOrCreate(
-            [
-                'email' => 'ahmed@law.com'
-            ],
-            [
-                'full_name' => 'Hazem Amer',
-                'phone_number' => '015345',
-                'city_id' => 1,
-                'license_type' => '0',
-                'license_attachment_id' => '0',
-                'have_legal_establishment' => '0',
-                'cv' => '',
-                'password' => Hash::make('notary'),
-            ]
-        );
-        $lawyer->status = Status::Active->value;
-        $lawyer->save();
-        $lawyer->assignRole($lawyerRole);
-
     }
 }

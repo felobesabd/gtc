@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Imports\UsersImport;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -21,26 +26,60 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('user.list');
         if ($request->ajax()) {
             return $this->userService->getUsers(data: $request->all());
         }
         return view('admin.users.index');
     }
 
+    public function manage_users(Request $request)
+    {
+        checkUserHasRolesOrRedirect('user.add');
+        $employees = Employee::all();
+        $roles = Role::all();
+        return view('admin.users.manage', compact('employees', 'roles'));
+    }
+
+    public function manage_users_store(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:3'
+        ]);
+
+        $user = $this->userService->manageUser(data: $request->all());
+        return redirect()->back()->with('success', 'Added successfully');
+    }
+
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('user.edit');
         $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        $employees = Employee::all();
+        $roles = Role::all();
+
+        return view('admin.users.edit', compact('user', 'employees', 'roles'));
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($id),
+            ],
+            'password' => ['required', 'min:3']
+        ]);
+
         $user = $this->userService->updateUser(id: $id, data: $request->all());
         return redirect()->back()->with('success', 'Updated successfully');
     }
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('user.delete');
         $user = $this->userService->deleteUser($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

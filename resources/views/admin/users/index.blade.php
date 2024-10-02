@@ -10,7 +10,20 @@ Users
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <div class="card mb-4">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-8 col-auto">
+                <h3 class="page-title">Manage Users</h3>
+            </div>
+
+            <div class="col-sm-4 col">
+                <a href="{{route('admin.users.manage')}}" class="btn btnColor float-end mt-2">Add User</a>
+            </div>
+        </div>
+    </div>
+
+    {{--<div class="card mb-4">
         <div class="col-md-4">
             <div class="card-header border-0 pt-6 pb-6">
                 <label class="fs-6 fw-semibold mb-2">{{__('Status')}}</label>
@@ -22,7 +35,7 @@ Users
                 </select>
             </div>
         </div>
-    </div>
+    </div>--}}
     <!--begin::Card-->
     <div class="card">
         <!--begin::Card header-->
@@ -49,10 +62,9 @@ Users
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">id</th>
+                        <th class="min-w-125px">Full Name</th>
                         <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Phone</th>
-                        <th class="min-w-125px">Full Name</th>
-                        <th class="min-w-125px">Status</th>
                         <th class="min-w-125px">Created Date</th>
                         <th class="min-w-125px">Actions</th>
                     </tr>
@@ -70,11 +82,15 @@ Users
 @push('footer')
 <script src="{{ url('design/admin/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
-    let user_role = "{{request('user_role')}}";
     var columns = [{
             data: 'id',
             name: 'id',
             className: "text-center",
+        },
+        {
+            data: 'full_name',
+            name: 'full_name',
+            className: "text-start",
         },
         {
             data: 'email',
@@ -84,16 +100,6 @@ Users
         {
             data: 'phone_number',
             name: 'phone_number',
-            className: "text-start",
-        },
-        {
-            data: 'full_name',
-            name: 'full_name',
-            className: "text-start",
-        },
-        {
-            data: 'status',
-            name: 'status',
             className: "text-start",
         },
         {
@@ -113,7 +119,7 @@ Users
         },
     ];
 
-    var ajax_url = "{!! route('admin.users.data-table', ['user_role' => request('user_role'), 'status' => request('status')]) !!}";
+    var ajax_url = "{!! route('admin.users.data-table') !!}";
 
     $(function() {
         createDatatable(columns, ajax_url);

@@ -18,6 +18,7 @@ class SupplierController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('supplier.list');
         if ($request->ajax()) {
             return $this->supplierService->getSuppliers();
         }
@@ -27,6 +28,7 @@ class SupplierController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('supplier.add');
         return view('admin.suppliers.create');
     }
 
@@ -38,6 +40,7 @@ class SupplierController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('supplier.edit');
         $supplier = Supplier::findOrFail($id);
         return view('admin.suppliers.edit', compact('supplier'));
     }
@@ -50,6 +53,7 @@ class SupplierController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('supplier.delete');
         $supplier = $this->supplierService->deleteSupplier($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

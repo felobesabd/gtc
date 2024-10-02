@@ -7,6 +7,28 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redirect;
+
+function checkUseHasPermission($permission)
+{
+    $user = auth()->user();
+
+    if (!$user || !$user->can($permission)) {
+        return false;
+    }
+
+    return true;
+}
+
+function checkUserHasRolesOrRedirect($permission)
+{
+    if (!checkUseHasPermission($permission)) {
+        Redirect::to('/' . target() . '?error=you do not have any permission to access this page')->send();
+        die();
+    }
+}
 
 function target()
 {
@@ -15,13 +37,19 @@ function target()
     if (!$user) {
         return '/';
     }
-    if ($user->hasRole(['admin'])) {
-        return 'admin';
-    }
-    if ($user->hasRole(['customer support'])) {
-        return 'customer-support';
-    } else return '/';
+
+    return 'admin';
 }
+
+//    if ($user->hasRole(['admin'])) {
+//        return 'admin';
+//    }
+//    if ($user->hasRole(['warehouse manager'])) {
+//        return 'warehouse-manager';
+//    }
+//    if ($user->hasRole(['deputy warehouse manager'])) {
+//        return 'deputy-warehouse-manager';
+//    } else return '/';
 
 function targetRole(?int $user_id = null, bool $get_freelancer_type = false): ?string
 {
@@ -743,4 +771,72 @@ function generate_country_codes()
                     <option data-countryCode='ZW' value='263'>Zimbabwe (+263)</option>
             </optgroup>
     </select>";
+}
+
+//function allModels() {
+//    return [
+//        'admin/jobCard' => ,
+//        'admin/itemCategory',
+//        'admin/role',
+//    ];
+//}
+
+function all_models()
+{
+    $array =
+        [
+            "job_card" => "Job Card",
+            "items" => "Items",
+            "item_transaction" => "Item Transaction",
+            "category" => "Category",
+            "vehicle" => "Vehicle",
+            "user" => "User",
+            "unit" => "Unit",
+            "supplier" => "Supplier",
+            "store_location" => "Store Location",
+            "sales" => "Sales",
+            "roles" => "Roles",
+            "expenses" => "Expenses",
+            "employee" => "Employee",
+            "group" => "Group",
+            "driver" => "Driver",
+            "department" => "Department",
+        ];
+    return $array;
+}
+
+function check_permission($all_user_permissions, $index, $action)
+{
+    return true;
+
+    if (isset($all_user_permissions[$index])) {
+        $get_permission = $all_user_permissions[$index]->all();
+    }
+
+    if (isset($get_permission) && is_array($get_permission) && count($get_permission)) {
+        $get_permission = $get_permission[0];
+        if (isset($get_permission->$action) && $get_permission->$action) {
+            return true;
+        }
+
+        $additional_permissions = json_decode($get_permission->additional_permissions);
+        if (is_array($additional_permissions) && in_array($action, $additional_permissions)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function havePermissionOrRedirect($permission_page, $action, $url_redirect_to = '/admin') {
+    $user_id = Session::get('this_user_id');
+    $user_permissions = Cache::get('user_permissions_' . $user_id);
+
+    if (!check_permission($user_permissions, $permission_page, $action)) {
+        return Redirect::
+        to($url_redirect_to . "?show_flash_msg=You do not have the permission to access this page")
+            ->send();
+
+        die();
+    }
 }

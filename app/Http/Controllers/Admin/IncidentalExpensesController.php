@@ -17,6 +17,7 @@ class IncidentalExpensesController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('expenses.list');
         if ($request->ajax()) {
             return $this->expensesService->getExpenses();
         }
@@ -26,6 +27,7 @@ class IncidentalExpensesController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('expenses.add');
         return view('admin.expenses.create');
     }
 
@@ -37,6 +39,7 @@ class IncidentalExpensesController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('expenses.edit');
         $expense = IncidentalExpenses::findOrFail($id);
         return view('admin.expenses.edit', compact('expense'));
     }
@@ -49,6 +52,7 @@ class IncidentalExpensesController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('expenses.delete');
         $expenses = $this->expensesService->deleteExpense($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }

@@ -18,6 +18,7 @@ class GroupController
 
     public function index(Request $request)
     {
+        checkUserHasRolesOrRedirect('group.list');
         if ($request->ajax()) {
             return $this->groupService->getGroups();
         }
@@ -27,6 +28,7 @@ class GroupController
 
     public function create()
     {
+        checkUserHasRolesOrRedirect('group.add');
         return view('admin.groups.create');
     }
 
@@ -43,6 +45,7 @@ class GroupController
 
     public function edit(Request $request, $id)
     {
+        checkUserHasRolesOrRedirect('group.edit');
         $group = Group::findOrFail($id);
         return view('admin.groups.edit', compact('group'));
     }
@@ -55,6 +58,7 @@ class GroupController
 
     public function destroy($id)
     {
+        checkUserHasRolesOrRedirect('group.delete');
         $group = $this->groupService->deleteGroup($id);
         return redirect()->back()->with('success', 'Deleted successfully');
     }
