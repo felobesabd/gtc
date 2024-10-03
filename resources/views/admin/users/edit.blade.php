@@ -49,7 +49,7 @@ Users
                         <select class="form-control" name="employee_id" id="employee-select">
                             <option selected disabled hidden>Choose</option>
                             @foreach($employees as $employee)
-                                <option @if($user->employee_id == $employee->id) @endif selected
+                                <option @if($user->employee_id === $employee->id) selected @endif
                                         value="{{ $employee->id }}"
                                         data-phone="{{ $employee->direct_contact_number }}"
                                         data-email="{{ $employee->email }}"

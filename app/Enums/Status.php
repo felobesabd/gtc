@@ -11,7 +11,7 @@ enum Status: int
     case Pending = 0;
     case InProgress = 1;
     case Completed = 2;
-    case Rejected = 3;
+    case Canceled = 3;
     case Confirmed = 4;
     case Active = 5;
     case Inactive = 6;
@@ -21,7 +21,7 @@ enum Status: int
         $arr[] = Self::Pending;
         $arr[] = Self::InProgress;
         $arr[] = Self::Completed;
-        $arr[] = Self::Rejected;
+        $arr[] = Self::Canceled;
         $arr[] = Self::Confirmed;
         return $arr;
     }
