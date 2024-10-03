@@ -1,73 +1,161 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{url('design/admin')}}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+          type="text/css"/>
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{{url('design/admin')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css"/>
+    <!--end::Global Stylesheets Bundle-->
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+        .full-height {
+            height: 100vh;
+        }
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        .login-container {
+            display: flex;
+            height: 100vh;
+        }
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        .left-side {
+            background-image: url('design/admin/assets/media/logos/login-img.jpg');;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .company-logo {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+        }
+
+        .bottom-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 20px;
+            color: #000;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            color: white;
+        }
+
+        .welcome-text {
+            font-size: 42px;
+            font-weight: 500;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .right-side {
+            background-color: #014294;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-btn {
+            margin-top: 40px;
+            padding: 12px !important;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid p-0">
+    <div class="row full-height m-0">
+        <!-- Left Side with Image and Logo -->
+        <div class="col-lg-6 left-side p-0">
+            <img src="{{url('design/admin')}}/assets/media/logos/login-logo.jpeg" class="company-logo" alt="Company Logo">
+            {{--<div class="bottom-text">
+                تصميم و تنفيذ شركة الطارق للتقنية و الاستثمار
+            </div>--}}
+        </div>
+
+        <!-- Right Side with Login Form -->
+        <div class="col-lg-6 right-side p-0">
+            <div class="login-box">
+                <div class="welcome-text">Welcome Back!</div>
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color: white;">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" style="padding: 14px;" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="color: white;">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" style="padding: 14px;" @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="my-6 form-check d-flex justify-content-between">
+                        <div>
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" style="color: white;" for="remember">Remember me</label>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div>
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}">Forgot Password?</a>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="">
+                        <input type="submit" class="form-control login-btn" value="Login" style="padding: 14px;">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{{url('design/admin')}}/assets/plugins/global/plugins.bundle.js"></script>
+<script src="{{url('design/admin')}}/assets/js/scripts.bundle.js"></script>
+<script src="{{url('design/assets/js/helper.js')}}"></script>
+<script src="{{url('design/admin')}}/assets/js/custom.js"></script>
+<script src="{{url('design/admin')}}/assets/js/moment.min.js"></script>
+<script src="{{url('design/admin')}}/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--end::Global Javascript Bundle-->
+</body>
+</html>
+

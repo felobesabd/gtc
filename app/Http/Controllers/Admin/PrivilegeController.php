@@ -29,8 +29,10 @@ class PrivilegeController
     public function addPermission($role_id)
     {
         checkUserHasRolesOrRedirect('roles.add');
+
         $role = DB::table('roles')->where('id', $role_id)->first();
         $all_models = all_models();
+
         return view('admin.privileges.create', compact('role', 'all_models'));
     }
 

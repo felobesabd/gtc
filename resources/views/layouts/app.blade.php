@@ -13,12 +13,28 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!--begin::Fonts(mandatory for all pages)
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
+    end::Fonts-->
+
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{url('design/admin')}}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+          type="text/css"/>
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{{url('design/admin')}}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="{{url('design/admin')}}/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css"/>
+    <!--end::Global Stylesheets Bundle-->
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        {{--<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -70,11 +86,21 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>--}}
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>
+
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{{url('design/admin')}}/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{url('design/admin')}}/assets/js/scripts.bundle.js"></script>
+    <script src="{{url('design/assets/js/helper.js')}}"></script>
+    <script src="{{url('design/admin')}}/assets/js/custom.js"></script>
+    <script src="{{url('design/admin')}}/assets/js/moment.min.js"></script>
+    <script src="{{url('design/admin')}}/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--end::Global Javascript Bundle-->
 </body>
 </html>

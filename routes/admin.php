@@ -133,3 +133,6 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
 });
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/', function () {
+    return view('auth.login');
+})->name('login');

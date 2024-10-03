@@ -143,13 +143,13 @@ class ItemTransactionService
     {
         return Datatables::of($model)
             ->editColumn('item_id', function ($row) {
-                return $row->itemCategory->item_name;
+                return $row->itemCategory ? $row->itemCategory->item_name : '---';
             })
             ->editColumn('transaction_type', function ($row) {
                 return $row->getTransactionType();
             })
             ->editColumn('user_id', function ($row) {
-                return $row->username->full_name;
+                return $row->username ? $row->username->full_name: '---';
             })
             ->editColumn('supplier_id', function ($row) {
                 return $row->supplier ? $row->supplier->company_name : '---';
