@@ -320,7 +320,7 @@ Job Card
 
                             <div class="col-sm-1 fv-row mb-7 me-1">
                                 <label class="fs-6 fw-semibold mb-2">Cost</label>
-                                <input type="number" class="form-control" step="0.01" name="cost[{{$key}}]"
+                                <input type="number" class="form-control cost" step="0.01" name="cost[{{$key}}]"
                                        value="{{ $jobCardItem->cost }}" id="cost">
                             </div>
 
@@ -444,11 +444,11 @@ Job Card
                 $item_details.find('#entered-quantity').attr('max', quantity);
                 $item_details.find('#cost').val('');
                 $item_details.find('#cost').attr('item_id', id);
-                itemCosts.forEach((item)=> {
+                itemCosts.forEach((item) => {
                     if (item.item_id === id) {
-                        $('#cost').val(item.cost);
+                        $(this).closest('.item-details').find('#cost').val(item.cost);
                     }
-                })
+                });
             });
 
             $(document).on('input', '#entered-quantity', function () {
@@ -539,7 +539,7 @@ Job Card
 
             $(document).on('change', '.entered-quantity', function () {
                 var $itemDetails = $(this).closest('.item-details');
-                var $cost = $itemDetails.find('#cost').val();
+                var $cost = $itemDetails.find('.cost').val();
                 var $quantityEnter = $(this).val();
                 var $totalCost = $cost * $quantityEnter;
 
