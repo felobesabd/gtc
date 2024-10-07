@@ -13,8 +13,7 @@ class JobCard extends Model
         'vehicle_id', 'delivered_by', 'received_by', 'ref_number', 'date_in', 'expected_date_out', 'reg_no',
         'km', 'expected_hour_out', 'location', 'site', 'job_card_type', 'repair_type', 'work_required',
         'estimated_time', 'staff_details', 'comments', 'driver_id', 'maintenance_manager', 'maintenance_supervisor',
-        'operation_coordinator', 'total_cost', 'lubrication_cost', 'subcontractor_cost', 'parts_cost',
-        'quantity', 'cost', 'description', 'part_number', 'status'
+        'operation_coordinator', 'total_cost', 'lubrication_cost', 'subcontractor_cost', 'parts_cost', 'status'
     ];
 
     public function vehicle()

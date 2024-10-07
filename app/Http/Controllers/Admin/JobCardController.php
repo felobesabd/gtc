@@ -6,10 +6,12 @@ use App\Http\Requests\JobCardRequest;
 use App\Models\Driver;
 use App\Models\Employee;
 use App\Models\ItemCategory;
+use App\Models\ItemDetails;
 use App\Models\JobCard;
 use App\Models\Vehicle;
 use App\Services\JobCardService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class JobCardController
 {
@@ -72,6 +74,7 @@ class JobCardController
     {
         $job_card = $this->jobCardService->createJobCard(data: $request->all());
         return redirect()->back()->with('success', 'Created successfully');
+
     }
 
     public function edit(Request $request, $id)
@@ -87,6 +90,7 @@ class JobCardController
         $employees = Employee::all();
         $drivers = Driver::all();
         $items = ItemCategory::all();
+        $jobCardItems = ItemDetails::where('job_card_id', $id)->get();
 
         return view('admin.jobCards.edit', compact(
             'job_card',
@@ -95,7 +99,8 @@ class JobCardController
             'drivers',
             'selectedJobCardTypes',
             'selectedRepairTypes',
-            'items'
+            'items',
+            'jobCardItems'
         ));
     }
 
@@ -103,6 +108,11 @@ class JobCardController
     {
         $job_card = $this->jobCardService->updateJobCard(id: $id, data: $request->all());
         return redirect()->back()->with('success', 'Updated successfully');
+    }
+
+    public function updateStatus(Request $request, $job_card) {
+        $job_card = $this->jobCardService->updateJobCardStatus(id: $job_card, data: $request->all());
+        return redirect()->back()->with('success', 'Created job card successfully');
     }
 
     public function destroy($id)

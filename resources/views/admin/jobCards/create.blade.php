@@ -10,7 +10,7 @@ Job Card
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <form class="form" action="{{ route('admin.job_cards.store') }}" method="post" enctype="multipart/form-data">
+    <form class="form" id="form" action="{{ route('admin.job_cards.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="card card-flush py-10">
@@ -225,39 +225,54 @@ Job Card
                         <input type="text" class="form-control" name="maintenance_manager" value="{{ old('maintenance_manager') }}">
                     </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                        <select class="form-control" name="part_number">
-                            <option selected disabled hidden>Choose</option>
-                            @foreach($items as $item)
-                                <option value="{{ $item->part_no }}">
-                                    {{ $item->part_no }} / {{ $item->item_name }} / {{ $item->quantity }}
-                                </option>
-                            @endforeach
-                        </select>
+
+                    <div class="item-details d-flex justify-content-between align-items-center mb-3" id="item-details">
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Part Number</label>
+                            <select class="form-control" name="part_number[]" id="item-selected">
+                                <option selected disabled hidden>Choose</option>
+                                @foreach($items as $item)
+                                    <option value="{{ $item->part_no }}" data-item_quantity="{{ $item->quantity }}">
+                                        {{ $item->part_no }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="fv-row mb-7 mx-1">
+                            <label class="fs-6 fw-semibold mb-2">Item Quantity Available</label>
+                            <input type="number" class="form-control disabled" id="item-quantity"/>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                            <input type="number" class="form-control" name="quantity[]" value="{{ old('quantity') }}">
+                        </div>
+
+                        <div class="fv-row mb-7 mx-1">
+                            <label class="fs-6 fw-semibold mb-2">Description</label>
+                            <textarea class="form-control" name="description[]"
+                                      rows="1">{{ old('description') }}</textarea>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Cost</label>
+                            <input type="number" class="form-control" step="0.01" name="cost[]"
+                                   value="{{ old('cost') }}">
+                        </div>
+
+                        {{--<div>
+                            <button type="button" class="add-item-details" id="add-item-details">+</button>
+                        </div>--}}
                     </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Description</label>
-                        <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
-                    </div>
-
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="cost" value="{{ old('cost') }}">
-                    </div>
-
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
-                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') }}">
-                    </div>
-
+                    <button type="button" class="add-item-details" id="add-item-details">Add</button>
 
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">
                     <!--begin::Button-->
-                    <button type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="submit-item-details">
                         <span class="indicator-label">Submit</span>
                     </button>
                     <!--end::Button-->
@@ -312,6 +327,67 @@ Job Card
                         }
                     });
                 }
+            });
+
+            // $('#item-selected').on('change', function () {
+            //     var selectedItems = $(this).find('option:selected');
+            //
+            //     var quantity = selectedItems.data('item_quantity');
+            //
+            //     $('#item-quantity').val(quantity);
+            // });
+
+            $(document).on('change', '#item-selected', function () {
+                var selectedItems = $(this).find('option:selected');
+                var quantity = selectedItems.data('item_quantity');
+
+                $(this).closest('.item-details').find('#item-quantity').val(quantity);
+            });
+
+            $('#add-item-details').on('click', function () {
+                var clonedItem = $('#item-details').clone();
+
+                clonedItem.find('input, textarea, select').each(function () {
+                    $(this).val('');
+                });
+
+                clonedItem.insertBefore('#add-item-details');
+            });
+
+            $('#submit-item-details').on('click', function (e) {
+                e.preventDefault();
+
+                var form = $('#form');
+                var formData = new FormData(form[0]);
+
+                console.log(formData);
+
+                $.ajax({
+                    url: '{{ route('admin.item_details.store') }}',
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: formData,
+                    success: function (response) {
+                        alert(response.message);
+                        form[0].reset();
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errorMessages = xhr.responseJSON.errors;
+                            let messages = '';
+
+                            $.each(errorMessages, function (key, value) {
+                                messages += value.join(', ') + '\n';
+                            });
+
+                            alert('Error(s):\n' + messages);
+                        } else {
+                            alert('An unexpected error occurred. Please try again.');
+                        }
+                    }
+                });
             });
         });
     </script>

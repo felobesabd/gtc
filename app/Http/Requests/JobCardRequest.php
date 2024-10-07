@@ -51,10 +51,6 @@ class JobCardRequest extends FormRequest
             'maintenance_supervisor' => 'nullable|string',
             'maintenance_manager' => 'nullable|string',
             'driver_id' => 'required|integer',
-            'part_number' => 'required|string',
-            'description' => 'nullable|string',
-            'cost' => 'nullable|numeric',
-            'quantity' => 'required|integer',
         ];
     }
 }

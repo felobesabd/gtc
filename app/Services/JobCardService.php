@@ -1,8 +1,12 @@
 <?php
 namespace App\Services;
 
+use App\Models\ItemCategory;
+use App\Models\ItemDetails;
 use App\Models\JobCard;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Yajra\Datatables\Datatables;
 
 class JobCardService
@@ -19,21 +23,60 @@ class JobCardService
         $data['repair_type'] = json_encode($data['repair_type']);
         $data['staff_details'] = json_encode($data['staff_details']);
 
-        $data['total_cost'] = $this->totalCost($data);
-
-//        Log::info('Storing Job Card:', $data);
-
-        $model = JobCard::create($data);
-        return $model;
+       return $job_card = $this->handleJobCard(null, $data);
     }
 
     public function updateJobCard(int $id, array $data): bool
     {
-        $itemCat = JobCard::findOrFail($id);
+        $job_card = JobCard::where('id', $id)->first();
 
-        $data['total_cost'] = $this->totalCost($data);
-        return $itemCat->fill($data)->save();
+        if (!$job_card) {
+            throw new \Exception('Failed to update job card');
+        }
+
+        $updatedJobCard = $this->handleJobCard($job_card, $data);
+        return $updatedJobCard instanceof JobCard;
     }
+
+    public function updateJobCardStatus(int $id, array $data): bool
+    {
+        DB::beginTransaction();
+        try {
+            $job_card = JobCard::findOrFail($id);
+            $itemDetails = ItemDetails::where('job_card_id', $job_card->id)->get();
+
+            foreach ($itemDetails as $index => $itemDetail) {
+
+                $partNumber = $itemDetail->part_number;
+                $quantity = $itemDetail->quantity;
+
+                $item = ItemCategory::where('part_no', $partNumber)->first();
+
+                if (!$item || $item->quantity < $quantity) {
+                    throw ValidationException::withMessages([
+                        'quantity' => 'Item quantity not enough for part number: ' . $partNumber,
+                    ]);
+                }
+
+                if ($data['status'] == '1') {
+                    $item->update(['quantity' => $item->quantity - $quantity]);
+                }
+            }
+
+            // check status and update quantity
+//            if ($data['status'] == '1') {
+//                $quantity = $item->quantity - $job_card->quantity;
+//                $item->update(['quantity' => $quantity]);
+//            }
+
+            DB::commit();
+            return $job_card->fill($data)->save();
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
 
     public function deleteJobCard($id): bool
     {
@@ -52,11 +95,7 @@ class JobCardService
                 if ($row->status == 0)
                     $html = '<label for="" class="text-warning">Pending</label>';
                 elseif ($row->status == 1)
-                    $html = '<label for="" class="text-info">in-progress</label>';
-                elseif ($row->status == 2)
                     $html = '<label for="" class="text-success">Completed</label>';
-                elseif ($row->status == 4)
-                    $html = '<label for="" class="text-success">Confirmed</label>';
                 else
                     $html = '<label for="" class="text-danger">Canceled</label>';
 
@@ -84,5 +123,35 @@ class JobCardService
     {
         $total_cost = $data['parts_cost'] + $data['subcontractor_cost'] + $data['lubrication_cost'];
         return $total_cost;
+    }
+
+    private function handleJobCard($model, $data)
+    {
+        DB::beginTransaction();
+        try {
+            $item = ItemCategory::where('part_no', $data['part_number'])->first();
+
+//            if ($item->quantity < $data['quantity']) {
+//                throw ValidationException::withMessages([
+//                    'quantity' => 'Item quantity not enough.',
+//                ]);
+//            }
+
+            // calculation price
+            $data['total_cost'] = $this->totalCost($data);
+
+            // create the job card
+            if (is_null($model)) {
+                $model = JobCard::create($data);
+            }
+
+            $model->fill($data)->save();
+
+            DB::commit();
+            return $model;
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 }

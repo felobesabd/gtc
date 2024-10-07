@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\IncidentalExpensesController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\ItemTransactionController;
 use App\Http\Controllers\Admin\PrivilegeController;
+use App\Http\Controllers\Admin\ItemDetailsController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -100,9 +101,15 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
 
     /** JobCardController */
     Route::resource('/job_cards', JobCardController::class, ['names' => 'admin.job_cards']);
+    Route::patch('/job_card-status/{job_card}', [JobCardController::class, 'updateStatus'])->name('admin.job_card.status');
     Route::get('/job_cards/delete/{id}', [JobCardController::class, 'destroy'])->name('admin.job_cards.delete');
     Route::get('/job_cards-data-table', [JobCardController::class, 'index'])->name('admin.job_cards.data-table');
     /** JobCardController */
+
+    /** ItemDetailsController */
+    Route::post('item_details/store', [ItemDetailsController::class, 'createItemDetails'])->name('admin.item_details.store');
+    Route::post('item_details/update', [ItemDetailsController::class, 'updateItemDetails'])->name('admin.item_details.update');
+    /** ItemDetailsController */
 
     /** IncidentalExpensesController */
     Route::resource('/expenses', IncidentalExpensesController::class, ['names' => 'admin.expenses']);

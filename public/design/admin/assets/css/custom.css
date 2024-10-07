@@ -178,3 +178,21 @@ select.disabled {
     width: 100%;
 }
 
+.add-item-details {
+    float: right;
+    border: none;
+    padding: 10px 20px;
+    background-color: #007fc5;
+    color: white;
+    border-radius: 6px;
+}
+
+.delete-item-details {
+    float: right;
+    border: none;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border-radius: 6px;
+}
+

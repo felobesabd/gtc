@@ -10,24 +10,55 @@ Job Card
 @section('content')
 <!--begin::Content container-->
 <div id="kt_app_content_container" class="app-container container-xxl">
-    <form class="form" action="{{ route('admin.job_cards.update', ['job_card' => $job_card->id]) }}" method="post">
+
+    @if(auth()->user()->hasRole(['deputy warehouse manager', 'warehouse manager']))
+        <form class="form" action="{{ route('admin.job_card.status', ['job_card' => $job_card->id]) }}" method="post">
+            @csrf
+            <input name="_method" type="hidden" value="PATCH"/>
+            <div class="row">
+                <div class="card card-flush py-10">
+                    <div class="card-header border-0 pt-6 pb-6">
+                        <label class="fs-6 fw-semibold mb-2">Status</label>
+                        <select class="form-control" name="status" required>
+                            <option disabled selected>...</option>
+                            @foreach(StatusEnum::jobCardCases() as $status)
+                                <option @if($job_card->status === $status->value) selected
+                                        @endif value="{{$status->value}}">{{$status->probertyName()}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="submit" class="btn btn-primary">
+                            <span class="indicator-label">Submit</span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                </div>
+            </div>
+        </form>
+    @endif
+
+    <form class="form" id="form" action="{{ route('admin.job_cards.update', ['job_card' => $job_card->id]) }}" method="post">
         @csrf
-        <input name="_method" type="hidden" value="PATCH" />
+        {{--<input name="_method" type="hidden" value="PATCH" />--}}
+        <input name="role" type="hidden" value="{{auth()->user()->getRoleNames()}}" />
+        <input type="hidden" name="job_card_id" id="job_card_id" value="{{ $job_card->id ?? '' }}">
         <div class="row">
             <div class="card card-flush py-10">
                 <!--begin::Modal body-->
                 <div class="modal-body px-lg-17">
-                    @if(auth()->user()->hasRole(['deputy warehouse manager', 'warehouse manager']))
+                    {{--@if(auth()->user()->hasRole(['deputy warehouse manager', 'warehouse manager']))
                         <div class="fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Status</label>
-                            <select class="form-control" name="status">
+                            <select class="form-control" id="select-status" name="status">
                                 <option disabled selected>...</option>
                                 @foreach(StatusEnum::jobCardCases() as $status)
                                     <option @if($job_card->status === $status->value) selected @endif value="{{$status->value}}">{{$status->probertyName()}}</option>
                                 @endforeach
                             </select>
                         </div>
-                    @endif
+                    @endif--}}
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Choose Vehicle</label>
@@ -248,37 +279,64 @@ Job Card
                         <input type="text" class="form-control" name="maintenance_manager" value="{{ $job_card->maintenance_manager }}">
                     </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                        <select class="form-control" name="part_number">
-                            <option selected disabled hidden>Choose</option>
-                            @foreach($items as $item)
-                                <option @if($job_card->part_number === $item->part_no) selected @endif value="{{ $item->part_no }}">
-                                    {{ $item->part_no }} / {{ $item->item_name }} / {{ $item->quantity }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @foreach($jobCardItems as $key=>$jobCardItem)
+                        <div class="item-details d-flex justify-content-between align-items-center mb-3"
+                             id="item-details">
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Description</label>
-                        <textarea class="form-control" name="description" rows="3">{{ $job_card->description }}</textarea>
-                    </div>
+                            <input type="hidden" name="jobCardItemIds[{{$key}}]" value="{{$jobCardItem->id}}">
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Cost</label>
-                        <input type="number" class="form-control" step="0.01" name="cost" value="{{ $job_card->cost }}">
-                    </div>
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Part Number</label>
+                                <select class="form-control" name="part_number[{{$key}}]" id="item-selected">
+                                    <option selected disabled hidden>Choose</option>
+                                    @foreach($items as $item)
+                                        <option @if($item->part_no == $jobCardItem->part_number) selected
+                                                @endif value="{{ $item->part_no }}"
+                                                data-item_quantity="{{ $item->quantity }}">
+                                            {{ $item->part_no }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Quantity</label>
-                        <input type="number" class="form-control" name="quantity" value="{{ $job_card->quantity }}">
-                    </div>
+                            <div class="fv-row mb-7 mx-1">
+                                <label class="fs-6 fw-semibold mb-2">Item Quantity Available</label>
+                                <input type="number" class="form-control disabled item-quantity" id=""/>
+                            </div>
+
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                                <input type="number" class="form-control" name="quantity[{{$key}}]"
+                                       value="{{ $jobCardItem->quantity }}">
+                            </div>
+
+                            <div class="fv-row mb-7 mx-1">
+                                <label class="fs-6 fw-semibold mb-2">Description</label>
+                                <textarea class="form-control" name="description[{{$key}}]"
+                                          rows="1">{{ $jobCardItem->description }}</textarea>
+                            </div>
+
+                            <div class="fv-row mb-7 me-1">
+                                <label class="fs-6 fw-semibold mb-2">Cost</label>
+                                <input type="number" class="form-control" step="0.01" name="cost[{{$key}}]"
+                                       value="{{ $jobCardItem->cost }}">
+                            </div>
+
+                            <div>
+                                <button type="button" class="delete-item-details" data-index="{{$key}}" data-id="{{$jobCardItem->id}}">X</button>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+                    <input type="hidden" class="deleted-items-indexes" name="deleted_items_indexes" value="{}">
+                    <button type="button" class="add-item-details" id="add-item-details">Add</button>
+
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">
                     <!--begin::Button-->
-                    <button type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="submit-item-details">
                         <span class="indicator-label">Submit</span>
                     </button>
                     <!--end::Button-->
@@ -358,6 +416,80 @@ Job Card
 
             $(document).ready(function () {
                 $('input[name="site"][value="' + site_val + '"]').prop('checked', true);
+            });
+
+            $(document).on('change', '#item-selected', function () {
+                var selectedItems = $(this).find('option:selected');
+                var quantity = selectedItems.data('item_quantity');
+
+                $(this).closest('.item-details').find('.item-quantity').val(quantity);
+            });
+
+            $('#add-item-details').on('click', function () {
+                var clonedItem = $('#item-details').clone();
+
+                clonedItem.find('input, textarea, select').each(function () {
+                    $(this).val('');
+                });
+
+                clonedItem.insertBefore('#add-item-details');
+            });
+
+            var roleValue = $('input[name="role"]').val();
+            if (roleValue.includes('deputy warehouse manager') || roleValue.includes('warehouse manager')) {
+                $('#form').find('input, textarea, select, button').attr('disabled', true);
+                $('#form').find('button[type="submit"]').attr('disabled', true);
+            }
+
+            $('#submit-item-details').on('click', function (e) {
+                e.preventDefault();
+
+                var form = $('#form');
+                var formData = new FormData(form[0]);
+
+                console.log(formData);
+
+                $.ajax({
+                    url: '{{ route('admin.item_details.update') }}',
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: formData,
+                    success: function (response) {
+                        alert(response.message);
+                        form[0].reset();
+                        window.location.reload();
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errorMessages = xhr.responseJSON.errors;
+                            let messages = '';
+
+                            $.each(errorMessages, function (key, value) {
+                                messages += value.join(', ') + '\n';
+                            });
+
+                            alert('Error(s):\n' + messages);
+                        } else {
+                            alert('An unexpected error occurred. Please try again.');
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete-item-details', function () {
+                const index = $(this).data('index');
+                const id = $(this).data('id');
+
+                let deletedItemsIndexes =  $('.deleted-items-indexes').val();
+                deletedItemsIndexes = JSON.parse(deletedItemsIndexes);
+                deletedItemsIndexes[index] = id;
+
+                $('.deleted-items-indexes').val(JSON.stringify(deletedItemsIndexes));
+
+                // Remove only the closest .item-details div
+                $(this).closest('.item-details').remove();
             });
 
         });

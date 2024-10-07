@@ -42,7 +42,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('cost', 10, 2);
             $table->integer('quantity');
-            $table->integer('status')->comment('0=pending,1=inprogress,2=completed,3=canceled,4=confirmed')->default(0);
+            $table->integer('status')->comment('0=pending,1=completed,2=canceled')->default(0);
             $table->timestamps();
         });
     }
