@@ -7,6 +7,7 @@ use App\Models\Driver;
 use App\Models\Employee;
 use App\Models\ItemCategory;
 use App\Models\ItemDetails;
+use App\Models\ItemTransaction;
 use App\Models\JobCard;
 use App\Models\Vehicle;
 use App\Services\JobCardService;
@@ -66,8 +67,15 @@ class JobCardController
         $employees = Employee::all();
         $drivers = Driver::all();
         $items = ItemCategory::all();
+        $itemCost = ItemTransaction::select('id', 'item_id', 'cost')->where('transaction_type', 1)->get();
 
-        return view('admin.jobCards.create', compact('vehicles','employees', 'drivers', 'items'));
+        return view('admin.jobCards.create', compact(
+            'vehicles',
+            'employees',
+            'drivers',
+            'items',
+            'itemCost',
+        ));
     }
 
     public function store(JobCardRequest $request)
@@ -91,6 +99,7 @@ class JobCardController
         $drivers = Driver::all();
         $items = ItemCategory::all();
         $jobCardItems = ItemDetails::where('job_card_id', $id)->get();
+        $itemCost = ItemTransaction::select('id', 'item_id', 'cost')->where('transaction_type', 1)->get();
 
         return view('admin.jobCards.edit', compact(
             'job_card',
@@ -100,7 +109,8 @@ class JobCardController
             'selectedJobCardTypes',
             'selectedRepairTypes',
             'items',
-            'jobCardItems'
+            'jobCardItems',
+            'itemCost'
         ));
     }
 

@@ -229,41 +229,46 @@ Job Card
                     <div class="item-details d-flex justify-content-between align-items-center mb-3" id="item-details">
                         <div class="fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                            <select class="form-control" name="part_number[]" id="item-selected">
+                            <select class="form-control" name="item_id[]" id="item-selected">
                                 <option selected disabled hidden>Choose</option>
                                 @foreach($items as $item)
-                                    <option value="{{ $item->part_no }}" data-item_quantity="{{ $item->quantity }}">
+                                    <option value="{{ $item->id }}"
+                                            data-item_quantity="{{ $item->quantity }}"
+                                            data-item_id="{{ $item->id }}">
                                         {{ $item->part_no }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="fv-row mb-7 mx-1">
-                            <label class="fs-6 fw-semibold mb-2">Item Quantity Available</label>
+                        <div class="col-sm-1 fv-row mb-7 mx-1">
+                            <label class="fs-6 fw-semibold mb-2">Item Quantity</label>
                             <input type="number" class="form-control disabled" id="item-quantity"/>
                         </div>
 
-                        <div class="fv-row mb-7">
+                        <div class="col-sm-1 fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Quantity</label>
-                            <input type="number" class="form-control" name="quantity[]" value="{{ old('quantity') }}">
+                            <input type="number" class="form-control entered-quantity" name="quantity[]"
+                                   value="{{ old('quantity') }}" id="entered-quantity" min="1" max="">
                         </div>
 
-                        <div class="fv-row mb-7 mx-1">
+                        <div class="col-sm-3 fv-row mb-7 mx-1">
                             <label class="fs-6 fw-semibold mb-2">Description</label>
                             <textarea class="form-control" name="description[]"
                                       rows="1">{{ old('description') }}</textarea>
                         </div>
 
-                        <div class="fv-row mb-7">
+                        <div class="col-sm-1 fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Cost</label>
                             <input type="number" class="form-control" step="0.01" name="cost[]"
-                                   value="{{ old('cost') }}">
+                                   value="{{ old('cost') }}" id="cost">
                         </div>
 
-                        {{--<div>
-                            <button type="button" class="add-item-details" id="add-item-details">+</button>
-                        </div>--}}
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Total Cost</label>
+                            <input type="number" class="form-control" step="0.01" name="total_cost"
+                                   value="{{ old('total_cost') }}" id="total-cost">
+                        </div>
                     </div>
 
                     <button type="button" class="add-item-details" id="add-item-details">Add</button>
@@ -337,11 +342,43 @@ Job Card
             //     $('#item-quantity').val(quantity);
             // });
 
+            var itemCosts = @json($itemCost);
             $(document).on('change', '#item-selected', function () {
                 var selectedItems = $(this).find('option:selected');
                 var quantity = selectedItems.data('item_quantity');
+                var id = selectedItems.data('item_id');
 
-                $(this).closest('.item-details').find('#item-quantity').val(quantity);
+                $item_details = $(this).closest('.item-details');
+                $item_details.find('#item-quantity').val(quantity);
+                $item_details.find('#entered-quantity').val('');
+                $item_details.find('#entered-quantity').attr('max', quantity);
+                $item_details.find('#cost').val('');
+                $item_details.find('#cost').attr('item_id', id);
+                itemCosts.forEach((item)=> {
+                    if (item.item_id === id) {
+                        $('#cost').val(item.cost);
+                    }
+                })
+            });
+
+            $(document).on('change', '.entered-quantity', function () {
+                var $itemDetails = $(this).closest('.item-details');
+                var $cost = $itemDetails.find('#cost').val();
+                var $quantityEnter = $(this).val();
+                var $totalCost = $cost * $quantityEnter;
+
+                $itemDetails.find('#total-cost').val($totalCost);
+            })
+
+
+            $(document).on('input', '#entered-quantity', function () {
+                var maxQuantity = $(this).attr('max');
+                var enteredQuantity = $(this).val();
+
+                if (parseInt(enteredQuantity) > parseInt(maxQuantity)) {
+                    alert('Entered quantity exceeds available quantity!');
+                    $(this).val(maxQuantity);
+                }
             });
 
             $('#add-item-details').on('click', function () {
@@ -354,6 +391,7 @@ Job Card
                 clonedItem.insertBefore('#add-item-details');
             });
 
+            // ajax
             $('#submit-item-details').on('click', function (e) {
                 e.preventDefault();
 

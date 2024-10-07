@@ -10,6 +10,6 @@ class ItemDetails extends Model
     use HasFactory;
 
     protected $fillable = [
-        'job_card_id', 'quantity', 'description', 'cost', 'part_number'
+        'job_card_id', 'quantity', 'description', 'cost', 'item_id'
     ];
 }

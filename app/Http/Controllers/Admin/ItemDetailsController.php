@@ -25,13 +25,13 @@ class ItemDetailsController
         try {
             $job_card = $this->jobCardService->createJobCard(data: $request->all());
 
-            $partNumbers = $request->input('part_number');
+            $partNumbers = $request->input('item_id');
             $quantities = $request->input('quantity');
             $descriptions = $request->input('description');
             $costs = $request->input('cost');
 
             foreach ($partNumbers as $index => $partNumber) {
-                $item = ItemCategory::where('part_no', $partNumber)->first();
+                /*$item = ItemCategory::where('part_no', $partNumber)->first();
 
                 if (!$item || $item->quantity < $quantities[$index]) {
                     return response()->json([
@@ -40,11 +40,11 @@ class ItemDetailsController
                             'quantity' => ['Item quantity not enough for part number: ' . $partNumber],
                         ]
                     ], 422);
-                }
+                }*/
 
                 ItemDetails::create([
                     'job_card_id' => $job_card->id,
-                    'part_number' => $partNumber,
+                    'item_id' => $partNumber,
                     'quantity' => $quantities[$index],
                     'description' => $descriptions[$index],
                     'cost' => $costs[$index],
@@ -73,7 +73,7 @@ class ItemDetailsController
 
             $jobCardItemIds= $request->input('jobCardItemIds');
 
-            $partNumbers = $request->input('part_number');
+            $partNumbers = $request->input('item_id');
             $quantities = $request->input('quantity');
             $descriptions = $request->input('description');
             $costs = $request->input('cost');
@@ -82,7 +82,8 @@ class ItemDetailsController
             $deletedItemsIds = array_values($deletedItemsIds);
 
             foreach ($partNumbers as $index => $partNumber) {
-                $item = ItemCategory::where('part_no', $partNumber)->first();
+                // check quantity
+                /*$item = ItemCategory::where('part_no', $partNumber)->first();
 
                 if (!$item || $item->quantity < $quantities[$index]) {
                     return response()->json([
@@ -91,8 +92,7 @@ class ItemDetailsController
                             'quantity' => ['Item quantity not enough for part number: ' . $partNumber],
                         ]
                     ], 422);
-                }
-
+                }*/
 
                 // dd($jobCardItemIds[$index]);
 
@@ -102,9 +102,8 @@ class ItemDetailsController
                     if (in_array($itemDetailsObj->id, $deletedItemsIds)) {
                         continue;
                     }
-
                     $itemDetailsObj->job_card_id = $jobCard->id;
-                    $itemDetailsObj->part_number = $partNumbers[$index];
+                    $itemDetailsObj->item_id = $partNumbers[$index];
                     $itemDetailsObj->quantity = $quantities[$index];
                     $itemDetailsObj->description = $descriptions[$index];
                     $itemDetailsObj->cost = $costs[$index];
@@ -112,7 +111,7 @@ class ItemDetailsController
                 } else {
                     ItemDetails::create([
                         'job_card_id' => $jobCard->id,
-                        'part_number' => $partNumbers[$index],
+                        'item_id' => $partNumbers[$index],
                         'quantity' => $quantities[$index],
                         'description' => $descriptions[$index],
                         'cost' => $costs[$index],

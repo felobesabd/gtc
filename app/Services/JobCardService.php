@@ -47,18 +47,18 @@ class JobCardService
 
             foreach ($itemDetails as $index => $itemDetail) {
 
-                $partNumber = $itemDetail->part_number;
+                $item_id = $itemDetail->item_id;
                 $quantity = $itemDetail->quantity;
 
-                $item = ItemCategory::where('part_no', $partNumber)->first();
+                $item = ItemCategory::where('id', $item_id)->first();
 
                 if (!$item || $item->quantity < $quantity) {
                     throw ValidationException::withMessages([
-                        'quantity' => 'Item quantity not enough for part number: ' . $partNumber,
+                        'quantity' => 'Item quantity not enough for part number: ' . $item_id,
                     ]);
                 }
 
-                if ($data['status'] == '1') {
+                if ($data['status'] == '3') {
                     $item->update(['quantity' => $item->quantity - $quantity]);
                 }
             }
@@ -96,8 +96,10 @@ class JobCardService
                     $html = '<label for="" class="text-warning">Pending</label>';
                 elseif ($row->status == 1)
                     $html = '<label for="" class="text-success">Completed</label>';
-                else
+                elseif ($row->status == 2)
                     $html = '<label for="" class="text-danger">Canceled</label>';
+                else
+                    $html = '<label for="" class="text-info">Parts Received</label>';
 
                 return $html;
             })
@@ -129,7 +131,7 @@ class JobCardService
     {
         DB::beginTransaction();
         try {
-            $item = ItemCategory::where('part_no', $data['part_number'])->first();
+            // $item = ItemCategory::where('part_no', $data['part_number'])->first();
 
 //            if ($item->quantity < $data['quantity']) {
 //                throw ValidationException::withMessages([
