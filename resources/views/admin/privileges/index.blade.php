@@ -60,16 +60,17 @@ Permission
                         <td>{{ $role->name }}</td>
                         <td>
                             <a href="{{ route('admin.edit.permission', ['role_id' => $role->id]) }}"
-                               class="btn btn-primary">
+                               class="btn btn-primary" style="width: 75px !important;">
                                 Permission
                             </a>
                         </td>
                         <td>
                             <a href="{{ route('admin.edit.permission', ['role_id' => $role->id]) }}"
-                               class="btn btn-primary">
+                               class="btn btn-primary" style="width: 75px !important;">
                                 Edit
                             </a>
-                            <a href="{{ route('admin.delete.permission', ['role_id' => $role->id]) }}" class="btn btn-danger"
+                            <a href="{{ route('admin.delete.permission', ['role_id' => $role->id]) }}"
+                               class="btn btn-danger"  style="width: 75px !important;"
                                onclick="return confirmMsg();">
                                 Delete
                             </a>

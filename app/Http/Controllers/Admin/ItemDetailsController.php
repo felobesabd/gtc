@@ -6,6 +6,7 @@ use App\Http\Requests\JobCardRequest;
 use App\Models\ItemCategory;
 use App\Models\ItemDetails;
 use App\Models\JobCard;
+use App\Models\JobCardEmployees;
 use App\Services\JobCardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,10 +26,15 @@ class ItemDetailsController
         try {
             $job_card = $this->jobCardService->createJobCard(data: $request->all());
 
+            // item details
             $partNumbers = $request->input('item_id');
             $quantities = $request->input('quantity');
             $descriptions = $request->input('description');
             $costs = $request->input('cost');
+
+            // employees
+            $employees = $request->input('employee_id');
+            $employee_time = $request->input('estimated_time_employee');
 
             foreach ($partNumbers as $index => $partNumber) {
                 /*$item = ItemCategory::where('part_no', $partNumber)->first();
@@ -48,6 +54,14 @@ class ItemDetailsController
                     'quantity' => $quantities[$index],
                     'description' => $descriptions[$index],
                     'cost' => $costs[$index],
+                ]);
+            }
+
+            foreach ($employees as $index => $employee) {
+                JobCardEmployees::create([
+                    'job_card_id' => $job_card->id,
+                    'employee_id' => $employee,
+                    'estimated_time_employee' => $employee_time[$index],
                 ]);
             }
 
@@ -71,7 +85,8 @@ class ItemDetailsController
             $jobCard = JobCard::findOrFail($request->job_card_id);
             $jobCard->fill($data)->save();
 
-            $jobCardItemIds= $request->input('jobCardItemIds');
+            $jobCardItemIds = $request->input('jobCardItemIds');
+            $jobCardEmployeeIds = $request->input('jobCardEmployeeIds');
 
             $partNumbers = $request->input('item_id');
             $quantities = $request->input('quantity');
@@ -80,6 +95,10 @@ class ItemDetailsController
             $deletedItemsIds = $request->input('deleted_items_indexes');
             $deletedItemsIds = json_decode($deletedItemsIds, true);
             $deletedItemsIds = array_values($deletedItemsIds);
+
+            $deletedEmployeeIds = $request->input('deleted_employees_indexes');
+            $deletedEmployeeIds = json_decode($deletedEmployeeIds, true);
+            $deletedEmployeeIds = array_values($deletedEmployeeIds);
 
             foreach ($partNumbers as $index => $partNumber) {
                 // check quantity
@@ -94,8 +113,6 @@ class ItemDetailsController
                     ], 422);
                 }*/
 
-                // dd($jobCardItemIds[$index]);
-
                 if ($jobCardItemIds[$index]) {
                     $itemDetailsObj = ItemDetails::where('id', $jobCardItemIds[$index])->first();
 
@@ -109,6 +126,7 @@ class ItemDetailsController
                     $itemDetailsObj->cost = $costs[$index];
                     $itemDetailsObj->save();
                 } else {
+                    // add => clone another names from form and create
                     ItemDetails::create([
                         'job_card_id' => $jobCard->id,
                         'item_id' => $partNumbers[$index],
@@ -120,6 +138,41 @@ class ItemDetailsController
             }
 
             ItemDetails::whereIn('id', $deletedItemsIds)->delete();
+
+            // employees
+            $employees = $request->input('employee_id');
+            $employee_time = $request->input('estimated_time_employee');
+
+            $employees_hide = $request->input('employee_id_2');
+            $employee_time_hide = $request->input('estimated_time_employee_2');
+
+            if ($employees_hide) {
+                foreach ($employees_hide as $index => $employee_hide) {
+                    JobCardEmployees::create([
+                        'job_card_id' => $jobCard->id,
+                        'employee_id' => $employee_hide,
+                        'estimated_time_employee' => $employee_time_hide[$index],
+                    ]);
+                }
+            }
+
+//            $jobCardEmployee = JobCardEmployees::where('job_card_id', $jobCard->id)->get();
+            foreach ($employees as $index => $employee) {
+                $jobCardEmployeeObj = JobCardEmployees::where('id', $jobCardEmployeeIds[$index])->first();
+                //dd($jobCardEmployeeObj);
+
+                if (in_array($jobCardEmployeeObj->id, $deletedEmployeeIds)) {
+                    continue;
+                }
+
+
+                $jobCardEmployeeObj->job_card_id = $jobCard->id;
+                $jobCardEmployeeObj->employee_id = $employee;
+                $jobCardEmployeeObj->estimated_time_employee = $employee_time[$index];
+                $jobCardEmployeeObj->save();
+            }
+
+            JobCardEmployees::whereIn('id', $deletedEmployeeIds)->delete();
 
             DB::commit();
 

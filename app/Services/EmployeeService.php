@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Traits\DateFormatterTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
@@ -16,6 +17,14 @@ class EmployeeService
     {
         $model = Employee::all();
         return $this->getTableData(model: $model);
+    }
+
+    public function searchEmployees(Request $request)
+    {
+        $search = $request->get('term');
+
+        $employees = Employee::where('name', 'LIKE', '%' . $search . '%')->pluck('name');
+        return $employees;
     }
 
     public function createEmployee($data): object

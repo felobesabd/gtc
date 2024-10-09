@@ -49,6 +49,10 @@ class ItemCategoryController
         return redirect()->back()->with('success', 'Created successfully');
     }
 
+    public function employeeSearch(Request $request) {
+        return $this->itemCatService->searchItems($request);
+    }
+
     public function edit(Request $request, $id)
     {
         checkUserHasRolesOrRedirect('items.edit');

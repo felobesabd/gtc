@@ -31,12 +31,16 @@ Job Card
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Delivered by</label>
-                        <input type="text" class="form-control" name="delivered_by" value="{{ old('delivered_by') }}"/>
+                        <input type="text" class="form-control employee-autocomplete delivered-by" name="delivered_by"
+                               value="{{ old('delivered_by') }}"/>
+                        <select id="" class="form-control employee-dropdown delivered-by-dropdown" style="display:none;"></select>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Received by</label>
-                        <input type="text" class="form-control" name="received_by" value="{{ old('received_by') }}"/>
+                        <input type="text" class="form-control employee-autocomplete received-by" name="received_by"
+                               value="{{ old('received_by') }}"/>
+                        <select id="" class="form-control employee-dropdown received-by-dropdown" style="display:none;"></select>
                     </div>
 
                     <div class="fv-row mb-7">
@@ -167,18 +171,30 @@ Job Card
                         <input type="text" class="form-control" name="estimated_time" value="{{ old('estimated_time') }}">
                     </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Staff Details</label>
-                        <select class="form-control" name="staff_details[]" multiple>
-                            <option selected disabled hidden>Choose</option>
-                            @foreach($employees as $employee)
-                                <option value={{ $employee->id }}>{{ $employee->name }}</option>
-                            @endforeach
-                        </select>
+                    <div class="div-employees fv-row d-flex justify-content-between align-items-center mb-3" id="div-employees">
+                        <div class="col-sm-8 fv-row">
+                            <label class="fs-6 fw-semibold mb-2">Staff Details</label>
+                            <select class="form-control" name="employee_id[]">
+                                <option selected disabled hidden>Choose</option>
+                                @foreach($employees as $employee)
+                                    <option value={{ $employee->id }}>{{ $employee->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 fv-row">
+                            <label class="fs-6 fw-semibold mb-2">Estimated Time</label>
+                            <input type="number" class="form-control" name="estimated_time_employee[]" step="0.01"
+                                   value="{{ old('estimated_time_employee') }}">
+                        </div>
+                    </div>
+
+                    <div class="fv-row mb-3">
+                        <button type="button" class="add-employee mb-3" id="add-employee">Add</button>
                     </div>
 
                     <!-- Comments -->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7 mt-10">
                         <label class="fs-6 fw-semibold mb-2">Comments</label>
                         <textarea class="form-control" name="comments" rows="3">{{ old('comments') }}</textarea>
                     </div>
@@ -225,12 +241,11 @@ Job Card
                         <input type="text" class="form-control" name="maintenance_manager" value="{{ old('maintenance_manager') }}">
                     </div>
 
-
                     <div class="item-details d-flex justify-content-between align-items-center mb-3" id="item-details">
-                        <div class="fv-row mb-7">
+                        <div class="col-sm-3 fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                            <select class="form-control" name="item_id[]" id="item-selected">
-                                <option selected disabled hidden>Choose</option>
+                            <select class="form-control item-selected" name="item_id[]" id="item-selected">
+                                <option selected disabled hidden></option>
                                 @foreach($items as $item)
                                     <option value="{{ $item->id }}"
                                             data-item_quantity="{{ $item->quantity }}"
@@ -260,7 +275,7 @@ Job Card
 
                         <div class="col-sm-1 fv-row mb-7">
                             <label class="fs-6 fw-semibold mb-2">Cost</label>
-                            <input type="number" class="form-control" step="0.01" name="cost[]"
+                            <input type="number" class="form-control cost" step="0.01" name="cost[]"
                                    value="{{ old('cost') }}" id="cost">
                         </div>
 
@@ -356,20 +371,19 @@ Job Card
                 $item_details.find('#cost').attr('item_id', id);
                 itemCosts.forEach((item)=> {
                     if (item.item_id === id) {
-                        $('#cost').val(item.cost);
+                        $(this).closest('.item-details').find('#cost').val(item.cost);
                     }
                 })
             });
 
             $(document).on('change', '.entered-quantity', function () {
                 var $itemDetails = $(this).closest('.item-details');
-                var $cost = $itemDetails.find('#cost').val();
+                var $cost = $itemDetails.find('.cost').val();
                 var $quantityEnter = $(this).val();
                 var $totalCost = $cost * $quantityEnter;
 
                 $itemDetails.find('#total-cost').val($totalCost);
             })
-
 
             $(document).on('input', '#entered-quantity', function () {
                 var maxQuantity = $(this).attr('max');
@@ -384,9 +398,18 @@ Job Card
             $('#add-item-details').on('click', function () {
                 var clonedItem = $('#item-details').clone();
 
+                clonedItem.find('.select2-container').remove();
+                clonedItem.find('.item-selected').select2({
+                    placeholder: "Choose a part number",
+                    allowClear: true,
+                    width: '100%'
+                });
+
                 clonedItem.find('input, textarea, select').each(function () {
                     $(this).val('');
                 });
+
+                clonedItem.addClass('new-item-details').removeAttr('id');
 
                 clonedItem.insertBefore('#add-item-details');
             });
@@ -427,6 +450,56 @@ Job Card
                     }
                 });
             });
+
+            $('.employee-autocomplete').each(function () {
+                var $input = $(this);
+                var $dropdown = $input.siblings('.employee-dropdown');
+
+                $input.autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "{{ route('admin.employees.search') }}",
+                            data: {
+                                term: request.term
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log(data);
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 2,
+
+                    select: function (event, ui) {
+                        $input.val(ui.item.value);
+                        $dropdown.hide();
+                        return false;
+                    }
+                });
+
+                $input.on('focus', function () {
+                    $dropdown.hide();
+                });
+            });
+
+            $('.item-selected').select2({
+                placeholder: "Choose a part number",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // employee
+            $('#add-employee').click(function () {
+                var clonedEmployee = $('#div-employees').clone();
+
+                clonedEmployee.find('input, select').each(function () {
+                    $(this).val('');
+                });
+
+                clonedEmployee.insertAfter('#div-employees:last');
+            });
+
         });
     </script>
 @endpush

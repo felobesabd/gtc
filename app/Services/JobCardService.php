@@ -21,7 +21,6 @@ class JobCardService
     {
         $data['job_card_type'] = json_encode($data['job_card_type']);
         $data['repair_type'] = json_encode($data['repair_type']);
-        $data['staff_details'] = json_encode($data['staff_details']);
 
        return $job_card = $this->handleJobCard(null, $data);
     }
@@ -76,7 +75,6 @@ class JobCardService
             throw $e;
         }
     }
-
 
     public function deleteJobCard($id): bool
     {

@@ -28,7 +28,6 @@ return new class extends Migration
             $table->integer('repair_type')->comment('1=normal,2=accident,3=major,4=pms,5=safety,6=warranty,7=repetitive');
             $table->text('work_required')->nullable();
             $table->string('estimated_time');
-            $table->text('staff_details')->nullable();
             $table->text('comments')->nullable();
             $table->decimal('lubrication_cost', 10, 2);
             $table->decimal('subcontractor_cost', 10, 2);

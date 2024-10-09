@@ -44,6 +44,7 @@ Route::prefix('/admin')->middleware(['web', 'admin'])->group(function () {
 
     /** EmployeeController */
     Route::resource('/employees', EmployeeController::class, ['names' => 'admin.employees']);
+    Route::get('/employees-search', [EmployeeController::class, 'employeeSearch'])->name('admin.employees.search');
     Route::get('/employees/delete/{id}', [EmployeeController::class, 'destroy'])->name('admin.employees.delete');
     Route::get('/employees-data-table', [EmployeeController::class, 'index'])->name('admin.employees.data-table');
     /** EmployeeController */

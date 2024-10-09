@@ -40,6 +40,10 @@ class EmployeeController
         return view('admin.employees.create', compact('departments', 'countries'));
     }
 
+    public function employeeSearch(Request $request) {
+        return $this->employeeService->searchEmployees($request);
+    }
+
     public function store(Request $request)
     {
         //        $passportExpiryWarning = Carbon::parse($request->passport_expires_at)->subMonths(6);

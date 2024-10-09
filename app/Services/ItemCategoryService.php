@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\ItemCategory;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 class ItemCategoryService
@@ -16,6 +17,14 @@ class ItemCategoryService
     {
         $model = ItemCategory::create($data);
         return $model;
+    }
+
+    public function searchItems(Request $request)
+    {
+        $search = $request->get('term');
+
+        $items = ItemCategory::where('part_no', 'LIKE', '%' . $search . '%')->pluck('part_no');
+        return $items;
     }
 
     public function updateItemCat(int $id, array $data): bool

@@ -21,7 +21,14 @@
 		<link href="{{url('design/admin')}}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('design/admin')}}/assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('design/admin')}}/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Include jQuery UI for autocomplete -->
         <link rel = "stylesheet" type = "text/css" href = "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" />
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <!-- Include Select2 CSS -->
+        <link href="{{url('design/admin')}}/assets/select2/select2.css" rel="stylesheet"/>
+
 		<!--end::Global Stylesheets Bundle-->
 		@stack('header')
 	</head>

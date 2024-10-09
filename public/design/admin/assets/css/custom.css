@@ -80,12 +80,15 @@ select.disabled {
 }
 
 .dataTable  td {
-  max-width: 200px;
+  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.dataTable .btn {
+    width: 75px !important;
+}
 
 /* Mouse Cursor Css */
 .mouse-move {
@@ -178,7 +181,7 @@ select.disabled {
     width: 100%;
 }
 
-.add-item-details {
+.add-item-details, .delete-item-details, .delete-employee  {
     float: right;
     border: none;
     padding: 10px 20px;
@@ -187,12 +190,31 @@ select.disabled {
     border-radius: 6px;
 }
 
-.delete-item-details {
+.add-item-details {
+    background-color: #007fc5;
+}
+
+.add-employee {
     float: right;
     border: none;
     padding: 10px 20px;
-    background-color: red;
+    background-color: #007fc5;
     color: white;
     border-radius: 6px;
 }
 
+.delete-item-details, .delete-employee {
+    background-color: red;
+}
+
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        min-width: 1140px
+    }
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        min-width: 1320px
+    }
+}

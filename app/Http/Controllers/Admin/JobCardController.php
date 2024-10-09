@@ -9,7 +9,9 @@ use App\Models\ItemCategory;
 use App\Models\ItemDetails;
 use App\Models\ItemTransaction;
 use App\Models\JobCard;
+use App\Models\JobCardEmployees;
 use App\Models\Vehicle;
+use App\Services\EmployeeService;
 use App\Services\JobCardService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -17,10 +19,12 @@ use Illuminate\Validation\ValidationException;
 class JobCardController
 {
     protected $jobCardService;
+    protected $employeeService;
 
-    public function __construct(JobCardService $jobCardService)
+    public function __construct(JobCardService $jobCardService, EmployeeService $employeeService)
     {
         $this->jobCardService = $jobCardService;
+        $this->employeeService = $employeeService;
     }
 
     public function index(Request $request)
@@ -78,6 +82,8 @@ class JobCardController
         ));
     }
 
+
+
     public function store(JobCardRequest $request)
     {
         $job_card = $this->jobCardService->createJobCard(data: $request->all());
@@ -99,6 +105,7 @@ class JobCardController
         $drivers = Driver::all();
         $items = ItemCategory::all();
         $jobCardItems = ItemDetails::where('job_card_id', $id)->get();
+        $jobCardEmployees = JobCardEmployees::where('job_card_id', $id)->get();
         $itemCost = ItemTransaction::select('id', 'item_id', 'cost')->where('transaction_type', 1)->get();
 
         return view('admin.jobCards.edit', compact(
@@ -110,7 +117,8 @@ class JobCardController
             'selectedRepairTypes',
             'items',
             'jobCardItems',
-            'itemCost'
+            'itemCost',
+            'jobCardEmployees'
         ));
     }
 

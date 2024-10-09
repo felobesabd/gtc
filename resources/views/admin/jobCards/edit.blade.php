@@ -78,12 +78,18 @@ Job Card
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Delivered by</label>
-                        <input type="text" class="form-control" name="delivered_by" value="{{ $job_card->delivered_by }}"/>
+                        <input type="text" class="form-control employee-autocomplete delivered-by" name="delivered_by"
+                               value="{{ $job_card->delivered_by }}"/>
+                        <select id="" class="form-control employee-dropdown delivered-by-dropdown"
+                                style="display:none;"></select>
                     </div>
 
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Received by</label>
-                        <input type="text" class="form-control" name="received_by" value="{{ $job_card->received_by }}"/>
+                        <input type="text" class="form-control employee-autocomplete received-by" name="received_by"
+                               value="{{ $job_card->received_by }}"/>
+                        <select id="" class="form-control employee-dropdown received-by-dropdown"
+                                style="display:none;"></select>
                     </div>
 
                     <div class="fv-row mb-7">
@@ -211,26 +217,71 @@ Job Card
                     <!-- Estimated Time and Staff Details -->
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Estimated Time</label>
-                        <input type="text" class="form-control" name="estimated_time" value="{{ $job_card->estimated_time }}">
+                        <input type="number" class="form-control" name="estimated_time" value="{{ $job_card->estimated_time }}">
                     </div>
 
-                    <div class="fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Staff Details</label>
-                        <select class="form-control" name="staff_details[]" multiple>
-                            <option disabled hidden>Choose</option>
-                            @foreach($employees as $employee)
-                                <option
-                                    @if(is_array($job_card->staff_details) && in_array($employee->id, $job_card->staff_details)) selected
-                                    @endif
-                                    value="{{ $employee->id }}">
-                                    {{ $employee->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                    @foreach($jobCardEmployees as $key => $jobCardEmployee)
+                        <div class="div-employees fv-row d-flex justify-content-between align-items-center mb-3"
+                             id="div-employees">
+                            <input type="hidden" name="jobCardEmployeeIds[{{$key}}]" value="{{$jobCardEmployee->id}}">
+
+                            <div class="col-sm-8 fv-row">
+                                <label class="fs-6 fw-semibold mb-2">Staff Details</label>
+                                <select class="form-control" name="employee_id[{{$key}}]">
+                                    <option disabled hidden>Choose</option>
+                                    @foreach($employees as $employee)
+                                        <option
+                                            @if($employee->id == $jobCardEmployee->employee_id) selected @endif
+                                            value="{{ $employee->id }}">
+                                            {{ $employee->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3 fv-row">
+                                <label class="fs-6 fw-semibold mb-2">Estimated Time</label>
+                                <input type="number" class="form-control" name="estimated_time_employee[{{$key}}]"
+                                       value="{{ $jobCardEmployee->estimated_time_employee }}">
+                            </div>
+
+                            <div>
+                                <button type="button" class="delete-employee mt-7" data-index="{{$key}}" data-id="{{$jobCardEmployee->id}}">X</button>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <div class="div-employees-hide" style="display: none">
+                        <div class="div-employees fv-row d-flex justify-content-between align-items-center mb-3"
+                             id="div-employees">
+                            <div class="col-sm-8 fv-row">
+                                <label class="fs-6 fw-semibold mb-2">Staff Details</label>
+                                <select class="form-control">
+                                    <option selected disabled hidden>Choose</option>
+                                    @foreach($employees as $employee)
+                                        <option value={{ $employee->id }}>{{ $employee->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3 fv-row">
+                                <label class="fs-6 fw-semibold mb-2">Estimated Time</label>
+                                <input type="number" class="form-control" step="0.01">
+                            </div>
+
+                            <div>
+                                <button type="button" class="delete-employee mt-7">X</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="deleted-employees-indexes" name="deleted_employees_indexes" value="{}">
+                    <div class="fv-row mb-3">
+                        <button type="button" class="add-employee mb-3" id="add-employee">Add</button>
                     </div>
 
                     <!-- Comments -->
-                    <div class="fv-row mb-7">
+                    <div class="fv-row mb-7 mt-10">
                         <label class="fs-6 fw-semibold mb-2">Comments</label>
                         <textarea class="form-control" name="comments" rows="3">{{ $job_card->comments }}</textarea>
                     </div>
@@ -279,16 +330,16 @@ Job Card
                         <input type="text" class="form-control" name="maintenance_manager" value="{{ $job_card->maintenance_manager }}">
                     </div>
 
-                    @foreach($jobCardItems as $key=>$jobCardItem)
+                    @foreach($jobCardItems as $key=> $jobCardItem)
                         <div class="item-details d-flex justify-content-between align-items-center mb-3"
                              id="item-details">
 
                             <input type="hidden" name="jobCardItemIds[{{$key}}]" value="{{$jobCardItem->id}}">
 
-                            <div class="fv-row mb-7">
+                            <div class="col-sm-3 fv-row mb-7">
                                 <label class="fs-6 fw-semibold mb-2">Part Number</label>
-                                <select class="form-control" name="item_id[{{$key}}]" id="item-selected">
-                                    <option selected disabled hidden>Choose</option>
+                                <select class="form-control item-selected" name="item_id[{{$key}}]">
+                                    <option selected disabled hidden></option>
                                     @foreach($items as $item)
                                         <option @if($item->id == $jobCardItem->item_id) selected
                                                 @endif value="{{ $item->id }}"
@@ -301,31 +352,31 @@ Job Card
                             </div>
 
                             <div class="col-sm-1 fv-row mb-7 mx-1">
-                                <label class="fs-8 fw-semibold">Item Quantity Available</label>
+                                <label class="fs-7 fw-semibold mb-2">Item Quantity</label>
                                 <input type="number" class="form-control disabled item-quantity" id=""
                                        value=""/>
                             </div>
 
                             <div class="col-sm-1 fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Quantity</label>
+                                <label class="fs-7 fw-semibold mb-2">Quantity</label>
                                 <input type="number" class="form-control entered-quantity" name="quantity[{{$key}}]"
                                        value="{{ $jobCardItem->quantity }}" id="entered-quantity" min="1" max="">
                             </div>
 
                             <div class="col-sm-3 fv-row mb-7 mx-1">
-                                <label class="fs-6 fw-semibold mb-2">Description</label>
+                                <label class="fs-7 fw-semibold mb-2">Description</label>
                                 <textarea class="form-control" name="description[{{$key}}]"
                                           rows="1">{{ $jobCardItem->description }}</textarea>
                             </div>
 
                             <div class="col-sm-1 fv-row mb-7 me-1">
-                                <label class="fs-6 fw-semibold mb-2">Cost</label>
+                                <label class="fs-7 fw-semibold mb-2">Cost</label>
                                 <input type="number" class="form-control cost" step="0.01" name="cost[{{$key}}]"
                                        value="{{ $jobCardItem->cost }}" id="cost">
                             </div>
 
                             <div class="col-sm-2 fv-row mb-7">
-                                <label class="fs-6 fw-semibold mb-2">Total Cost</label>
+                                <label class="fs-7 fw-semibold mb-2">Total Cost</label>
                                 <input type="number" class="form-control" step="0.01" name="total_cost"
                                        value="{{ $jobCardItem->quantity * $jobCardItem->cost  }}" id="total-cost">
                             </div>
@@ -426,14 +477,14 @@ Job Card
             });
 
             $('.item-details').each(function () {
-                var selectedItems = $(this).find('#item-selected option:selected');
+                var selectedItems = $(this).find('.item-selected option:selected');
                 var quantity = selectedItems.data('item_quantity');
                 $(this).find('.item-quantity').val(quantity);
                 $(this).find('#entered-quantity').attr('max', quantity);
             });
 
             var itemCosts = @json($itemCost);
-            $(document).on('change', '#item-selected', function () {
+            $(document).on('change', '.item-selected', function () {
                 var selectedItems = $(this).find('option:selected');
                 var quantity = selectedItems.data('item_quantity');
                 var id = selectedItems.data('item_id');
@@ -464,9 +515,18 @@ Job Card
             $('#add-item-details').on('click', function () {
                 var clonedItem = $('#item-details').clone();
 
+                clonedItem.find('.select2-container').remove();
+                clonedItem.find('.item-selected').select2({
+                    placeholder: "Choose a part number",
+                    allowClear: true,
+                    width: '100%'
+                });
+
                 clonedItem.find('input, textarea, select').each(function () {
                     $(this).val('');
                 });
+
+                clonedItem.addClass('new-item-details').removeAttr('id');
 
                 clonedItem.insertBefore('#add-item-details');
             });
@@ -536,7 +596,6 @@ Job Card
             //
             //     $('#total-cost').val($totaCost)
             // })
-
             $(document).on('change', '.entered-quantity', function () {
                 var $itemDetails = $(this).closest('.item-details');
                 var $cost = $itemDetails.find('.cost').val();
@@ -545,6 +604,75 @@ Job Card
 
                 $itemDetails.find('#total-cost').val($totalCost);
             })
+
+            // autocomplete employees
+            $('.employee-autocomplete').each(function () {
+                var $input = $(this);
+                var $dropdown = $input.siblings('.employee-dropdown');
+
+                $input.autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "{{ route('admin.employees.search') }}",
+                            data: {
+                                term: request.term
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log(data);
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 2,
+
+                    select: function (event, ui) {
+                        $input.val(ui.item.value);
+                        $dropdown.hide();
+                        return false;
+                    }
+                });
+
+                $input.on('focus', function () {
+                    $dropdown.hide();
+                });
+            });
+
+            // autocomplete employees
+            $('.item-selected').select2({
+                placeholder: "Choose a part number",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // employee
+            $('#add-employee').click(function () {
+                var clonedEmployee = $('.div-employees-hide .div-employees').clone();
+                clonedEmployee.show();
+
+                clonedEmployee.find('input, select').each(function () {
+                    $(this).val('');
+                });
+
+                clonedEmployee.find('select').attr('name', 'employee_id_2[]');
+                clonedEmployee.find('input').attr('name', 'estimated_time_employee_2[]');
+
+                clonedEmployee.insertBefore('#add-employee');
+            });
+
+            $(document).on('click', '.delete-employee', function () {
+                const index = $(this).data('index');
+                const id = $(this).data('id');
+
+                let deletedEmployeeIndexes =  $('.deleted-employees-indexes').val();
+                deletedEmployeeIndexes = JSON.parse(deletedEmployeeIndexes);
+                deletedEmployeeIndexes[index] = id;
+
+                $('.deleted-employees-indexes').val(JSON.stringify(deletedEmployeeIndexes));
+
+                // Remove only the closest .item-details div
+                $(this).closest('.div-employees').remove();
+            });
         });
     </script>
 @endpush
