@@ -34,3 +34,42 @@ function createDatatable(columns, ajax_url, order_option = [0, 'desc']) {
 
   return $datatable;
 }
+
+$(document).ready(function () {
+    // Suppliers
+    $('#add-supplier-details').on('click', function () {
+        var clonedSupplier = $('.supplier-details').first().clone();
+
+        clonedSupplier.find('input').each(function () {
+            $(this).val('');
+        });
+
+        clonedSupplier.addClass('new-item-details').removeAttr('id');
+
+        clonedSupplier.insertBefore('#add-supplier-details');
+    });
+
+    $(document).on('click', '.delete-supplier-details', function () {
+        const index = $(this).data('index');
+        const id = $(this).data('id');
+
+        let deletedSupplierContactIndexes = $('.deleted-supplier-contact-indexes').val();
+        deletedSupplierContactIndexes = JSON.parse(deletedSupplierContactIndexes);
+        deletedSupplierContactIndexes[index] = id;
+
+        $('.deleted-supplier-contact-indexes').val(JSON.stringify(deletedSupplierContactIndexes));
+        // Remove only the closest .item-details div
+        $(this).closest('.supplier-details').remove();
+    });
+
+    $('#add-supplier-details-edits').on('click', function () {
+        var clonedSupplier = $('.supplier-details-hide').first().clone();
+        clonedSupplier.show();
+
+        clonedSupplier.find('input').each(function () {
+            $(this).val('');
+        });
+
+        clonedSupplier.insertBefore('#add-supplier-details-edits');
+    });
+});

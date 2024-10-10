@@ -36,6 +36,42 @@ Suppliers
                         <input type="text" class="form-control" name="commercial_register_no" value="{{ old('commercial_register_no') }}"/>
                     </div>
 
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Number Of Tax</label>
+                        <input type="text" class="form-control" name="tax_value_added" value="{{ old('tax_value_added') }}"/>
+                    </div>
+
+                    <div class="supplier-details d-flex justify-content-between mb-3" id="supplier-details">
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Supplier Name</label>
+                            <input type="text" class="form-control" name="supplier_name[]"/>
+                        </div>
+
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Email</label>
+                            <input type="text" class="form-control" name="email[]"/>
+                        </div>
+
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Phone</label>
+                            <input type="text" class="form-control" name="phone[]"/>
+                        </div>
+
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Whats App</label>
+                            <input type="text" class="form-control" name="whats_app[]"/>
+                        </div>
+
+                        <div class="col-sm-2 fv-row mb-7">
+                            <label class="fs-6 fw-semibold mb-2">Department</label>
+                            <input type="text" class="form-control" name="department[]"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="add-supplier-details" id="add-supplier-details">Add</button>
+                    </div>
+
                 </div>
                 <!--end::Modal body-->
                 <div class="modal-footer flex-center">

@@ -181,19 +181,12 @@ select.disabled {
     width: 100%;
 }
 
-.add-item-details, .delete-item-details, .delete-employee  {
-    float: right;
-    border: none;
-    padding: 10px 20px;
-    background-color: #007fc5;
-    color: white;
-    border-radius: 6px;
-}
-
-.add-item-details {
-    background-color: #007fc5;
-}
-
+.add-item-details,
+.delete-item-details,
+.delete-employee,
+.add-employee,
+.add-supplier-details,
+.delete-supplier-details,
 .add-employee {
     float: right;
     border: none;
@@ -203,18 +196,30 @@ select.disabled {
     border-radius: 6px;
 }
 
-.delete-item-details, .delete-employee {
+.add-item-details, .add-supplier-details {
+    background-color: #007fc5;
+}
+
+.delete-item-details, .delete-employee, .delete-supplier-details {
     background-color: red;
 }
 
 @media (min-width: 1200px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl {
-        min-width: 1140px
+        min-width: 1140px !important;
     }
 }
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        min-width: 1320px
+        min-width: 1320px !important;
     }
+}
+
+.modal-footer .btn {
+    width: 80px;
+}
+
+.modal-footer .indicator-label {
+    font-size: 15px;
 }
